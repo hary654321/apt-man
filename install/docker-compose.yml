@@ -1,0 +1,41 @@
+version: '3.3'
+services: 
+    master: 
+        image: hary654321/crocodile
+        container_name: crocodile_server
+        restart: always
+        ports: 
+          - 61665:61665
+        volumes: 
+          - $PWD/core_docker.toml:/app/core.toml
+          - $PWD/client:/app/client
+        depends_on:
+          - mysql
+          - redis
+          - sacner
+    sacner: 
+        image: hary654321/scaner
+        container_name: crocodile_scaner
+        restart: always
+        ports: 
+          - 61666:61666
+        volumes: 
+          - $PWD/client/conf.toml:/app/conf.toml
+          - $PWD/client/pem:/app/pem
+    mysql:
+        image: mysql:5.7
+        container_name: crocodile_mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: "crocodile"
+            MYSQL_DATABASE: "crocodile"
+        volumes: 
+          - "/zrtx/apt/mysqldata:/var/lib/mysql"   # mysql数据持久化
+        ports: 
+          - 13306:3306
+        restart: always
+    redis:
+        image: redis:latest
+        container_name: crocodile_redis
+        restart: always
+        ports: 
+          - 16379:6379

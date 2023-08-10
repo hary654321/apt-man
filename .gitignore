@@ -1,0 +1,15 @@
+.idea
+*.log
+.vscode
+*.db
+web/node_modules
+*.pem
+build/*
+vendor
+/web/crocodile/
+/client
+/install/*.tar
+*.zip
+*.xml
+*.csv
+*.tar

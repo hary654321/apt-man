@@ -1,0 +1,46 @@
+package middleware
+
+import (
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+	"strings"
+	"time"
+	"zrDispatch/common/log"
+	"zrDispatch/core/utils/resp"
+)
+
+// ZapLogger zap logget middle
+func ZapLogger() func(c *gin.Context) {
+	return func(c *gin.Context) {
+		start := time.Now()
+		url := c.Request.URL.RequestURI()
+		c.Next()
+		latency := time.Now().Sub(start) * 1000
+		statuscode := c.GetInt("statuscode")
+		reqip := c.ClientIP()
+		method := c.Request.Method
+		bodySize := c.Writer.Size()
+
+		fields := []zap.Field{
+			zap.String("uid", c.GetString("uid")),
+			zap.String("method", strings.ToLower(method)),
+			zap.Int("statuscode", statuscode),
+			zap.String("reqip", reqip),
+			zap.Duration("latency(ms)", latency),
+			zap.String("url", url),
+		}
+
+		if bodySize > 0 {
+			fields = append(fields, zap.Int("respsize", bodySize))
+		}
+
+		switch {
+		case statuscode < resp.ErrBadRequest:
+			log.Debug("Debug", fields...)
+		case statuscode < resp.ErrInternalServer:
+			log.Warn("Warn", fields...)
+		case statuscode >= resp.ErrInternalServer:
+			log.Error("Error", fields...)
+		}
+	}
+}
