@@ -15,7 +15,7 @@ go build -o ./install/apt-server  main.go
 ### go 扫描端
 go build -o ../cyberspacemapping/www/strategy-manage/install/client/apt-scan main.go 
 
-docker build -t hary654321/server . -f DockerfileScaner
+docker build -t hary654321/scaner . -f DockerfileScaner
 
 ### go 服务镜像  build   注意copy的分层  有缓存  可执行文件没有更新
 docker build -t hary654321/server . -f DockerfileServer
