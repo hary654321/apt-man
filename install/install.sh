@@ -3,7 +3,7 @@
 production='网络后门扫描系统'
 version='V1.0'
 dockerVersion='18.0.0'
-dockerComposeVersion='2.0.0'
+dockerComposeVersion='1.0.0'
 rootPath='./'
 dockerImage=${rootPath}'crocodile.tar'
 
@@ -94,11 +94,12 @@ setupDocker() {
   if [ $? -ne  0 ]; then
 
     sys=`uname -s`
-    composerFile=./bin/docker-compose-${sys,}-`uname -m`
+    composerFile=./bin/docker-compose-${sys,}-`uname -m`.tar
     if [[ ! -f ${composerFile} ]]; then
         echo "无对应系统docker-compose安装包请手动安装"
         exit 1
     fi
+    tar -vxf ${composerFile}
     cp -f ${composerFile} /usr/bin/docker-compose
     chmod +x /usr/bin/*
   fi
