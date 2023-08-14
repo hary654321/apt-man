@@ -12,7 +12,7 @@ services:
         depends_on:
           - mysql
           - redis
-          - sacner
+          - scaner
     sacner: 
         image: hary654321/scaner
         container_name: crocodile_scaner
