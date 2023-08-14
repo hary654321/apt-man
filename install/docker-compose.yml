@@ -13,7 +13,7 @@ services:
           - mysql
           - redis
           - scaner
-    sacner: 
+    scaner: 
         image: hary654321/scaner
         container_name: crocodile_scaner
         restart: always
