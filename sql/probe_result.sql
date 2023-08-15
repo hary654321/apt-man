@@ -13,7 +13,7 @@ CREATE TABLE `probe_result` (
 	PRIMARY KEY (`id`) USING BTREE,
 	INDEX `probe_scan_result_main_task_id_2f750a41_fk_probe_sca` (`run_task_id`) USING BTREE
 )
-COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1
-;
+DEFAULT CHARSET=utf8;
+

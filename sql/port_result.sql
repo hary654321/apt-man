@@ -19,7 +19,7 @@ CREATE TABLE `port_result` (
 	INDEX `port_scan_result_port_tr_create_time_7a565a50` (`create_time`) USING BTREE,
 	INDEX `port_scan_result_main_task_id_61908dd9_fk_port_scan` (`run_task_id`) USING BTREE
 )
-COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1
+DEFAULT CHARSET=utf8;
 ;

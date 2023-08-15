@@ -22,5 +22,5 @@ CREATE TABLE IF NOT EXISTS `log` (
   KEY `idx_s_t` (`starttime`,`taskid`),
   KEY `hostid` (`hostid`),
   KEY `runTaskId` (`runTaskId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 

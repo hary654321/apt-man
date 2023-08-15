@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS `notify` (
     `is_read` BOOL NOT NULL DEFAULT false COMMENT "是否已读",
      PRIMARY KEY (`id`),
      KEY `idx_nu` (`notifyuid`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `operate` (
   `columns` mediumtext COMMENT '修改的字段',
   PRIMARY KEY (`id`),
   KEY `idx_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

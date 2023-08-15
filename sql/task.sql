@@ -29,6 +29,6 @@ CREATE TABLE `task` (
 	INDEX `idx_name` (`name`) USING BTREE,
 	INDEX `idx_cbi` (`createByID`) USING BTREE
 )
-COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
-;
+DEFAULT CHARSET=utf8;
+

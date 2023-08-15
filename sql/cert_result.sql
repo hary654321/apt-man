@@ -23,7 +23,7 @@ CREATE TABLE `cert_result` (
 	PRIMARY KEY (`id`) USING BTREE,
 	INDEX `ssl_cert_result_main_task_id_b744052e_fk_ssl_cert_` (`run_task_id`) USING BTREE
 )
-COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1
+DEFAULT CHARSET=utf8;
 ;
