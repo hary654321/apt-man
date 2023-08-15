@@ -853,11 +853,24 @@ func nmap(taskdata *define.DetailTask) {
 		models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
 	}
 
+	xml := utils.Read(path)
+
+	mewXml := ""
+
+	arr := strings.Split(xml, "\n")
+
+	for _, v := range arr {
+		if strings.Contains(v, "stylesheet") {
+			continue
+		}
+		mewXml += v + "\n"
+	}
+
 	data := define.PlugResAdd{
 
 		RunTaskID: taskdata.RunTaskId,
 		Type:      taskdata.TaskType,
-		Res:       utils.Read(path),
+		Res:       mewXml,
 		Ctime:     utils.GetTimeStr(),
 	}
 
