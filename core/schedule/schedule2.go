@@ -858,6 +858,7 @@ func nmap(taskdata *define.DetailTask) {
 		RunTaskID: taskdata.RunTaskId,
 		Type:      taskdata.TaskType,
 		Res:       utils.Read(path),
+		Ctime:     utils.GetTimeStr(),
 	}
 
 	// 保存结果

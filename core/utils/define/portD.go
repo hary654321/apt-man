@@ -11,6 +11,7 @@ type PortScan struct {
 	ProductName string `gorm:"column:product_name" json:"ProductName"`
 	RunTaskID   string `gorm:"column:run_task_id" json:"runTaskID"`
 	Os          string `gorm:"column:os" json:"OperatingSystem"`
+	Ctime       string `gorm:"column:create_time" json:"create_time"`
 	// CreateTime string `gorm:"column:create_time" json:"CreateTime"`
 	// ProductName      string `gorm:"column:ip" json:"ProductName"`
 	// Info             string `gorm:"column:ip" json:"Info"`

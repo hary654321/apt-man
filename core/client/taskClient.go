@@ -202,6 +202,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 
 			portInfo.Hex = hex.Dump([]byte(portInfo.Response))
 
+			portInfo.Ctime = utils.GetTimeStr()
 			models.AddPortRes(portInfo)
 		}
 	}
