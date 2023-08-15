@@ -353,7 +353,7 @@ func BinInstall(hostInfo *define.Host) (err error) {
 
 	client.Cmd("mkdir -p /zrtx/apt").Output()
 
-	client.Upload("./client.tar", "/zrtx/apt/client.tar")
+	client.Upload("./client/client.tar", "/zrtx/apt/client.tar")
 
 	client.Cmd("tar -xvf /zrtx/apt/client.tar -C /zrtx/apt").Output()
 

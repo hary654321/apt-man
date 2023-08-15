@@ -92,15 +92,14 @@ setupDocker() {
   localDockerCompose=''
   [[ ` docker-compose version` ]]
   if [ $? -ne  0 ]; then
-
-    sys=`uname -s`
-    composerFile=./bin/docker-compose-${sys,}-`uname -m`.tar
+    echo "检测到 docker-compose 未安装 开始安装！"
+    composerFile=./bin/docker-compose-linux-aarch64.tar
     if [[ ! -f ${composerFile} ]]; then
         echo "无对应系统docker-compose安装包请手动安装"
         exit 1
     fi
     tar -vxf ${composerFile}
-    mv -f ${composerFile} /usr/bin/docker-compose
+    mv -f docker-compose-linux-aarch64 /usr/bin/docker-compose
     chmod +x /usr/bin/*
   fi
   localDockerCompose=` docker-compose version | awk '{print $4}'|tr -d 'v'`
