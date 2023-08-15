@@ -22,7 +22,7 @@ docker build -t hary654321/crocodile . -f DockerfileServer
 
 ### 镜像打包
 
-docker image save -o crocodile.tar hary654321/server mysql:5.7 redis:latest
+docker image save -o crocodile.tar hary654321/crocodile hary654321/scaner mysql:8.0 redis:3.2.10
 
 ### 客户端资源打包 
 
