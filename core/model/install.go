@@ -126,7 +126,7 @@ func StartInstall(ctx context.Context, username, password string) error {
 			execsql = string(content)
 		}
 
-		if tbname == TBCasbin || tbname == TBProbeInfo || tbname == TBProbeGroup {
+		if tbname == TBCasbin || tbname == TBProbeInfo || tbname == TBProbeGroup || tbname == TBHost {
 			for _, sql := range strings.Split(execsql, ";\n") {
 				if sql == "" {
 					slog.Println(slog.DEBUG, "StartInstall", "sql", tbname)

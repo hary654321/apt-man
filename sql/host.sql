@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS `host` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主机ID',
   `hostname` varchar(100) NOT NULL COMMENT '主机名',
@@ -17,4 +19,9 @@ CREATE TABLE IF NOT EXISTS `host` (
   UNIQUE KEY `ip` (`ip`),
   UNIQUE KEY `hostname` (`hostname`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO `host` (`id`, `hostname`, `ip`, `sshPort`, `servicePort`, `sshUser`, `sshPwd`, `status`, `runningTasks`, `weight`, `stop`, `version`, `lastUpdateTimeUnix`, `remark`) VALUES (1, '本机', 'scaner', 22, 61666, 'root', '123456', 2, '', 50, 0, '1.0.0', 1690009316, '');
+
+COMMIT;
+
 
