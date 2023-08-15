@@ -100,7 +100,7 @@ setupDocker() {
         exit 1
     fi
     tar -vxf ${composerFile}
-    cp -f ${composerFile} /usr/bin/docker-compose
+    mv -f ${composerFile} /usr/bin/docker-compose
     chmod +x /usr/bin/*
   fi
   localDockerCompose=` docker-compose version | awk '{print $4}'|tr -d 'v'`
