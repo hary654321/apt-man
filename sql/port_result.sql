@@ -11,6 +11,7 @@ CREATE TABLE `port_result` (
 	`product_name` VARCHAR(40) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`os` VARCHAR(40) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`probe_name` VARCHAR(40) NOT NULL COLLATE 'utf8_general_ci',
+	`remark` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`is_deleted` TINYINT(1) NOT NULL DEFAULT '0',

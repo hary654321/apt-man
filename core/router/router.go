@@ -60,13 +60,8 @@ func NewHTTPRouter() *http.Server {
 		c.Redirect(http.StatusMovedPermanently, "/crocodile")
 	})
 
-	//pprof.Register(router)
-	//router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	//gin.SetMode(gin.ReleaseMode)
-	//, 鉴权在这里
-	router.Use(gin.Recovery(), middleware.ZapLogger(), middleware.PermissionControl(), middleware.Oprtation())
-
 	v1 := router.Group("/api/v1")
+	v1.Use(gin.Recovery(), middleware.ZapLogger(), middleware.PermissionControl(), middleware.Oprtation())
 	ru := v1.Group("/user")
 	{
 		ru.POST("/registry", user.RegistryUser) // only admin // 管理员创建了新的用户。。。
@@ -180,6 +175,13 @@ func NewHTTPRouter() *http.Server {
 		sys.GET("log", sysP.RunLog)
 		sys.GET("restart", sysP.Restart)
 		sys.POST("upload", sysP.Upload)
+	}
+
+	open := router.Group("/api/open")
+	open.Use(gin.Recovery(), middleware.BasicAuth())
+
+	{
+		open.POST("/task", task.CreateTask)
 	}
 
 	// if nor find router, will rediret to /crocodile/
