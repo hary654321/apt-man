@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"ias_tool_v2/config"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +12,7 @@ func BasicAuth() gin.HandlerFunc {
 		var data interface{}
 		token := c.GetHeader("Authorization")
 		//slog.Printf(slog.INFO, "Authorization %s  %s", token, global.ServerSetting.BasicAuth)
-		if token != config.CoreConf.BasicAuth {
+		if token != "" {
 			code = 401
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": code,

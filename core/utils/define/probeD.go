@@ -105,7 +105,10 @@ type ProbeRes struct {
 	Res       string      `gorm:"column:response" json:"response" `
 	RunTaskID string      `gorm:"column:run_task_id" json:"run_task_id"`
 	Matched   MatchStatus `gorm:"column:matched" json:"matched"`
+	Dealed    DealStatus  `gorm:"column:dealed" json:"dealed"`
+	Remark    string      `gorm:"column:remark" json:"remark"`
 	Ctime     LocalTime   `gorm:"column:create_time" json:"create_time"`
+	Utime     LocalTime   `gorm:"column:update_time" json:"update_time"`
 	D         int         `gorm:"column:is_deleted" json:"is_deleted"`
 
 	// Utime   string `gorm:"column:update_time" json:"update_time"`
@@ -128,6 +131,24 @@ func (t MatchStatus) String() string {
 		return "命中"
 	case NotMatched:
 		return "未命中"
+	default:
+		return "unknown"
+	}
+}
+
+type DealStatus int
+
+const (
+	NotDeal DealStatus = iota //未处理
+	DealEd                    // 已处理
+)
+
+func (t DealStatus) String() string {
+	switch t {
+	case NotDeal:
+		return "未处理"
+	case DealEd:
+		return "已处理"
 	default:
 		return "unknown"
 	}
