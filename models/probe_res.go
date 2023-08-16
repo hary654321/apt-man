@@ -2,6 +2,7 @@ package models
 
 import (
 	"zrDispatch/common/utils"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 )
 
@@ -72,4 +73,12 @@ func GetTaskMatchIpCount(taskId string) (ipcount int64) {
 	dbTmp.Where("run_task_id like ? ", taskId+"%").Where("matched", define.Matched).Select("distinct ip").Distinct("ip").Count(&ipcount)
 
 	return
+}
+
+// 通过id，更新
+func EditProbeRes(pge define.ProbeResEdit) int64 {
+
+	res := db.Table("probe_result").Where("id = ?", pge.Id).Updates(pge)
+	slog.Println(slog.DEBUG, res.Error)
+	return res.RowsAffected
 }

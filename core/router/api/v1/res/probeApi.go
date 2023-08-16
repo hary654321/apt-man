@@ -3,6 +3,7 @@ package res
 import (
 	"encoding/csv"
 	"fmt"
+	"net/http"
 	"os"
 	"time"
 	"zrDispatch/core/ginhelp"
@@ -32,6 +33,28 @@ func GetProbeRes(c *gin.Context) {
 	data, count := models.GetProbeRes(q.Offset, q.Limit, query)
 
 	resp.JSON(c, resp.Success, data, int(count))
+}
+
+func UpdateRemark(c *gin.Context) {
+
+	pg := define.ProbeResEdit{}
+
+	err := c.ShouldBindJSON(&pg)
+	if err != nil {
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", err)
+		resp.JSON(c, resp.ErrBadRequest, nil)
+		return
+	}
+
+	data := make(map[string]interface{})
+
+	data["count"] = models.EditProbeRes(pg)
+
+	code := resp.Success
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"data": data,
+	})
 }
 
 func ExportProbeCsv(c *gin.Context) {

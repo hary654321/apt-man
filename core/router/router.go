@@ -109,7 +109,8 @@ func NewHTTPRouter() *http.Server {
 		sr.GET("/getOsSelect", res.GetOsSelect)
 		sr.GET("/cert", res.GetCertRes)
 		sr.GET("/probe", res.GetProbeRes)
-		sr.GET("exportProbeCsv", res.ExportProbeCsv)
+		sr.PUT("/probe", res.UpdateRemark)
+		sr.GET("/exportProbeCsv", res.ExportProbeCsv)
 		sr.GET("/match", res.Getmatches)
 		sr.GET("/matchExport", res.ExportCsv)
 	}
