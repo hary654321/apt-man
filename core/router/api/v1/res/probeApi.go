@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"zrDispatch/common/utils"
 	"zrDispatch/core/ginhelp"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
@@ -48,6 +49,7 @@ func UpdateRemark(c *gin.Context) {
 
 	data := make(map[string]interface{})
 
+	pg.Utime = utils.GetTimeStr()
 	data["count"] = models.EditProbeRes(pg)
 
 	code := resp.Success

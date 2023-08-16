@@ -91,10 +91,10 @@ type ProbeResCreate struct {
 }
 
 type ProbeResEdit struct {
-	Id     int       `gorm:"column:id" json:"id" binding:"required"`
-	Dealed int       `gorm:"column:dealed" json:"dealed" binding:"required"`
-	Remark string    `gorm:"column:remark" json:"remark" binding:"required"`
-	Utime  LocalTime `gorm:"column:update_time" json:"update_time"`
+	Id     int    `gorm:"column:id" json:"id" binding:"required"`
+	Dealed int    `gorm:"column:dealed" json:"dealed" binding:"required"`
+	Remark string `gorm:"column:remark" json:"remark" binding:"required"`
+	Utime  string `gorm:"column:update_time" json:"update_time"`
 }
 
 // probe_name
