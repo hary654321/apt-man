@@ -92,8 +92,8 @@ type ProbeResCreate struct {
 
 type ProbeResEdit struct {
 	Id     int    `gorm:"column:id" json:"id" binding:"required"`
-	Dealed int    `gorm:"column:dealed" json:"dealed" binding:"required"`
-	Remark string `gorm:"column:remark" json:"remark" binding:"required"`
+	Dealed int    `gorm:"column:dealed" json:"dealed" `
+	Remark string `gorm:"column:remark" json:"remark" `
 	Utime  string `gorm:"column:update_time" json:"update_time"`
 }
 

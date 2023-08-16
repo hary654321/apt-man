@@ -1,6 +1,9 @@
 package models
 
-import "zrDispatch/core/utils/define"
+import (
+	"zrDispatch/core/slog"
+	"zrDispatch/core/utils/define"
+)
 
 // 保存结果
 func AddPortRes(c define.PortScan) int {
@@ -48,4 +51,12 @@ func GetOsSelect() (os []define.Os) {
 	dbTmp.Where("os!=?", "").Select("os").Distinct("os").Find(&os)
 
 	return
+}
+
+// 通过id，更新
+func EditPortRes(pge define.PortResEdit) int64 {
+
+	res := db.Table("port_result").Where("id = ?", pge.Id).Updates(pge)
+	slog.Println(slog.DEBUG, res.Error)
+	return res.RowsAffected
 }

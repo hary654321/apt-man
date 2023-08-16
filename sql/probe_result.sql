@@ -9,7 +9,7 @@ CREATE TABLE `probe_result` (
 	`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	`is_deleted` TINYINT(1) NOT NULL DEFAULT '0',
 	`matched` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0未开始匹配1匹配上2未匹配上',
-	`dealed` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '0 未处理  1已处理',
+	`dealed` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '1 未处理  2已处理',
 	`remark` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`run_task_id` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	PRIMARY KEY (`id`) USING BTREE,

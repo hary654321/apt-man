@@ -39,9 +39,16 @@ type PortRes struct {
 	Version     string    `gorm:"column:version" json:"version" `
 	Pname       string    `gorm:"column:probe_name" json:"probe_name" `
 	RunTaskID   string    `gorm:"column:run_task_id" json:"run_task_id"`
+	Remark      string    `gorm:"column:remark" json:"remark"`
 	Ctime       LocalTime `gorm:"column:create_time" json:"create_time"`
 	Utime       LocalTime `gorm:"column:update_time" json:"update_time"`
 	D           int       `gorm:"column:is_deleted" json:"is_deleted"`
+}
+
+type PortResEdit struct {
+	Id     int    `gorm:"column:id" json:"id" binding:"required"`
+	Remark string `gorm:"column:remark" json:"remark"`
+	Utime  string `gorm:"column:update_time" json:"update_time"`
 }
 
 var TOP_1000 = []int{80, 442, 22, 25, 3306, 8080, 21, 9000, 8443, 8089, 21, 23, 25, 81, 88, 89, 110, 3389, 135, 445, 139, 137,

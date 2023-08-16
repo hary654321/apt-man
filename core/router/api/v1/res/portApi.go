@@ -1,6 +1,8 @@
 package res
 
 import (
+	"net/http"
+	"zrDispatch/common/utils"
 	"zrDispatch/core/ginhelp"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
@@ -34,4 +36,27 @@ func GetOsSelect(c *gin.Context) {
 
 	data := models.GetOsSelect()
 	resp.JSON(c, resp.Success, data)
+}
+
+func UpdatePortRemark(c *gin.Context) {
+
+	pg := define.PortResEdit{}
+
+	err := c.ShouldBindJSON(&pg)
+	if err != nil {
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", err)
+		resp.JSON(c, resp.ErrBadRequest, nil)
+		return
+	}
+
+	data := make(map[string]interface{})
+
+	pg.Utime = utils.GetTimeStr()
+	data["count"] = models.EditPortRes(pg)
+
+	code := resp.Success
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"data": data,
+	})
 }
