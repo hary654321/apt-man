@@ -10,5 +10,4 @@ vendor
 /client
 /install/*.tar
 *.zip
-*.xml
 *.csv
