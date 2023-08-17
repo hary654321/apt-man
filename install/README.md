@@ -28,7 +28,7 @@ docker image save -o crocodile.tar hary654321/crocodile hary654321/scaner mysql:
 
 client 目录下
 
-tar -cvf ../client.tar  *
+tar -cvf ./client.tar  *
 
 
 ### 一键生成安装包

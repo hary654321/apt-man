@@ -28,3 +28,5 @@ cd ..
 
 
 tar -cvf ../install.tar  *
+
+tar -cvf update.tar client apt-server  DockerfileServer update.sh 
