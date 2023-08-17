@@ -1,0 +1,7 @@
+FROM hary654321/crocodile
+
+COPY ./apt-server /app/apt-server
+RUN chmod +x /app/apt-server
+CMD ["/app/apt-server","core.toml"]
+
+# docker build -t hary654321/crocodile . -f DockerfileServer

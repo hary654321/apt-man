@@ -11,7 +11,8 @@ import (
 
 func Update() {
 
-	if !utils.PathExists("update.sql") {
+	path := "sql/update.sql"
+	if !utils.PathExists(path) {
 		return
 	}
 
@@ -25,7 +26,7 @@ func Update() {
 
 	defer conn.Close()
 
-	execsql, _ := utils.ReadLineData("update.sql")
+	execsql, _ := utils.ReadLineData(path)
 
 	for _, sql := range execsql {
 		_, err = conn.ExecContext(context.Background(), sql)
