@@ -7,13 +7,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"zrDispatch/common/db"
 	"zrDispatch/common/jwt"
 	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/utils/define"
+
+	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 // LoginUser login user
@@ -83,7 +84,7 @@ func AddUser(ctx context.Context, name, hashpassword string, role define.Role) e
 	defer stmt.Close()
 
 	now := time.Now().Unix()
-	id := utils.GetID()
+	id := "1" //utils.GetID()
 	_, err = stmt.ExecContext(ctx, id, name, hashpassword, role, false, now, now)
 	if err != nil {
 		return fmt.Errorf("stmt.ExecContext failed: %w", err)

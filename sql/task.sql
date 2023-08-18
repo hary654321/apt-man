@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE `task` (
 	`id` CHAR(18) NOT NULL COMMENT 'ID' COLLATE 'utf8mb4_general_ci',
 	`name` VARCHAR(30) NOT NULL COMMENT '任务名称' COLLATE 'utf8mb4_general_ci',
@@ -32,3 +34,6 @@ CREATE TABLE `task` (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8;
 
+INSERT INTO `task` (`id`, `name`, `TaskType`, `ip`, `port`, `run`, `status`, `routePolicy`, `timeout`, `threads`, `parentTaskIds`, `parentRunParallel`, `childRunParallel`, `childTaskIds`, `createByID`, `hostGroupID`, `cronExpr`, `alarmUserIds`, `alarmStatus`, `priority`, `remark`, `probeScanId`, `probeId`, `createTime`, `updateTime`, `isDeleted`) VALUES ('test', '127', 1, '127.0.0.1', 'all', 1, 0, 1, 5, 100, '', 0, 0, '', '1', 'zd', '', '', -1, 0, '', '', '', '2023-07-31 06:56:35', '2023-08-18 09:43:34', 0);
+
+COMMIT;

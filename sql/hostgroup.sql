@@ -1,4 +1,6 @@
 
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS `hostgroup` (
   `id` char(18) NOT NULL COMMENT 'ID',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '主机组名称',
@@ -11,3 +13,6 @@ CREATE TABLE IF NOT EXISTS `hostgroup` (
   KEY `idx_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `hostgroup` (`id`, `name`, `remark`, `createByID`, `hostIDs`, `createTime`, `updateTime`) VALUES ('zd', 'docker组', 'docker组', '1', '1', 0, 0);
+
+COMMIT;

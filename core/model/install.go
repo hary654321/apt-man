@@ -126,15 +126,15 @@ func StartInstall(ctx context.Context, username, password string) error {
 			execsql = string(content)
 		}
 
-		if tbname == TBCasbin || tbname == TBProbeInfo || tbname == TBProbeGroup || tbname == TBHost {
+		if tbname == TBCasbin || tbname == TBProbeInfo || tbname == TBProbeGroup || tbname == TBHost || tbname == TBHostgroup || tbname == TBTask {
 			for _, sql := range strings.Split(execsql, ";\n") {
 				if sql == "" {
-					slog.Println(slog.DEBUG, "StartInstall", "sql", tbname)
+					slog.Println(slog.DEBUG, "StartInstall", "=====sql====", tbname)
 					continue
 				}
 				_, err = conn.ExecContext(context.Background(), sql)
 				if err != nil {
-					slog.Println(slog.DEBUG, "StartInstall", "sql", err)
+					slog.Println(slog.DEBUG, "StartInstall", "====sql======", err)
 					continue
 				}
 			}
@@ -167,5 +167,6 @@ func StartInstall(ctx context.Context, username, password string) error {
 	}
 
 	log.Debug("Success Install Crocodile")
+
 	return nil
 }

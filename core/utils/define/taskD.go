@@ -266,10 +266,10 @@ type Task struct {
 	// CreateBy          string      `gorm:"column:create_by" json:"create_by"`                                 // 创建人
 	CreateByUID string `gorm:"column:createByID" json:"create_byuid"` // 创建人ID
 	// HostGroup    string      `gorm:"column:host_group" json:"host_group" `                              // 主机组
-	HostGroupID string      `gorm:"column:hostGroupID" json:"host_groupid" binding:"required,len=18"` // 主机组ID
-	Cronexpr    string      `gorm:"column:cronExpr" json:"cronexpr" binding:"max=1000"`               // 执行任务表达式
-	Timeout     int         `gorm:"column:timeout" json:"timeout" binding:"required,min=-1"`          // 任务超时时间 (s) -1 no limit
-	RoutePolicy RoutePolicy `gorm:"column:routePolicy" json:"route_policy" "required,min=1,max=4" `   // how to select a run worker from hostgroup
+	HostGroupID string      `gorm:"column:hostGroupID" json:"host_groupid" binding:"required"`      // 主机组ID
+	Cronexpr    string      `gorm:"column:cronExpr" json:"cronexpr" binding:"max=1000"`             // 执行任务表达式
+	Timeout     int         `gorm:"column:timeout" json:"timeout" binding:"required,min=-1"`        // 任务超时时间 (s) -1 no limit
+	RoutePolicy RoutePolicy `gorm:"column:routePolicy" json:"route_policy" "required,min=1,max=4" ` // how to select a run worker from hostgroup
 	//ExpectCode        int         `json:"expect_code"`                                  // expect task return code. if not set 0 or 200
 	//ExpectContent     string      `json:"expect_content"`                               // expect task return content. if not set do not check
 	AlarmStatus AlarmStatus `gorm:"column:alarmStatus" json:"alarm_status" binding:"required,min=-2,max=1"` // alarm when task run success or fail or all all:-2 failed: -1 success: 1
