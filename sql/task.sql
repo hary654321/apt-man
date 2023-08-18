@@ -5,7 +5,7 @@ CREATE TABLE `task` (
 	`ip` TEXT NULL DEFAULT NULL COMMENT 'ip' COLLATE 'utf8mb4_general_ci',
 	`port` TEXT NULL DEFAULT NULL COMMENT 'port' COLLATE 'utf8mb4_general_ci',
 	`run` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '是否自动调度运行',
-	`status` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '任务的状态',
+	`status` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '任务的状态',
 	`routePolicy` INT(11) NOT NULL DEFAULT '0' COMMENT '路由策略 1:Random 2:RoundRobin 3:Weight 4:LeastTask',
 	`timeout` INT(11) NOT NULL DEFAULT '5' COMMENT '任务超时时间，默认5s',
 	`threads` INT(11) NOT NULL DEFAULT '5',
