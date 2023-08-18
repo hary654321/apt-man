@@ -21,7 +21,6 @@ import (
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
 	redis2 "zrDispatch/core/redis"
-	"zrDispatch/core/service"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/tasktype"
 	"zrDispatch/core/utils/define"
@@ -961,15 +960,6 @@ var gjmInit = true
 var addrSleep = 10000
 
 var scanDir = true
-
-func fwspeed() {
-
-	if service.GetAliveCount() > service.AliveCount/4 {
-		addrSleep = 1 * 80 * 1000 / service.AliveCount
-	} else {
-		addrSleep = 100 * 1000 / service.AliveCount
-	}
-}
 
 // cacheSchedule2 save task status
 type cacheSchedule2 struct {
