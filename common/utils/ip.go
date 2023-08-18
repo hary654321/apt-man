@@ -88,6 +88,10 @@ func GetIpArr(expr string) []string {
 
 func GetPortArr(port string) (portRes []string) {
 
+	if strings.ToLower(port) == "all" {
+		return GetAllPort()
+	}
+
 	if strings.Contains(port, ",") {
 		portArr := strings.Split(port, ",")
 
@@ -122,7 +126,7 @@ func GetPortArr(port string) (portRes []string) {
 		}
 	}
 
-	if strings.Contains(port, "TOP") {
+	if strings.Contains(strings.ToLower(port), "top") {
 		num := port[3:]
 		numInt, _ := strconv.Atoi(num)
 		if numInt > 1000 {
@@ -146,4 +150,11 @@ func GetPortArr(port string) (portRes []string) {
 func isNumeric(input string) bool {
 	match, _ := regexp.MatchString("^[0-9]+$", input)
 	return match
+}
+
+func GetAllPort() (portRes []string) {
+	for i := 1; i <= 65535; i++ {
+		portRes = append(portRes, strconv.Itoa(i))
+	}
+	return
 }
