@@ -215,6 +215,7 @@ func getTasks(ctx context.Context,
 		getsql += " AND t.createByID=?"
 		args = append(args, createbyid)
 	}
+	getsql += " order by t.createTime desc"
 	tasks := []define.GetTask{}
 	if limit > 0 {
 		var err error
