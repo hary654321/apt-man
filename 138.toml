@@ -30,7 +30,7 @@ keyfile="key.pem"
 # crocodile server
 [server]
 logPath = "/u2/zrtx/log/cyberspace/"
-port = 8085
+port = 8080
 run = true
 maxhttptime = "10s" # 秒
 [server.db]
