@@ -125,6 +125,7 @@ func NewHTTPRouter() *http.Server {
 		rt.DELETE("", task.DeleteTask)
 		rt.PUT("/run", task.RunTask)
 		rt.PUT("/kill", task.KillTask)
+		rt.PUT("/changestate", task.Changestate)
 		rt.GET("/running", task.GetRunningTask)
 		rt.DELETE("/log", task.CleanTaskLog)
 		rt.GET("/log", task.LogTask)

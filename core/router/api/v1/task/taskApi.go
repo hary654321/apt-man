@@ -368,6 +368,54 @@ func GetTask(c *gin.Context) {
 	}
 }
 
+func Changestate(c *gin.Context) {
+
+	runtask := define.GetIdChange{}
+	err := c.ShouldBindJSON(&runtask)
+	if err != nil {
+		resp.JSON(c, resp.ErrBadRequest, nil)
+		return
+	}
+	if utils.CheckID(runtask.ID) != nil {
+		resp.JSON(c, resp.ErrBadRequest, nil)
+		return
+	}
+	err = models.ChangeTaskState(runtask.ID, runtask.RUN)
+
+	if err != nil {
+		log.Error("修改失败", zap.Error(err))
+		resp.JSON(c, resp.ErrInternalServer, nil)
+		return
+	}
+
+	if runtask.RUN == 1 {
+		event := schedule.EventData{
+			TaskID: runtask.ID,
+			TE:     schedule.ChangeEvent,
+		}
+		res, err := json.Marshal(event)
+		if err != nil {
+			log.Error("json.Marshal failed", zap.Error(err))
+			resp.JSON(c, resp.ErrInternalServer, nil)
+			return
+		}
+		schedule.Cron2.PubTaskEvent(res)
+	} else {
+		event := schedule.EventData{
+			TaskID: runtask.ID,
+			TE:     schedule.KillEvent,
+		}
+		res, err := json.Marshal(event)
+		if err != nil {
+			log.Error("json.Marshal failed", zap.Error(err))
+			resp.JSON(c, resp.ErrInternalServer, nil)
+			return
+		}
+		schedule.Cron2.PubTaskEvent(res)
+	}
+	resp.JSON(c, resp.Success, nil)
+}
+
 // RunTask start run task now
 // @Summary get tasks
 // @Tags Task

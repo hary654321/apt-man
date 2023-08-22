@@ -783,7 +783,7 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 			break
 		}
 	}
-
+	slog.Println(slog.DEBUG, "hostInfo", hostInfo)
 	// defer conn.Close()
 	t.writelogt(taskruntype, id, "start run task %s[%s] on host %s", taskdata.Name, id, hostInfo.Ip)
 

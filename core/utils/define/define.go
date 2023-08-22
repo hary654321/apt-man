@@ -75,6 +75,12 @@ type GetID struct {
 	ID string `gorm:"column:id"  json:"id" form:"id" `
 }
 
+// GetID get task id in post
+type GetIdChange struct {
+	ID  string `gorm:"column:id"  json:"id" form:"id" `
+	RUN int    `gorm:"column:run"  json:"run" form:"run" `
+}
+
 type GetIDInt struct {
 	ID int `gorm:"column:id"  json:"id" form:"id" `
 }

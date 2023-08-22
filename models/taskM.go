@@ -43,3 +43,10 @@ func DeleteTask(id string) error {
 
 	return res.Error
 }
+
+func ChangeTaskState(id string, run int) error {
+
+	res := db.Table("task").Where("id", id).Update("run", run)
+
+	return res.Error
+}

@@ -320,3 +320,11 @@ func execPath() (string, error) {
 	slog.Println(slog.WARN, re)
 	return filepath.Abs(file)
 }
+
+func String2int64(str string) int64 {
+	i, err := strconv.ParseInt(str, 10, 64)
+	if err != nil {
+		slog.Println(slog.WARN, err)
+	}
+	return i
+}
