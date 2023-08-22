@@ -972,12 +972,6 @@ type cacheSchedule2 struct {
 func Init2() error {
 	client := redis2.GetClient()
 
-	line := client.Get("reTryLine").Val()
-
-	slog.Println(slog.DEBUG, "清除日志", line)
-	// cmd.ClearLog(line)
-	client.Set("reTryLine", 0, 0)
-
 	Cron2 = &cacheSchedule2{
 		ts:    make(map[string]*task2),
 		redis: client,
