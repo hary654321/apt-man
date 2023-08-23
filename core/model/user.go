@@ -59,7 +59,7 @@ func LoginUser(ctx context.Context, name string, password string) (string, error
 }
 
 // AddUser add new user
-func AddUser(ctx context.Context, name, hashpassword string, role define.Role) error {
+func AddUser(ctx context.Context, name, hashpassword string, role define.Role) (string, error) {
 	adduser := `INSERT INTO user (
 					id,
 					name,
@@ -73,13 +73,13 @@ func AddUser(ctx context.Context, name, hashpassword string, role define.Role) e
 				(?,?,?,?,?,?,?)`
 	conn, err := db.GetConn(ctx)
 	if err != nil {
-		return fmt.Errorf("db.Db.GetConn failed: %w", err)
+		return "", fmt.Errorf("db.Db.GetConn failed: %w", err)
 	}
 	defer conn.Close()
 
 	stmt, err := conn.PrepareContext(ctx, adduser)
 	if err != nil {
-		return fmt.Errorf("conn.PrepareContext failed: %w", err)
+		return "", fmt.Errorf("conn.PrepareContext failed: %w", err)
 	}
 	defer stmt.Close()
 
@@ -87,18 +87,18 @@ func AddUser(ctx context.Context, name, hashpassword string, role define.Role) e
 	id := utils.GetID()
 	_, err = stmt.ExecContext(ctx, id, name, hashpassword, role, false, now, now)
 	if err != nil {
-		return fmt.Errorf("stmt.ExecContext failed: %w", err)
+		return id, fmt.Errorf("stmt.ExecContext failed: %w", err)
 	}
 
 	ok, err := enforcer.AddRoleForUser(id, role.String())
 	if err != nil {
-		return err
+		return id, err
 	}
 	if !ok {
-		return errors.New("AddRoleForUser failed")
+		return id, errors.New("AddRoleForUser failed")
 	}
 
-	return nil
+	return id, nil
 }
 
 func getusers(ctx context.Context, uids []string, name string, offset, limit int) ([]define.User, int, error) {

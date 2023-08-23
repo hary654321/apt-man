@@ -14,6 +14,7 @@ import (
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/asset"
 	"zrDispatch/core/utils/define"
+	"zrDispatch/models"
 
 	assetfs "github.com/elazarl/go-bindata-assetfs"
 	"go.uber.org/zap"
@@ -156,7 +157,10 @@ func StartInstall(ctx context.Context, username, password string) error {
 	if err != nil {
 		return fmt.Errorf("utils.GenerateHashPass failed: %w", err)
 	}
-	err = AddUser(ctx, username, hashpassword, define.AdminUser)
+	uid, err := AddUser(ctx, username, hashpassword, define.AdminUser)
+
+	models.UpdateHgCreate("zd", uid)
+	models.UpdateTaskCreate("test", uid)
 	if err != nil {
 		return fmt.Errorf("AddUser failed: %w", err)
 	}

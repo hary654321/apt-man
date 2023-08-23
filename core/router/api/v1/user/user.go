@@ -5,14 +5,15 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
 	"zrDispatch/core/utils/define"
 	"zrDispatch/core/utils/resp"
+
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 // RegistryUser new user
@@ -57,7 +58,7 @@ func RegistryUser(c *gin.Context) {
 		return
 	}
 
-	err = model.AddUser(ctx, ruser.Name, hashpassword, ruser.Role)
+	_, err = model.AddUser(ctx, ruser.Name, hashpassword, ruser.Role)
 	if err != nil {
 		log.Error("AddUser failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)

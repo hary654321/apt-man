@@ -50,3 +50,8 @@ func ChangeTaskState(id string, run int) error {
 
 	return res.Error
 }
+
+func UpdateTaskCreate(id, uid string) {
+
+	db.Table("task").Where("id = ?", id).Update("createByID", uid)
+}
