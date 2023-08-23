@@ -180,13 +180,6 @@ func NewHTTPRouter() *http.Server {
 		sys.POST("upload", sysP.Upload)
 	}
 
-	open := router.Group("/api/open")
-	open.Use(gin.Recovery(), middleware.BasicAuth())
-
-	{
-		open.POST("/task", task.CreateTask)
-	}
-
 	// if nor find router, will rediret to /crocodile/
 	router.NoRoute(func(c *gin.Context) {
 		//c.Redirect(http.StatusMovedPermanently, "/crocodile/")
