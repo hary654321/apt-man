@@ -10,131 +10,140 @@ CREATE TABLE IF NOT EXISTS `casbin_rule` (
   `v5` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES
-	('p', 'Admin', '/api/v1/res*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/task*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/host*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/notify', '(GET)', '', '', ''),
-	('g', '615260289813712896', 'Admin', '', '', '', ''),
-	('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/task*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/host*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/notify', '(GET)', '', '', ''),
-	('g', '615260289813712896', 'Admin', '', '', '', ''),
-	('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/task*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/host*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/notify', '(GET)', '', '', ''),
-	('g', '615260289813712896', 'Admin', '', '', '', ''),
-	('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/task*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/host*', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', ''),
-	('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', ''),
-	('p', 'Guest', '/api/v1/notify', '(GET)', '', '', ''),
-	('g', '615260289813712896', 'Admin', '', '', '', ''),
-	('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/probegroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', ''),
-	('g', '686282792736133120', 'Normal', '', '', '', ''),
-	('p', 'Admin', '/api/v1/probeinfo*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/probeinfo*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/probegroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/task*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/host*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/notify', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/task*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/host*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/notify', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/task*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/host*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/notify', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/hostgroup*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/task*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/host*', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/info', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/notify', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/probegroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/probeinfo*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/res*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Normal', '/api/v1/res*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Guest', '/api/v1/res*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/task*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/host*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/info', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/select', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/registry', '(POST)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/all', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/admin', '(PUT)|(DELETE)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/alarmstatus', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/user/operate', '(GET)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/notify', '(GET)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/hostgroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/deploy*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/finger*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/statistics*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/sys*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/probeinfo*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/probegroup*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '700675093184909312', 'Guest', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '700675016454311936', 'Normal', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '686282792736133120', 'Normal', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '615260289813712896', 'Admin', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '615260289813712896', 'Admin', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '615260289813712896', 'Admin', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '615260289813712896', 'Admin', '', '', '', '');
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('g', '1', 'Admin', '', '', '', '');
+
 
 
 COMMIT;
