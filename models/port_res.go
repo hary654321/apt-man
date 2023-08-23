@@ -29,12 +29,28 @@ func DeletePortRes(ids []int) int64 {
 	return res.RowsAffected
 }
 
-func GetTaskPortRes(taskId string) (PortRes []define.PortRes) {
+func GetTaskPortRes(taskId string) []define.PortRes {
 	dbTmp := db.Table("port_result")
 
+	var PortRes []define.PortRes
 	dbTmp.Where("run_task_id like ? ", taskId+"%").Order("id  desc").Find(&PortRes)
 
-	return
+	havemap := make(map[string]int)
+
+	var PortResUnique []define.PortRes
+
+	for _, v := range PortRes {
+
+		if havemap[v.IP+v.Port] == 1 {
+			continue
+		}
+
+		PortResUnique = append(PortResUnique, v)
+
+		havemap[v.IP+v.Port] = 1
+	}
+
+	return PortResUnique
 }
 
 func GetTaskLiveIpCount(taskId string) (ipcount int64) {
