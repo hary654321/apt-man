@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"encoding/base64"
 	"fmt"
 	"os"
 	"strconv"
@@ -21,7 +23,31 @@ type Client struct { // Our example struct, you can use "-" to ignore a field
 }
 
 func main() {
-	doc()
+	encode()
+}
+
+func encode() {
+	res := base64.StdEncoding.EncodeToString([]byte("zw:1234qwer"))
+
+	println(res)
+}
+
+func DecodeString() {
+	decodedAuth, err := base64.StdEncoding.DecodeString("enc6MTIzNHF3ZXI=")
+	if err != nil {
+		// 处理解码错误
+		return
+	}
+	// 按照冒号分割解码后的字符串，得到用户名和密码
+	parts := bytes.Split(decodedAuth, []byte(":"))
+	if len(parts) != 2 {
+		// 处理格式错误
+		return
+	}
+	username := string(parts[0])
+	password := string(parts[1])
+
+	println(username, password)
 }
 
 func doc() {
