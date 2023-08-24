@@ -16,12 +16,15 @@ import (
 
 func Update() {
 
-	sqlfilename := "sql/update0824.sql"
+	filename := "update0824.sql"
 
-	if utils.PathExists(sqlfilename) {
+	if utils.PathExists(filename) {
+
+		slog.Println(slog.DEBUG, "update.sql is exists")
 		return
 	}
 
+	sqlfilename := "sql/" + filename
 	fs := &assetfs.AssetFS{
 		Asset:     asset.Asset,
 		AssetDir:  asset.AssetDir,
@@ -58,6 +61,6 @@ func Update() {
 		}
 	}
 
-	utils.Write(sqlfilename, "")
+	utils.Write(filename, "")
 
 }
