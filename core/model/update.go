@@ -3,9 +3,9 @@ package model
 import (
 	"context"
 	"io/ioutil"
-	"os"
 	"strings"
 	"zrDispatch/common/db"
+	"zrDispatch/common/utils"
 	"zrDispatch/core/config"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/asset"
@@ -16,13 +16,18 @@ import (
 
 func Update() {
 
+	sqlfilename := "sql/update0824.sql"
+
+	if utils.PathExists(sqlfilename) {
+		return
+	}
+
 	fs := &assetfs.AssetFS{
 		Asset:     asset.Asset,
 		AssetDir:  asset.AssetDir,
 		AssetInfo: asset.AssetInfo,
 	}
 
-	sqlfilename := "sql/update.sql"
 	file, err := fs.Open(sqlfilename)
 	if err != nil {
 		slog.Println(slog.DEBUG, "fs.Open failed", zap.String("filename", sqlfilename), zap.Error(err))
@@ -52,6 +57,7 @@ func Update() {
 			continue
 		}
 	}
-	os.Remove("update.sql")
+
+	utils.Write(sqlfilename, "")
 
 }
