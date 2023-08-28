@@ -23,7 +23,9 @@ type Client struct { // Our example struct, you can use "-" to ignore a field
 }
 
 func main() {
-	encode()
+	m := make(map[string]int)
+
+	fmt.Println(&m["qcrao"])
 }
 
 func encode() {
