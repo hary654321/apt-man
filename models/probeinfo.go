@@ -22,6 +22,11 @@ func BatchAddProbeInfo(datas []map[string]any) int64 {
 func GetProbeInfo(pageNum int, pageSize int, maps map[string]interface{}) (ProbeInfo []define.ProbeInfoRes, total int64) {
 	dbTmp := db.Table("probe_info")
 
+	if maps["probe_name"] != nil {
+		dbTmp = dbTmp.Where("probe_name LIKE ?", "%"+maps["probe_name"].(string)+"%")
+		delete(maps, "probe_name")
+	}
+
 	dbTmp.Where("is_deleted", 0).Where(maps).Count(&total)
 	dbTmp.Where("is_deleted", 0).Where(maps).Offset(pageNum).Limit(pageSize).Order("probe_id  desc").Find(&ProbeInfo)
 
