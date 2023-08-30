@@ -17,8 +17,6 @@ services:
         image: hary654321/scaner
         container_name: crocodile_scaner
         restart: always
-        ports: 
-          - 61666:61666
         volumes: 
           - $PWD/client/conf.toml:/app/conf.toml
           - $PWD/client/pem:/app/pem
@@ -30,12 +28,8 @@ services:
             MYSQL_DATABASE: "crocodile"
         volumes: 
           - "/zrtx/apt/mysqldata:/var/lib/mysql"   # mysql数据持久化
-        ports: 
-          - 13306:3306
         restart: always
     redis:
         image: redis:3.2.10
         container_name: crocodile_redis
         restart: always
-        ports: 
-          - 16379:6379
