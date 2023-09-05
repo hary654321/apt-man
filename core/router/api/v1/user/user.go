@@ -104,7 +104,7 @@ func GetUser(c *gin.Context) {
 	if user.Role == 2 {
 		user.Roles = []string{"admin"}
 	} else {
-		user.Roles = []string{}
+		user.Roles = []string{"normal"}
 	}
 	resp.JSON(c, resp.Success, user)
 }
