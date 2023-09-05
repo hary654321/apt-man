@@ -11,6 +11,7 @@ import (
 	"zrDispatch/common/db"
 	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 
 	"github.com/gin-gonic/gin"
@@ -439,7 +440,7 @@ func GetOperate(ctx context.Context, uid, username, method, module string, limit
 	getsql := `SELECT 
 					uid,username,role,method,module,modulename, operatetime,description,columns
 			   FROM 
-					operate`
+					operate `
 	query := []string{}
 	args := []interface{}{}
 	var count int
@@ -462,13 +463,14 @@ func GetOperate(ctx context.Context, uid, username, method, module string, limit
 	}
 
 	if len(query) > 0 {
-		getsql += "WHERE"
+		getsql += "WHERE "
 		getsql += strings.Join(query, "AND")
 	}
 	oplogs := make([]define.OperateLog, 0, limit)
 
 	if limit > 0 {
 		var err error
+		slog.Println(slog.DEBUG, getsql, args)
 		count, err = countColums(ctx, getsql, args...)
 		if err != nil {
 			return oplogs, 0, fmt.Errorf("countColums failed: %w", err)
@@ -485,6 +487,7 @@ func GetOperate(ctx context.Context, uid, username, method, module string, limit
 
 	stmt, err := conn.PrepareContext(ctx, getsql)
 	if err != nil {
+		slog.Println(slog.DEBUG, getsql)
 		return oplogs, 0, fmt.Errorf("conn.PrepareContext failed: %w", err)
 	}
 	defer stmt.Close()

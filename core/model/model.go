@@ -231,6 +231,7 @@ func countColums(ctx context.Context, querysql string, args ...interface{}) (int
 	defer conn.Close()
 	stmt, err := conn.PrepareContext(ctx, querysql2)
 	if err != nil {
+		slog.Println(slog.DEBUG, querysql2, err)
 		return 0, fmt.Errorf("conn.PrepareContext failed: %w", err)
 	}
 	defer stmt.Close()

@@ -271,15 +271,15 @@ func (t TaskStatus) String() string {
 
 // OperateLog openrate log
 type OperateLog struct {
-	UID         string   `json:"user_id"`      // 修改人ID
-	UserName    string   `json:"user_name"`    // 修改人姓名
-	Role        Role     `json:"user_role"`    // 用户类型
-	Method      string   `json:"method"`       // 新增 修改删除
-	Module      string   `json:"module"`       // 修改模块 任务 主机组 主机 用户
-	ModuleName  string   `json:"module_name"`  // 修改的对象名称
-	OperateTime string   `json:"operate_time"` // 修改时间
-	Desc        string   `json:"desc"`         // 描述
-	Columns     []Column `json:"columns"`      // 修改的字段及新旧值
+	UID         string   `gorm:"column:uid" json:"user_id"`              // 修改人ID
+	UserName    string   `gorm:"column:username" json:"user_name"`       // 修改人姓名
+	Role        Role     `gorm:"column:role" json:"user_role"`           // 用户类型
+	Method      string   `gorm:"column:method" json:"method"`            // 新增 修改删除
+	Module      string   `gorm:"column:module" json:"module"`            // 修改模块 任务 主机组 主机 用户
+	ModuleName  string   `gorm:"column:modulename" json:"module_name"`   // 修改的对象名称
+	OperateTime string   `gorm:"column:operatetime" json:"operate_time"` // 修改时间
+	Desc        string   `gorm:"column:description" json:"desc"`         // 描述
+	Columns     []Column `gorm:"column:columns" json:"columns"`          // 修改的字段及新旧值
 }
 
 // Column change column old and new value
