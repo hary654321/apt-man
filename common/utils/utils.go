@@ -60,6 +60,12 @@ func GetHour() string {
 	return time.Now().In(cstZone).Format("2006-01-02-15")
 }
 
+func GetTimeStrHIS(t int64) string {
+	var cstZone = time.FixedZone("CST", 8*3600) // 东八
+
+	return time.Unix(t, 0).In(cstZone).Format("2006-01-02 15:04:05")
+}
+
 func RandInt(max int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 

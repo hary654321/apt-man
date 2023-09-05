@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
 	"zrDispatch/common/db"
 	"zrDispatch/common/log"
@@ -216,8 +215,8 @@ func GetLog(ctx context.Context, taskname string, status int, offset, limit int)
 		// getlog.EndTimeStr = getlog.EndTime
 		getlog.Triggerstr = getlog.Trigger.String()
 
-		getlog.StartTimeStr = time.Unix(utils.String2int64(getlog.StartTime[0:10]), 0).Format("2006-01-02 15:04:05")
-		getlog.EndTimeStr = time.Unix(utils.String2int64(getlog.EndTime[0:10]), 0).Format("2006-01-02 15:04:05")
+		getlog.StartTimeStr = utils.GetTimeStrHIS(utils.String2int64(getlog.StartTime[0:10]))
+		getlog.EndTimeStr = utils.GetTimeStrHIS(utils.String2int64(getlog.EndTime[0:10]))
 
 		logs = append(logs, &getlog)
 	}
