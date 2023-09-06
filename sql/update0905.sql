@@ -1,3 +1,1 @@
-SET GLOBAL time_zone = '+8:00';
-SET time_zone = '+8:00';
-FLUSH PRIVILEGES;
+update host set ip="127.0.0.1" where ip="scaner"
