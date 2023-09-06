@@ -65,6 +65,14 @@ func GetIpArr(expr string) []string {
 		ipArr = strings.Split(expr, ",")
 	}
 
+	if strings.Contains(expr, ";") {
+		ipArr = strings.Split(expr, ";")
+	}
+
+	if strings.Contains(expr, "\n") {
+		ipArr = strings.Split(expr, "\n")
+	}
+
 	if IsIPv4(expr) {
 		ipArr = append(ipArr, expr)
 	}
