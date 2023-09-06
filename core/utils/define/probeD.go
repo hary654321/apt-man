@@ -146,8 +146,8 @@ func (t MatchStatus) String() string {
 type DealStatus int
 
 const (
-	NotDeal DealStatus = iota //未处理
-	DealEd                    // 已处理
+	NotDeal DealStatus = iota + 1 //未处理
+	DealEd                        // 已处理
 )
 
 func (t DealStatus) String() string {
