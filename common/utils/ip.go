@@ -91,6 +91,15 @@ func GetIpArr(expr string) []string {
 		}
 	}
 
+	for _, v := range ipArr {
+		if IsCIDR(v) {
+			slog.Println(slog.DEBUG, v)
+			for _, ip := range CIDRToIP(v) {
+				ipArr = append(ipArr, ip.String())
+			}
+		}
+	}
+
 	return ipArr
 }
 
@@ -100,7 +109,25 @@ func GetPortArr(port string) (portRes []string) {
 		return GetAllPort()
 	}
 
-	if strings.Contains(port, ",") {
+	if strings.Contains(port, "\n") {
+
+		portArr := strings.Split(port, "\n")
+
+		for _, v := range portArr {
+			if strings.Contains(v, "-") {
+				portRange := strings.Split(port, "-")
+				// fmt.Println("%#", portRange)
+				startPort, _ := strconv.Atoi(portRange[0])
+				endPort, _ := strconv.Atoi(portRange[1])
+				for i := startPort; i <= endPort; i++ {
+					portRes = append(portRes, strconv.Itoa(i))
+				}
+			} else {
+				portRes = append(portRes, v)
+			}
+		}
+
+	} else if strings.Contains(port, ",") {
 		portArr := strings.Split(port, ",")
 
 		for _, v := range portArr {
