@@ -35,8 +35,10 @@ update()
   docker build -t hary654321/scaner . -f DockerfileScaner
 
   cd -
-
+  service iptables start
+  docker rm -f  $(docker ps -a -q)
   runContainer
+  service iptables stop
   getIpAddr
   info "后台地址：http://${local_ip}:61665/crocodile/"
   info '更新顺利完成！'
