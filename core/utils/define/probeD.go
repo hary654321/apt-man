@@ -18,6 +18,7 @@ type ProbeInfoRes struct {
 	Ctime LocalTime `gorm:"column:probe_create_time" json:"probe_create_time"`
 	Utime LocalTime `gorm:"column:probe_update_time" json:"probe_update_time"`
 	D     int       `gorm:"column:is_deleted" json:"is_deleted"`
+	Sys   int       `gorm:"column:sys" json:"sys"`
 }
 
 type ProbeGroupAdd struct {
