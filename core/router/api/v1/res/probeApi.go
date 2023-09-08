@@ -62,7 +62,7 @@ func UpdateRemark(c *gin.Context) {
 func ExportProbeCsv(c *gin.Context) {
 	query := ginhelp.GetQueryParams(c)
 
-	data, count := models.GetProbeRes(0, define.ExportLimit, query)
+	data, count := models.GetProbeInfo(0, define.ExportLimit, query)
 
 	if count == 0 {
 		resp.JSON(c, resp.Nodata, nil)
@@ -88,7 +88,7 @@ func ExportProbeCsv(c *gin.Context) {
 
 }
 
-func toProbeCsv(data []define.ProbeRes, name string) (string, error) {
+func toProbeCsv(data []define.ProbeInfoRes, name string) (string, error) {
 	//获取数据
 
 	strTime := time.Now().Format("20060102150405")
@@ -104,10 +104,10 @@ func toProbeCsv(data []define.ProbeRes, name string) (string, error) {
 	//写入UTF-8 BOM,此处如果不写入就会导致写入的汉字乱码
 	xlsFile.WriteString("\xEF\xBB\xBF")
 	wStr := csv.NewWriter(xlsFile)
-	wStr.Write([]string{"ip", "port", "探针名称", "探针分组", "所属国家", "标签", "匹配结果", "是否处理", "备注", "创建时间"})
+	wStr.Write([]string{"探针名称", "探针组", "协议", "匹配类型", "请求载荷", "结果匹配", "描述"})
 
 	for _, s := range data {
-		wStr.Write([]string{s.IP, s.Port, s.Pname, s.Pg, s.Region, s.Tags, s.Matched.String(), s.Dealed.String(), s.Remark, s.Ctime.String()})
+		wStr.Write([]string{s.Name, s.Group, s.Pro, s.MT, s.Send, s.Recv, s.Desc})
 	}
 	wStr.Flush() //写入文件
 	return filename, nil
