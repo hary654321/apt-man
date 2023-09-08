@@ -14,6 +14,16 @@ func AddProbeRes(c define.ProbeResCreate) int {
 }
 
 func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}) (ProbeRes []define.ProbeRes, total int64) {
+
+	order := "probe_result.id  desc"
+
+	if maps["order"] != nil {
+
+		order = "probe_result." + utils.GetInterfaceToString(maps["order"])
+		delete(maps, "order")
+
+	}
+
 	dbTmp := db.Table("probe_result")
 
 	dbTmp = dbTmp.Select("probe_result.*,probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags,probe_group.probe_group_region").
@@ -32,7 +42,7 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}) (ProbeR
 
 	dbTmp.Where(maps).Count(&total)
 
-	dbTmp.Where(maps).Offset(pageNum).Limit(pageSize).Order("probe_result.id  desc").Find(&ProbeRes)
+	dbTmp.Where(maps).Offset(pageNum).Limit(pageSize).Order(order).Find(&ProbeRes)
 
 	return
 }

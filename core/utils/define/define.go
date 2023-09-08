@@ -181,8 +181,9 @@ type Cleanlog struct {
 
 // Query recv url query params
 type Query struct {
-	Offset int `form:"offset"`
-	Limit  int `form:"limit"`
+	Offset int    `form:"offset"`
+	Limit  int    `form:"limit"`
+	Order  string `form:"order"`
 }
 
 // KlOption vue el-select
