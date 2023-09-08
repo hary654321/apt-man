@@ -20,7 +20,7 @@ func AddProbeGroup(data define.ProbeGroupAdd) {
 func GetProbeGroup(pageNum int, pageSize int, maps map[string]interface{}) (probeGroup []define.ProbeGroupRes, total int64) {
 	dbTmp := db.Table("probe_group")
 
-	dbTmp.Where("is_deleted", 0).Where(maps).Offset(pageNum).Limit(pageSize).Order("probe_group_update_time  desc").Find(&probeGroup)
+	dbTmp.Where("is_deleted", 0).Where(maps).Offset(pageNum).Limit(pageSize).Order("probe_group_id  desc").Find(&probeGroup)
 
 	dbTmp.Where("is_deleted", 0).Where(maps).Count(&total)
 	return
