@@ -84,4 +84,6 @@ const (
 	InstallFail = 10803
 
 	PnameExits = 10804
+
+	ProbeInfoAdd = 11101
 )

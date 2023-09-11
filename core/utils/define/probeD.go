@@ -53,12 +53,12 @@ type PgName struct {
 type ProbeInfoAdd struct {
 	Name  string `gorm:"column:probe_name" json:"probe_name" binding:"required"`
 	Group string `gorm:"column:probe_group" json:"probe_group" binding:"required"`
-	Tags  string `gorm:"column:probe_tags" json:"probe_tags" binding:"required"`
+	Tags  string `gorm:"column:probe_tags" json:"probe_tags" `
 	Pro   string `gorm:"column:probe_protocol" json:"probe_protocol" binding:"required"`
 	MT    string `gorm:"column:probe_match_type" json:"probe_match_type" binding:"required"`
 	Send  string `gorm:"column:probe_send" json:"probe_send" binding:"required"`
 	Recv  string `gorm:"column:probe_recv" json:"probe_recv" binding:"required"`
-	Desc  string `gorm:"column:probe_desc" json:"probe_desc" binding:"required"`
+	Desc  string `gorm:"column:probe_desc" json:"probe_desc" `
 }
 
 type ProbeInfoE struct {

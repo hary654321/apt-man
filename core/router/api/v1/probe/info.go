@@ -26,7 +26,7 @@ func CreateProbe(c *gin.Context) {
 	err := c.ShouldBindJSON(&pi)
 	if err != nil {
 		log.Error("ShouldBindJSON failed", zap.Error(err))
-		resp.JSON(c, resp.ErrBadRequest, nil)
+		resp.JSON(c, resp.ProbeInfoAdd, nil)
 		return
 	}
 

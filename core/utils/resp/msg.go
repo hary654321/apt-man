@@ -49,6 +49,7 @@ var msgcode = map[int]string{
 	Nodata:        "无数据",
 	InstallFail:   "部署失败",
 	PnameExits:    "此名称已存在",
+	ProbeInfoAdd:  "结果匹配必填",
 }
 
 // GetMsg get msg by code
