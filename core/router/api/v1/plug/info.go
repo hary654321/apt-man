@@ -1,11 +1,8 @@
-package Plug
+package plug
 
 import (
-	"encoding/csv"
-	"fmt"
 	"net/http"
-	"os"
-	"time"
+
 	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/ginhelp"
@@ -21,13 +18,9 @@ import (
 
 func CreatePlug(c *gin.Context) {
 
-	pi := define.PlugInfoAdd{}
-
-	err := c.ShouldBindJSON(&pi)
-	if err != nil {
-		log.Error("ShouldBindJSON failed", zap.Error(err))
-		resp.JSON(c, resp.PlugInfoAdd, nil)
-		return
+	pi := define.PlugInfoAdd{
+		Name: c.PostForm("name"),
+		Desc: c.PostForm("desc"),
 	}
 
 	res := models.GetPlugInfoByName(pi.Name)
@@ -38,7 +31,7 @@ func CreatePlug(c *gin.Context) {
 		return
 	}
 
-	err = models.AddPlugInfo(pi)
+	err := models.AddPlugInfo(pi)
 
 	if err != nil {
 		resp.JSON(c, resp.AddFail, err.Error())
@@ -136,58 +129,4 @@ func GetPiSelect(c *gin.Context) {
 		"msg":  e.GetMsg(code),
 		"data": data,
 	})
-}
-
-func ExportPlugCsv(c *gin.Context) {
-	query := ginhelp.GetQueryParams(c)
-
-	data, count := models.GetPlugRes(0, define.ExportLimit, query, "")
-
-	if count == 0 {
-		resp.JSON(c, resp.Nodata, nil)
-	}
-
-	filename, err := toPlugCsv(data, "匹配结果")
-
-	if err != nil {
-		slog.Println(slog.DEBUG, "t.toCsv() failed == ", err)
-	}
-	if filename == "" {
-		slog.Println(slog.DEBUG, "export excel file failed == ", filename)
-	}
-	defer func() {
-		err := os.Remove("./" + filename) //下载后，删除文件
-		if err != nil {
-			slog.Println(slog.DEBUG, "remove  excel file failed", err)
-		}
-	}()
-	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
-	c.Writer.Header().Add("Content-Type", "application/octet-stream") //设置下载文件格式，流式下载
-	c.File("./" + filename)                                           //直接返回文件
-
-}
-
-func toPlugCsv(data []define.PlugRes, name string) (string, error) {
-	//获取数据
-
-	strTime := time.Now().Format("20060102150405")
-	//创建csv文件
-	filename := fmt.Sprintf("%s-%s.csv", name, strTime)
-	xlsFile, fErr := os.OpenFile("./"+filename, os.O_RDWR|os.O_CREATE, 0766)
-	if fErr != nil {
-		slog.Println(slog.DEBUG, "Export:created excel file failed ==", fErr)
-		return "", fErr
-	}
-	defer xlsFile.Close()
-	//开始写入内容
-	//写入UTF-8 BOM,此处如果不写入就会导致写入的汉字乱码
-	xlsFile.WriteString("\xEF\xBB\xBF")
-	wStr := csv.NewWriter(xlsFile)
-	wStr.Write([]string{"ip", "port", "探针名称", "探针分组", "所属国家", "标签", "匹配结果", "是否处理", "备注", "创建时间"})
-
-	for _, s := range data {
-		wStr.Write([]string{s.IP, s.Port, s.Pname, s.Pg, s.Region, s.Tags, s.Matched.String(), s.Dealed.String(), s.Remark, s.Ctime.String()})
-	}
-	wStr.Flush() //写入文件
-	return filename, nil
 }

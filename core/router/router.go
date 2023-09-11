@@ -17,6 +17,7 @@ import (
 	"zrDispatch/core/router/api/v1/hostgroup"
 	"zrDispatch/core/router/api/v1/install"
 	"zrDispatch/core/router/api/v1/notify"
+	"zrDispatch/core/router/api/v1/plug"
 	"zrDispatch/core/router/api/v1/probe"
 	"zrDispatch/core/router/api/v1/task"
 	"zrDispatch/core/router/api/v1/user"
@@ -181,6 +182,14 @@ func NewHTTPRouter() *http.Server {
 		sys.POST("upload", sysP.Upload)
 	}
 
+	plugr := v1.Group("/plug")
+	{
+		plugr.POST("", plug.CreatePlug)
+		plugr.GET("", plug.GetPlug)
+		plugr.GET("select", plug.GetPiSelect)
+		plugr.DELETE("", plug.DelPlug)
+		plugr.PUT("", plug.EditPlug)
+	}
 	// if nor find router, will rediret to /crocodile/
 	router.NoRoute(func(c *gin.Context) {
 		//c.Redirect(http.StatusMovedPermanently, "/crocodile/")
