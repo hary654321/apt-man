@@ -823,9 +823,9 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 		return nil
 	}
 
-	if taskdata.TaskType == define.TYPE_NMAP {
-		nmap(taskdata)
-	}
+	// if taskdata.TaskType == define.TYPE_NMAP {
+	// 	nmap(taskdata)
+	// }
 
 	return nil
 }

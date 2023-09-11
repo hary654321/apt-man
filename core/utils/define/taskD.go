@@ -134,7 +134,8 @@ type GetTask struct {
 	ExpectContent     string        `json:"expect_content" comment:"期望返回内容"`
 	AlarmStatus       AlarmStatus   `json:"alarm_status"`
 	AlarmStatusDesc   string        `json:"alarm_statusdesc" comment:"报警策略"`
-	ProbeId           StrArr        `json:"probeId" comment:"任务数据"`
+	ProbeId           StrArr        `json:"probeId" comment:"探针"`
+	Plug              StrArr        `json:"plug" comment:"插件"`
 	Common
 }
 
@@ -274,7 +275,8 @@ type Task struct {
 	//ExpectContent     string      `json:"expect_content"`                               // expect task return content. if not set do not check
 	AlarmStatus AlarmStatus `gorm:"column:alarmStatus" json:"alarm_status" binding:"required,min=-2,max=1"` // alarm when task run success or fail or all all:-2 failed: -1 success: 1
 	Remark      string      `gorm:"column:remark" json:"remark" binding:"max=100"`
-	ProbeId     StrArr      `gorm:"column:probeId" json:"probeId" comment:"任务数据"`
+	ProbeId     StrArr      `gorm:"column:probeId" json:"probeId" comment:"探针"`
+	Plug        StrArr      `gorm:"column:plug" json:"plug" comment:"插件"`
 	Threads     int         `gorm:"column:threads" json:"threads" binding:"required,min=-1"` // 任务超时时间 (s) -1 no limit
 }
 
@@ -305,8 +307,6 @@ const (
 	TYPE_PORT TaskType = iota + 1
 	// API run http req
 	TYPE_PROBE
-
-	TYPE_NMAP
 )
 
 func (tt TaskType) String() string {
@@ -315,8 +315,6 @@ func (tt TaskType) String() string {
 		return "端口扫描"
 	case TYPE_PROBE:
 		return "探针扫描"
-	case TYPE_NMAP:
-		return "NMAP扫描"
 	default:
 		return "unknow"
 	}
