@@ -12,7 +12,7 @@ func GetQueryParams(c *gin.Context) map[string]any {
 	query := c.Request.URL.Query()
 	var queryMap = make(map[string]any, len(query))
 	for k := range query {
-		if k == "limit" || k == "offset" {
+		if k == "limit" || k == "offset" || k == "order" {
 			continue
 		}
 		if c.Query(k) == "" {

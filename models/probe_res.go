@@ -13,16 +13,15 @@ func AddProbeRes(c define.ProbeResCreate) int {
 	return int(res.RowsAffected)
 }
 
-func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}) (ProbeRes []define.ProbeRes, total int64) {
+func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order string) (ProbeRes []define.ProbeRes, total int64) {
 
-	order := "probe_result.id  desc"
-
-	if maps["order"] != nil {
-
-		order = "probe_result." + utils.GetInterfaceToString(maps["order"])
-		delete(maps, "order")
-
+	if order != "" {
+		order = "probe_result." + order
+	} else {
+		order = "probe_result.id  desc"
 	}
+
+	slog.Println(slog.DEBUG, maps)
 
 	dbTmp := db.Table("probe_result")
 

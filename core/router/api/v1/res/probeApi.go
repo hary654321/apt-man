@@ -31,7 +31,7 @@ func GetProbeRes(c *gin.Context) {
 		q.Limit = define.DefaultLimit
 	}
 	// slog.Println(slog.DEBUG, maps)
-	data, count := models.GetProbeRes(q.Offset, q.Limit, query)
+	data, count := models.GetProbeRes(q.Offset, q.Limit, query, q.Order)
 
 	resp.JSON(c, resp.Success, data, int(count))
 }

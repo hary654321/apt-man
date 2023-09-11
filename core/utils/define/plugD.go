@@ -14,3 +14,9 @@ type PlugRes struct {
 	Utime    LocalTime `gorm:"column:update_time" json:"update_time"`
 	TypeDesc string    `json:"type_desc" `
 }
+
+type PlugInfoAdd struct {
+	GetID
+	GetName
+	Desc string `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+}

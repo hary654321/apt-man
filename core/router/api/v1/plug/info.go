@@ -1,4 +1,4 @@
-package probe
+package Plug
 
 import (
 	"encoding/csv"
@@ -19,18 +19,18 @@ import (
 	"go.uber.org/zap"
 )
 
-func CreateProbe(c *gin.Context) {
+func CreatePlug(c *gin.Context) {
 
-	pi := define.ProbeInfoAdd{}
+	pi := define.PlugInfoAdd{}
 
 	err := c.ShouldBindJSON(&pi)
 	if err != nil {
 		log.Error("ShouldBindJSON failed", zap.Error(err))
-		resp.JSON(c, resp.ProbeInfoAdd, nil)
+		resp.JSON(c, resp.PlugInfoAdd, nil)
 		return
 	}
 
-	res := models.GetProbeInfoByName(pi.Name)
+	res := models.GetPlugInfoByName(pi.Name)
 
 	utils.WriteJsonLog(res)
 	if res.Name != "" {
@@ -38,7 +38,7 @@ func CreateProbe(c *gin.Context) {
 		return
 	}
 
-	err = models.AddProbeInfo(pi)
+	err = models.AddPlugInfo(pi)
 
 	if err != nil {
 		resp.JSON(c, resp.AddFail, err.Error())
@@ -48,7 +48,7 @@ func CreateProbe(c *gin.Context) {
 	resp.JSON(c, resp.Success, nil)
 }
 
-func GetProbe(c *gin.Context) {
+func GetPlug(c *gin.Context) {
 
 	query := ginhelp.GetQueryParams(c)
 
@@ -63,12 +63,12 @@ func GetProbe(c *gin.Context) {
 		q.Limit = define.DefaultLimit
 	}
 
-	data, count := models.GetProbeInfo(q.Offset, q.Limit, query)
+	data, count := models.GetPlugInfo(q.Offset, q.Limit, query)
 
 	resp.JSON(c, resp.Success, data, int(count))
 }
 
-func DelProbe(c *gin.Context) {
+func DelPlug(c *gin.Context) {
 
 	id := define.GetIDInt{}
 
@@ -79,7 +79,7 @@ func DelProbe(c *gin.Context) {
 		return
 	}
 	data := make(map[string]interface{})
-	data["count"] = models.DeleteProbeInfo([]int{id.ID})
+	data["count"] = models.DeletePlugInfo([]int{id.ID})
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": resp.Success,
@@ -87,9 +87,9 @@ func DelProbe(c *gin.Context) {
 	})
 }
 
-func EditProbe(c *gin.Context) {
+func EditPlug(c *gin.Context) {
 
-	pg := define.ProbeInfoE{}
+	pg := define.PlugInfoE{}
 
 	err := c.ShouldBindJSON(&pg)
 	if err != nil {
@@ -100,7 +100,7 @@ func EditProbe(c *gin.Context) {
 
 	data := make(map[string]interface{})
 
-	data["count"] = models.EditProbeInfo(pg)
+	data["count"] = models.EditPlugInfo(pg)
 
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{
@@ -117,7 +117,7 @@ func Import(c *gin.Context) {
 
 	data, _ := utils.GetcsvDataPro(f.Filename)
 
-	res := models.BatchAddProbeInfo(data)
+	res := models.BatchAddPlugInfo(data)
 
 	if res == 0 {
 		resp.JSON(c, resp.AddFail, nil)
@@ -129,7 +129,7 @@ func Import(c *gin.Context) {
 
 func GetPiSelect(c *gin.Context) {
 
-	data := models.GetProbeSelect()
+	data := models.GetPlugSelect()
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
@@ -138,16 +138,16 @@ func GetPiSelect(c *gin.Context) {
 	})
 }
 
-func ExportProbeCsv(c *gin.Context) {
+func ExportPlugCsv(c *gin.Context) {
 	query := ginhelp.GetQueryParams(c)
 
-	data, count := models.GetProbeRes(0, define.ExportLimit, query, "")
+	data, count := models.GetPlugRes(0, define.ExportLimit, query, "")
 
 	if count == 0 {
 		resp.JSON(c, resp.Nodata, nil)
 	}
 
-	filename, err := toProbeCsv(data, "匹配结果")
+	filename, err := toPlugCsv(data, "匹配结果")
 
 	if err != nil {
 		slog.Println(slog.DEBUG, "t.toCsv() failed == ", err)
@@ -167,7 +167,7 @@ func ExportProbeCsv(c *gin.Context) {
 
 }
 
-func toProbeCsv(data []define.ProbeRes, name string) (string, error) {
+func toPlugCsv(data []define.PlugRes, name string) (string, error) {
 	//获取数据
 
 	strTime := time.Now().Format("20060102150405")
