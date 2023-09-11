@@ -103,6 +103,7 @@ func NewHTTPRouter() *http.Server {
 		pi.PUT("", probe.EditProbe)
 		pi.POST("import", probe.Import)
 		pi.GET("/exportCsv", probe.ExportProbeCsv)
+		pi.GET("/temcsv", probe.ExportTem)
 	}
 	sr := v1.Group("/res")
 	{
