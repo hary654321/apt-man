@@ -812,6 +812,7 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 
 		err := client.RunTask(hostInfo, taskdata)
 		if err == nil {
+			model.UpdateTaskStatus(context.Background(), taskdata.ID, 1, define.TASK_STATUS_RUNING)
 			go GetRes(hostInfo, taskdata)
 		} else {
 			if taskdata.Cronexpr == "" {
