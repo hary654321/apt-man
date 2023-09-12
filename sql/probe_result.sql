@@ -1,7 +1,7 @@
 CREATE TABLE `probe_result` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
 	`ip` VARCHAR(40) NOT NULL COLLATE 'utf8_general_ci',
-	`port` VARCHAR(40) NOT NULL COLLATE 'utf8_general_ci',
+	`port` INT(10) NOT NULL DEFAULT '0',
 	`probe_name` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
 	`hex` LONGTEXT NOT NULL COLLATE 'utf8_general_ci',
 	`response` LONGTEXT NOT NULL COLLATE 'utf8_general_ci',
