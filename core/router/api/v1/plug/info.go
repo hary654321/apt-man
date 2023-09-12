@@ -21,6 +21,7 @@ func CreatePlug(c *gin.Context) {
 	pi := define.PlugInfoAdd{
 		Name: c.PostForm("name"),
 		Desc: c.PostForm("desc"),
+		Cmd:  c.PostForm("cmd"),
 	}
 
 	res := models.GetPlugInfoByName(pi.Name)
