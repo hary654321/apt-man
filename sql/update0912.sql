@@ -170,3 +170,5 @@ INSERT INTO `probe_group` ( `probe_group_name`, `probe_group_type`, `probe_group
 
 
 INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/plug*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+
+ALTER TABLE `task` ADD COLUMN `plug` VARCHAR(1000) NOT NULL DEFAULT '' AFTER `probeId`;
