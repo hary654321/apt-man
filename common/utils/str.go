@@ -75,7 +75,10 @@ func PrinfI(k string, v interface{}) {
 }
 
 func SubString(str, s, e string) string {
-	start := strings.Index(str, s) + len(s)
+	start := 0
+	if s != "" {
+		start = strings.Index(str, s) + len(s)
+	}
 	end := 0
 	if e == "" {
 		end = len(str)

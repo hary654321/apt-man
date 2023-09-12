@@ -999,6 +999,7 @@ func Report(c *gin.Context) {
 	task, _ := models.GetTaskByID(taskId)
 	data["task_info"] = task
 	data["port_list"] = models.GetTaskPortRes(taskId)
+	data["plug_list"] = models.GetTaskPlugRes(taskId)
 	data["probe_list"] = models.GetTaskProbe(taskId)
 	data["ip_count"] = len(utils.GetIpArr(task.Ip))
 	data["live_ip_count"] = models.GetTaskLiveIpCount(taskId)

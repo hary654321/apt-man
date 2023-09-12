@@ -1,6 +1,7 @@
 package models
 
 import (
+	"zrDispatch/common/utils"
 	"zrDispatch/core/utils/define"
 )
 
@@ -10,16 +11,28 @@ func AddPlugRes(c define.PlugResAdd) error {
 	return res.Error
 }
 
-func GetPlugRes(pageNum int, pageSize int, maps map[string]interface{}) (res []define.PlugRes, total int64) {
+func GetTaskPlugRes(taskId string) []define.PlugRes {
 	dbTmp := db.Table("plug_result")
 
-	dbTmp.Where(maps).Count(&total)
+	var PlugRes []define.PlugRes
+	dbTmp.Where("run_task_id like ? ", taskId+"%").Order("id  desc").Find(&PlugRes)
 
-	dbTmp.Where(maps).Offset(pageNum).Limit(pageSize).Order("id  desc").Find(&res).Scan(&res)
+	havemap := make(map[string]int)
 
-	for i := 0; i < len(res); i++ {
-		res[i].TypeDesc = res[i].Type.String()
+	var PlugResUnique []define.PlugRes
+
+	for _, v := range PlugRes {
+
+		runid := v.RunTaskID
+		tid := utils.SubString(runid, "", "-")
+		if havemap[tid] == 1 {
+			continue
+		}
+
+		PlugResUnique = append(PlugResUnique, v)
+
+		havemap[tid] = 1
 	}
 
-	return
+	return PlugResUnique
 }

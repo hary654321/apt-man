@@ -754,7 +754,7 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 
 	taskdata, err = models.GetTaskByID(id)
 
-	taskdata.RunTaskId = taskdata.ID + utils.GetTime()
+	taskdata.RunTaskId = taskdata.ID + "-" + utils.GetTime()
 
 	if err != nil {
 		log.Error("model.GetTaskByID failed", zap.String("taskid", id),
@@ -814,6 +814,7 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 		if err == nil {
 			model.UpdateTaskStatus(context.Background(), taskdata.ID, 1, define.TASK_STATUS_RUNING)
 			go GetRes(hostInfo, taskdata)
+			go plugs(taskdata)
 		} else {
 			if taskdata.Cronexpr == "" {
 				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
@@ -823,17 +824,22 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 		return nil
 	}
 
-	// if taskdata.TaskType == define.TYPE_NMAP {
-	// 	nmap(taskdata)
-	// }
-
 	return nil
 }
 
-func nmap(taskdata *define.DetailTask) {
+func plugs(taskdata *define.DetailTask) {
+	plugs := taskdata.Plug
+
+	for _, pname := range plugs {
+		plug(taskdata, pname)
+	}
+}
+
+func plug(taskdata *define.DetailTask, pid string) {
 	slog.Println(slog.DEBUG, taskdata.ID, "====", taskdata.TaskType)
 
-	path, err := cmd.Scan(taskdata.RunTaskId, taskdata.Ip, taskdata.Port)
+	pluginfo := models.GetPlugInfoById(pid)
+	path, err := cmd.Plug(taskdata.RunTaskId, taskdata.Ip, taskdata.Port, pluginfo.Cmd)
 
 	slog.Println(slog.WARN, "path", path)
 
@@ -869,7 +875,7 @@ func nmap(taskdata *define.DetailTask) {
 	data := define.PlugResAdd{
 
 		RunTaskID: taskdata.RunTaskId,
-		Type:      taskdata.TaskType,
+		Plug:      pid,
 		Res:       mewXml,
 		Ctime:     utils.GetTimeStr(),
 	}

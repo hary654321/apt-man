@@ -108,7 +108,6 @@ func NewHTTPRouter() *http.Server {
 	sr := v1.Group("/res")
 	{
 		sr.GET("/port", res.GetPoertRes)
-		sr.GET("/plug", res.GetPlugRes)
 		sr.GET("/getOsSelect", res.GetOsSelect)
 		sr.GET("/cert", res.GetCertRes)
 		sr.GET("/probe", res.GetProbeRes)
