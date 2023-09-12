@@ -875,7 +875,7 @@ func plug(taskdata *define.DetailTask, pid string) {
 	data := define.PlugResAdd{
 
 		RunTaskID: taskdata.RunTaskId,
-		Plug:      pid,
+		Plug:      pluginfo.Name,
 		Res:       mewXml,
 		Ctime:     utils.GetTimeStr(),
 	}
