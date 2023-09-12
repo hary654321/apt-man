@@ -18,10 +18,15 @@ import (
 
 func CreatePlug(c *gin.Context) {
 
+	f, _ := c.FormFile("file")
+	//SaveUploadedFile上传表单文件到指定的路径
+	c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
+
 	pi := define.PlugInfoAdd{
-		Name: c.PostForm("name"),
-		Desc: c.PostForm("desc"),
-		Cmd:  c.PostForm("cmd"),
+		Name:     c.PostForm("name"),
+		Desc:     c.PostForm("desc"),
+		Cmd:      c.PostForm("cmd"),
+		FileName: f.Filename,
 	}
 
 	res := models.GetPlugInfoByName(pi.Name)
@@ -83,18 +88,24 @@ func DelPlug(c *gin.Context) {
 
 func EditPlug(c *gin.Context) {
 
-	pg := define.PlugInfoE{}
+	pi := define.PlugInfoE{
+		Name: c.PostForm("name"),
+		Desc: c.PostForm("desc"),
+		Cmd:  c.PostForm("cmd"),
+		ID:   c.PostForm("id"),
+	}
 
-	err := c.ShouldBindJSON(&pg)
-	if err != nil {
-		log.Error("ShouldBindJSON failed", zap.Error(err))
-		resp.JSON(c, resp.ErrBadRequest, nil)
-		return
+	f, _ := c.FormFile("file")
+
+	if f != nil {
+		pi.FileName = f.Filename
+		//SaveUploadedFile上传表单文件到指定的路径
+		c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
 	}
 
 	data := make(map[string]interface{})
 
-	data["count"] = models.EditPlugInfo(pg)
+	data["count"] = models.EditPlugInfo(pi)
 
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{

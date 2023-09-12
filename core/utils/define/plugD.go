@@ -16,10 +16,11 @@ type PlugRes struct {
 }
 
 type PlugInfoAdd struct {
-	Name string `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
-	Cmd  string `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
-	Desc string `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
-	Sys  int    `gorm:"column:sys" json:"sys"`
+	Name     string `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
+	FileName string `gorm:"column:filename"  json:"filename" form:"filename"`
+	Cmd      string `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
+	Desc     string `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+	Sys      int    `gorm:"column:sys" json:"sys"`
 }
 
 type PlugInfo struct {
@@ -30,9 +31,11 @@ type PlugInfo struct {
 }
 
 type PlugInfoE struct {
-	GetID
-	GetName
-	Desc string `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+	ID       string `gorm:"column:id"  json:"id" form:"id" `
+	Name     string `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
+	FileName string `gorm:"column:filename"  json:"filename" form:"filename"`
+	Cmd      string `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
+	Desc     string `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
 }
 
 type PlugIdName struct {

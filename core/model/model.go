@@ -80,6 +80,7 @@ const (
 	TBFinger string = "finger"
 
 	TBProbeInfo  string = "probe_info"
+	TBPlug       string = "plug"
 	TBProbeGroup string = "probe_group"
 	TBProbeRes   string = "probe_result"
 	TBPortRes    string = "port_result"

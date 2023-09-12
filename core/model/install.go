@@ -30,6 +30,7 @@ var crcocodileTables = []string{
 	TBUser,
 	TBCasbin,
 	TBProbeInfo,
+	TBPlug,
 	TBProbeGroup,
 	TBCertRes,
 	TBMatchRes,
@@ -127,7 +128,7 @@ func StartInstall(ctx context.Context, username, password string) error {
 			execsql = string(content)
 		}
 
-		if tbname == TBCasbin || tbname == TBProbeInfo || tbname == TBProbeGroup || tbname == TBHost || tbname == TBHostgroup || tbname == TBTask {
+		if tbname == TBCasbin || tbname == TBProbeInfo || tbname == TBProbeGroup || tbname == TBHost || tbname == TBHostgroup || tbname == TBTask || tbname == TBPlug {
 			for _, sql := range strings.Split(execsql, ";\n") {
 				if sql == "" {
 					slog.Println(slog.DEBUG, "StartInstall", "=====sql====", tbname)

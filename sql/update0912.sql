@@ -1,6 +1,8 @@
+
 CREATE TABLE IF NOT EXISTS `plug` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
+  `filename` varchar(255) NOT NULL DEFAULT '',
   `cmd` varchar(255) NOT NULL DEFAULT '',
   `desc` varchar(255) NOT NULL DEFAULT '',
   `sys` tinyint(1) NOT NULL DEFAULT '0',
@@ -8,13 +10,11 @@ CREATE TABLE IF NOT EXISTS `plug` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- 正在导出表  apt.plug 的数据：~2 rows (大约)
-INSERT INTO `plug` (`id`, `name`, `cmd`, `desc`, `sys`, `is_deleted`, `create_time`, `update_time`) VALUES
-	(1, 'NMAP', 'nmap -T5   -p {port}  -oX  res.xml  {ip}', '内置插件NMAP', 1, 0, '2023-09-11 09:08:40', '2023-09-12 02:16:01'),
-	(2, 'goby', '', '木马', 0, 0, '2023-09-11 09:33:20', '2023-09-11 09:33:20'),
-	(3, '', '', '', 0, 0, '2023-09-12 02:17:34', '2023-09-12 02:17:34');
+
+INSERT INTO `plug` (`id`, `name`, `filename`, `cmd`, `desc`, `sys`, `is_deleted`, `create_time`, `update_time`) VALUES
+	(1, 'NMAP', 'nmap', 'nmap -T5   -p {port}  -oX  res.xml  {ip}', '内置插件NMAP', 1, 0, '2023-09-11 09:08:40', '2023-09-12 07:13:08');
 
 
 DROP TABLE  `probe_info`;
