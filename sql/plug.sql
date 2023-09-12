@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `plug` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `plug` (`id`, `name`, `filename`, `cmd`, `desc`, `sys`, `is_deleted`, `create_time`, `update_time`) VALUES
