@@ -17,13 +17,14 @@ type PlugRes struct {
 
 type PlugInfoAdd struct {
 	Name string `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
+	Cmd  string `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
 	Desc string `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+	Sys  int    `gorm:"column:sys" json:"sys"`
 }
 
-type PlugInfoRes struct {
+type PlugInfo struct {
 	GetID
-	GetName
-	Desc  string    `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+	PlugInfoAdd
 	Ctime LocalTime `gorm:"column:create_time" json:"create_time"`
 	Utime LocalTime `gorm:"column:update_time" json:"update_time"`
 }

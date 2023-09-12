@@ -18,7 +18,7 @@ func BatchAddPlugInfo(datas []map[string]any) int64 {
 	return res.RowsAffected
 }
 
-func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugInfo []define.PlugInfoRes, total int64) {
+func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugInfo []define.PlugInfo, total int64) {
 	dbTmp := db.Table("plug")
 
 	if maps["name"] != nil {
