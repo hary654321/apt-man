@@ -31,6 +31,7 @@ func main() {
 	models.Setup()
 
 	model.Update()
+	model.Pi()
 
 	go client.HeartBeat() // 心跳检测
 
