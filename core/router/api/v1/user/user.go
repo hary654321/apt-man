@@ -252,7 +252,7 @@ func AdminChangeUser(c *gin.Context) {
 		role = v.(define.Role)
 	}
 	if role != define.AdminUser {
-		resp.JSON(c, resp.ErrUnauthorized, nil)
+		resp.JSON(c, resp.ErrAcl, nil)
 		return
 	}
 
@@ -293,7 +293,7 @@ func AdminDeleteUser(c *gin.Context) {
 		role = v.(define.Role)
 	}
 	if role != define.AdminUser {
-		resp.JSON(c, resp.ErrUnauthorized, nil)
+		resp.JSON(c, resp.ErrAcl, nil)
 		return
 	}
 	// 只能删除普通用户，不能删除admin用户
@@ -304,7 +304,7 @@ func AdminDeleteUser(c *gin.Context) {
 		return
 	}
 	if userinfo.Role == define.AdminUser {
-		resp.JSON(c, resp.ErrUnauthorized, nil)
+		resp.JSON(c, resp.ErrAcl, nil)
 		return
 	}
 	// TODO only admin

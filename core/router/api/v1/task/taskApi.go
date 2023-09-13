@@ -159,7 +159,7 @@ func ChangeTask(c *gin.Context) {
 		}
 
 		if !exist {
-			resp.JSON(c, resp.ErrUnauthorized, nil)
+			resp.JSON(c, resp.ErrAcl, nil)
 			return
 		}
 	}
@@ -241,7 +241,7 @@ func DeleteTask(c *gin.Context) {
 		}
 
 		if !exist {
-			resp.JSON(c, resp.ErrUnauthorized, nil)
+			resp.JSON(c, resp.ErrAcl, nil)
 			return
 		}
 	}
@@ -458,7 +458,7 @@ func RunTask(c *gin.Context) {
 		}
 
 		if !exist {
-			resp.JSON(c, resp.ErrUnauthorized, nil)
+			resp.JSON(c, resp.ErrAcl, nil)
 			return
 		}
 	}
@@ -967,7 +967,7 @@ func CleanTaskLog(c *gin.Context) {
 		}
 
 		if !exist {
-			resp.JSON(c, resp.ErrUnauthorized, nil)
+			resp.JSON(c, resp.ErrAcl, nil)
 			return
 		}
 	}

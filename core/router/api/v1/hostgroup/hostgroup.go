@@ -181,7 +181,7 @@ func DeleteHostGroup(c *gin.Context) {
 		}
 
 		if !exist {
-			resp.JSON(c, resp.ErrUnauthorized, nil)
+			resp.JSON(c, resp.ErrAcl, nil)
 			return
 		}
 	}
