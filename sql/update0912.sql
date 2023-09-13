@@ -5,6 +5,9 @@ ALTER TABLE `task` ADD COLUMN `plug` VARCHAR(1000) NOT NULL DEFAULT '' AFTER `pr
 
 ALTER TABLE `probe_result` CHANGE COLUMN `port` `port` INT(10) NOT NULL DEFAULT 0 COLLATE 'utf8_general_ci' AFTER `run_task_id`;
 
+
+ALTER TABLE `plug_result`	CHANGE COLUMN `type` `plug` VARCHAR(50) NOT NULL DEFAULT '0' AFTER `run_task_id`;
+
 DROP TABLE  `plug`;
 CREATE TABLE IF NOT EXISTS `plug` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -22,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `plug` (
 
 
 INSERT INTO `plug` (`id`, `name`, `filename`, `cmd`, `desc`, `sys`, `is_deleted`, `create_time`, `update_time`) VALUES
-	(1, 'NMAP', 'nmap', 'nmap -T5   -p {port}  -oX  res.xml  {ip}', '内置插件NMAP', 1, 0, '2023-09-11 09:08:40', '2023-09-12 07:13:08');
+	(1, 'NMAP', 'nmap', 'nmap -T5   -p {port}  -oX  {res}  {ip}', '内置插件NMAP', 1, 0, '2023-09-11 09:08:40', '2023-09-12 07:13:08');
 
 DROP TABLE `probe_group`;
 

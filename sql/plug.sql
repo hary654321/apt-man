@@ -15,4 +15,4 @@ CREATE TABLE IF NOT EXISTS `plug` (
 
 
 INSERT INTO `plug` (`id`, `name`, `filename`, `cmd`, `desc`, `sys`, `is_deleted`, `create_time`, `update_time`) VALUES
-	(1, 'NMAP', 'nmap', 'nmap -T5   -p {port}  -oX  res.xml  {ip}', '内置插件NMAP', 1, 0, '2023-09-11 09:08:40', '2023-09-12 07:13:08');
+	(1, 'NMAP', 'nmap', 'nmap -T5   -p {port}  -oX  {res}  {ip}', '内置插件NMAP', 1, 0, '2023-09-11 09:08:40', '2023-09-12 07:13:08');

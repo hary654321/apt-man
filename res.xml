@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.01 scan initiated Wed Sep 13 04:02:05 2023 as: nmap -T5 -p 61665,61666,3306,22,8085 -oX res.xml 127.0.0.1 -->
+<nmaprun scanner="nmap" args="nmap -T5 -p 61665,61666,3306,22,8085 -oX res.xml 127.0.0.1" start="1694602925" startstr="Wed Sep 13 04:02:05 2023" version="7.01" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="5" services="22,3306,8085,61665-61666"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1694602925" endtime="1694602925"><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="127.0.0.1" addrtype="ipv4"/>
+<hostnames>
+<hostname name="localhost" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="3306"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="mysql" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8085"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="unknown" method="table" conf="3"/></port>
+<port protocol="tcp" portid="61665"><state state="closed" reason="reset" reason_ttl="64"/></port>
+<port protocol="tcp" portid="61666"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<times srtt="2277" rttvar="3671" to="50000"/>
+</host>
+<runstats><finished time="1694602925" timestr="Wed Sep 13 04:02:05 2023" elapsed="0.35" summary="Nmap done at Wed Sep 13 04:02:05 2023; 1 IP address (1 host up) scanned in 0.35 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>
