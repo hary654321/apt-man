@@ -37,6 +37,6 @@ ENGINE=InnoDB
 ;
 
 
-INSERT INTO `task` (`id`, `name`, `TaskType`, `ip`, `port`, `run`, `status`, `routePolicy`, `timeout`, `threads`, `parentTaskIds`, `parentRunParallel`, `childRunParallel`, `childTaskIds`, `createByID`, `hostGroupID`, `cronExpr`, `alarmUserIds`, `alarmStatus`, `priority`, `remark`, `probeScanId`, `probeId`, `createTime`, `updateTime`, `isDeleted`) VALUES ('test', '127', 1, '127.0.0.1', 'all', 1, 0, 1, 5, 100, '', 0, 0, '', '1', 'zd', '', '', -1, 0, '', '', '', '2023-07-31 06:56:35', '2023-08-18 09:43:34', 0);
+INSERT INTO `task` (`id`, `name`, `TaskType`, `ip`, `port`, `run`, `status`, `routePolicy`, `timeout`, `threads`, `parentTaskIds`, `parentRunParallel`, `childRunParallel`, `childTaskIds`, `createByID`, `hostGroupID`, `cronExpr`, `alarmUserIds`, `alarmStatus`, `priority`, `remark`, `probeScanId`, `probeId`, `createTime`, `updateTime`, `isDeleted`) VALUES ('test', '127', 1, '127.0.0.1', 'TOP100', 1, 0, 1, 5, 100, '', 0, 0, '', '1', 'zd', '', '', -1, 0, '', '', '', '2023-07-31 06:56:35', '2023-08-18 09:43:34', 0);
 
 COMMIT;
