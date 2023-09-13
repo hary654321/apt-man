@@ -18,11 +18,11 @@ func Update() {
 
 	filename := "update0912.sql"
 
-	if utils.PathExists(filename) {
+	// if utils.PathExists(filename) {
 
-		slog.Println(slog.DEBUG, "update.sql is exists")
-		return
-	}
+	// 	slog.Println(slog.DEBUG, "update.sql is exists")
+	// 	return
+	// }
 
 	sqlfilename := "sql/" + filename
 	fs := &assetfs.AssetFS{
@@ -53,7 +53,7 @@ func Update() {
 
 	defer conn.Close()
 
-	for _, sql := range strings.Split(string(content), ";") {
+	for _, sql := range strings.Split(string(content), ";\n") {
 		_, err = conn.ExecContext(context.Background(), sql)
 		if err != nil {
 			slog.Println(slog.DEBUG, "Update", "sql", sql, err)

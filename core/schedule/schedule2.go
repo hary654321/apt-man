@@ -830,7 +830,14 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 func plugs(taskdata *define.DetailTask) {
 	plugs := taskdata.Plug
 
+	if len(plugs) == 0 {
+		return
+	}
+
 	for _, pname := range plugs {
+		if pname == "" {
+			return
+		}
 		plug(taskdata, pname)
 	}
 }
