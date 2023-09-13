@@ -178,7 +178,7 @@ func NewHTTPRouter() *http.Server {
 	sys := v1.Group("/sys")
 	{
 		sys.GET("log", sysP.RunLog)
-		sys.GET("restart", sysP.Restart)
+
 		sys.POST("upload", sysP.Upload)
 	}
 

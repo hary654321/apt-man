@@ -16,13 +16,6 @@ func RunLog(c *gin.Context) {
 	resp.JSON(c, resp.Success, resMap)
 }
 
-func Restart(c *gin.Context) {
-
-	a := cmd.Restart()
-
-	resp.JSON(c, resp.Success, []string{a})
-}
-
 func Upload(c *gin.Context) {
 	//FormFile返回所提供的表单键的第一个文件
 	f, _ := c.FormFile("file")

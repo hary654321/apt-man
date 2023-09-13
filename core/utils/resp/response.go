@@ -27,3 +27,15 @@ func JSON(c *gin.Context, code int, data ...interface{}) {
 
 	return
 }
+
+func JSONNew(c *gin.Context, code int, Msg string) {
+	resp := Response{
+		Code: code,
+		Msg:  Msg,
+	}
+
+	c.JSON(200, resp)
+	c.Set("statuscode", code)
+
+	return
+}

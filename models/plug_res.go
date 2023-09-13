@@ -24,7 +24,7 @@ func GetTaskPlugRes(taskId string) []define.PlugRes {
 	for _, v := range PlugRes {
 
 		runid := v.RunTaskID
-		tid := utils.SubString(runid, "", "-")
+		tid := utils.SubString(runid, "", "-") + v.Plug
 		if havemap[tid] == 1 {
 			continue
 		}
