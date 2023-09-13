@@ -1,4 +1,10 @@
 
+INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/plug*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
+
+ALTER TABLE `task` ADD COLUMN `plug` VARCHAR(1000) NOT NULL DEFAULT '' AFTER `probeId`;
+
+ALTER TABLE `probe_result` CHANGE COLUMN `port` `port` INT(10) NOT NULL DEFAULT 0 COLLATE 'utf8_general_ci' AFTER `run_task_id`;
+
 DROP TABLE  `plug`;
 CREATE TABLE IF NOT EXISTS `plug` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -167,8 +173,3 @@ INSERT INTO `probe_group` ( `probe_group_name`, `probe_group_type`, `probe_group
 	( '内网穿透', '后门', '', '', '2022-06-21 17:52:16', '2023-09-08 03:52:51', 0);
 
 
-INSERT INTO `casbin_rule` (`p_type`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`) VALUES ('p', 'Admin', '/api/v1/plug*', '(GET)|(POST)|(DELETE)|(PUT)', '', '', '');
-
-ALTER TABLE `task` ADD COLUMN `plug` VARCHAR(1000) NOT NULL DEFAULT '' AFTER `probeId`;
-
-ALTER TABLE `probe_result` CHANGE COLUMN `port` `port` INT(10) NOT NULL DEFAULT 0 COLLATE 'utf8_general_ci' AFTER `run_task_id`;
