@@ -336,6 +336,7 @@ func BinDeploy(c *gin.Context) {
 
 	err = BinInstall(hostInfo)
 	if err != nil {
+		slog.Println(slog.DEBUG, err)
 		resp.JSON(c, resp.InstallFail, err.Error())
 		return
 	}
@@ -367,25 +368,35 @@ func BinInstall(hostInfo *define.Host) (err error) {
 
 func Restart(c *gin.Context) {
 
-	//utils.ZipFile("../scanning-client", "./update.zip", "2023-02-13 15:04:05")
-
 	ctx, cancel := context.WithTimeout(context.Background(),
 		config.CoreConf.Server.DB.MaxQueryTime.Duration)
 	defer cancel()
-	hosts, count, err := model.GetHostsWithStatus(ctx, "=", model.RUNNING)
+
+	id := c.Query("id")
+	slog.Println(slog.DEBUG, "id", id)
+	hostInfo, err := model.GetHostByID(ctx, id)
 
 	if err != nil {
-		log.Error("BindQuery offset failed", zap.Error(err))
-	}
-
-	if count < 1 {
+		resp.JSON(c, resp.InstallFail, err.Error())
 		return
 	}
 
-	for _, hostInfo := range hosts {
+	client, err := sshclient.DialWithPasswd(hostInfo.Ip+":"+utils.GetInterfaceToString(hostInfo.SshPort), hostInfo.SshUser, hostInfo.SshPwd)
+	if err != nil {
+		slog.Println(slog.DEBUG, "sshclient.DialWithPasswd failed", zap.Error(err))
 
-		go sshclient.Restart(hostInfo)
-
+		resp.JSONNew(c, resp.InstallFail, "ssh配置信息错误")
+		return
 	}
-	resp.JSON(c, resp.Success, hosts, count)
+	defer client.Close()
+
+	go client.Cmd("/zrtx/apt/clientInstall.sh").Output()
+
+	if err != nil {
+		slog.Println(slog.DEBUG, err)
+		resp.JSON(c, resp.InstallFail, err.Error())
+		return
+	}
+
+	resp.JSON(c, resp.Success, hostInfo)
 }

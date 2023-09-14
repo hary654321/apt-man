@@ -152,6 +152,7 @@ func NewHTTPRouter() *http.Server {
 		rh.GET("/select", host.GetSelect)
 		rh.GET("/serviceLog", host.ServiceLog)
 		rh.GET("/binDeploy", host.BinDeploy)
+		rh.GET("/restart", host.Restart)
 		rh.GET("/bash", host.Bash)
 		rh.GET("/cleanLog", host.CleanLog)
 	}
