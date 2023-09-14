@@ -58,7 +58,7 @@ func GetAddrs(expr, ports string) (res []string) {
 }
 
 // 粒度问题会影响这里的设计
-func GetIpArr(expr string) []string {
+func GetIpArr(expr string) (ipArrRes []string) {
 	var ipArr []string
 
 	if strings.Contains(expr, ",") {
@@ -95,12 +95,15 @@ func GetIpArr(expr string) []string {
 		if IsCIDR(v) {
 			slog.Println(slog.DEBUG, v)
 			for _, ip := range CIDRToIP(v) {
-				ipArr = append(ipArr, ip.String())
+				ipArrRes = append(ipArrRes, ip.String())
 			}
+		}
+		if IsIPv4(v) {
+			ipArrRes = append(ipArrRes, v)
 		}
 	}
 
-	return ipArr
+	return
 }
 
 func GetPortArr(port string) (portRes []string) {
@@ -172,11 +175,6 @@ func GetPortArr(port string) (portRes []string) {
 
 	if isNumeric(port) {
 		portRes = append(portRes, port)
-	}
-
-	//默认扫描前10个端口
-	if len(portRes) == 0 {
-		portRes = IntArr2Str(define.TOP_1000[0:10])
 	}
 
 	return

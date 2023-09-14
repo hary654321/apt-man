@@ -58,6 +58,16 @@ func CreateTask(c *gin.Context) {
 		}
 	}
 
+	if len(utils.GetIpArr(task.Ip)) == 0 {
+		resp.JSONNew(c, 400, "请按照规定格式填写Ip")
+		return
+	}
+
+	if len(utils.GetPortArr(task.Port)) == 0 {
+		resp.JSONNew(c, 400, "请按照规定格式填写Port")
+		return
+	}
+
 	// TODO 检查任务数据
 	exist, err := model.Check(ctx, model.TBTask, model.Name, task.Name)
 	if err != nil {
