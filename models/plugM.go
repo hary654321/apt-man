@@ -71,9 +71,16 @@ func DeletePlugInfo(ids []int) int64 {
 }
 
 // 通过id，更新
-func EditPlugInfo(pge define.PlugInfoE) int64 {
+func EditPlugInfo(pge define.PlugInfoE) error {
 
 	res := db.Table("plug").Where("id = ?", pge.ID).Updates(pge)
 	slog.Println(slog.DEBUG, res.Error)
-	return res.RowsAffected
+	return res.Error
+}
+
+func ChangePlugState(name string, status int) error {
+
+	res := db.Table("plug").Where("name", name).Update("status", status)
+
+	return res.Error
 }

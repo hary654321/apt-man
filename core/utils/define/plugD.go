@@ -16,20 +16,20 @@ type PlugRes struct {
 }
 
 type PlugInfoAdd struct {
-	Name      string     `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
-	FileName  string     `gorm:"column:filename"  json:"filename" form:"filename"`
-	Cmd       string     `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
-	Desc      string     `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
-	Sys       int        `gorm:"column:sys" json:"sys"`
-	Status    PlugStatus `gorm:"column:status" json:"status"`
-	StatusStr string     `gorm:"column:status_text" json:"status_text"`
+	Name     string     `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
+	FileName string     `gorm:"column:filename"  json:"filename" form:"filename"`
+	Cmd      string     `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
+	Desc     string     `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+	Sys      int        `gorm:"column:sys" json:"sys"`
+	Status   PlugStatus `gorm:"column:status" json:"status"`
 }
 
 type PlugInfo struct {
 	GetID
 	PlugInfoAdd
-	Ctime LocalTime `gorm:"column:create_time" json:"create_time"`
-	Utime LocalTime `gorm:"column:update_time" json:"update_time"`
+	StatusStr string    `gorm:"column:status_text" json:"status_text"`
+	Ctime     LocalTime `gorm:"column:create_time" json:"create_time"`
+	Utime     LocalTime `gorm:"column:update_time" json:"update_time"`
 }
 
 type PlugInfoE struct {

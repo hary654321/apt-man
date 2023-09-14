@@ -3,6 +3,7 @@ package plug
 import (
 	"net/http"
 
+	"zrDispatch/common/cmd"
 	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/ginhelp"
@@ -23,25 +24,17 @@ func CreatePlug(c *gin.Context) {
 	c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
 
 	slog.Println(slog.DEBUG, f.Header)
-	// cmd.Exec("chmod +x " + "/zrtx/apt/bin/" + f.Filename)
-
-	// _, err := cmd.Exec("/zrtx/apt/bin/" + f.Filename)
-
-	// if err != nil {
-	// 	resp.JSONNew(c, 400, "文件类型错误")
-	// 	return
-	// }
 
 	pi := define.PlugInfoAdd{
 		Name:     c.PostForm("name"),
 		Desc:     c.PostForm("desc"),
 		Cmd:      c.PostForm("cmd"),
 		FileName: f.Filename,
+		Status:   define.PLUG_JYZ,
 	}
 
 	res := models.GetPlugInfoByName(pi.Name)
 
-	utils.WriteJsonLog(res)
 	if res.Name != "" {
 		resp.JSON(c, resp.PnameExits, nil)
 		return
@@ -54,7 +47,23 @@ func CreatePlug(c *gin.Context) {
 		return
 	}
 
+	go checkPlug(pi.Name, f.Filename)
+
 	resp.JSON(c, resp.Success, nil)
+}
+
+func checkPlug(pname, filename string) {
+	cmd.Exec("chmod +x " + "/zrtx/apt/bin/" + filename)
+
+	_, err := cmd.Exec("/zrtx/apt/bin/" + filename)
+
+	if err != nil {
+		slog.Println(slog.DEBUG, err)
+		models.ChangePlugState(pname, int(define.PLUG_FAIL))
+	} else {
+		models.ChangePlugState(pname, int(define.PLUG_SUCC))
+	}
+
 }
 
 func GetPlug(c *gin.Context) {
@@ -105,18 +114,32 @@ func EditPlug(c *gin.Context) {
 		ID:   c.PostForm("id"),
 	}
 
+	res := models.GetPlugInfoByName(pi.Name)
+
+	if res.Name != "" {
+		resp.JSON(c, resp.PnameExits, nil)
+		return
+	}
+
 	f, _ := c.FormFile("file")
 
 	if f != nil {
 		pi.FileName = f.Filename
 		//SaveUploadedFile上传表单文件到指定的路径
 		c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
+
 	}
 
 	data := make(map[string]interface{})
 
-	data["count"] = models.EditPlugInfo(pi)
+	serr := models.EditPlugInfo(pi)
 
+	if serr != nil {
+		resp.JSON(c, resp.AddFail, serr.Error())
+		return
+	}
+
+	go checkPlug(pi.Name, f.Filename)
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,
