@@ -21,8 +21,6 @@ services:
         volumes: 
           - $PWD/client/conf.toml:/app/conf.toml
           - $PWD/client/pem:/app/pem
-        ports: 
-          - 61666:61666
     mysql:
         image: mysql:8.0
         container_name: crocodile_mysql
