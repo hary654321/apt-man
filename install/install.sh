@@ -173,7 +173,9 @@ install()
 {
   setupDocker
   loadImage
+  service iptables start
   runContainer
+  service iptables stop
   getIpAddr
   info "后台地址：http://${local_ip}:61665/crocodile/"
   info '安装顺利完成！'
