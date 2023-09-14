@@ -3,7 +3,6 @@ package plug
 import (
 	"net/http"
 
-	"zrDispatch/common/cmd"
 	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/ginhelp"
@@ -23,14 +22,15 @@ func CreatePlug(c *gin.Context) {
 	//SaveUploadedFile上传表单文件到指定的路径
 	c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
 
-	cmd.Exec("chmod +x " + "/zrtx/apt/bin/" + f.Filename)
+	slog.Println(slog.DEBUG, f.Header)
+	// cmd.Exec("chmod +x " + "/zrtx/apt/bin/" + f.Filename)
 
-	_, err := cmd.Exec("/zrtx/apt/bin/" + f.Filename)
+	// _, err := cmd.Exec("/zrtx/apt/bin/" + f.Filename)
 
-	if err != nil {
-		resp.JSONNew(c, 400, "文件类型错误")
-		return
-	}
+	// if err != nil {
+	// 	resp.JSONNew(c, 400, "文件类型错误")
+	// 	return
+	// }
 
 	pi := define.PlugInfoAdd{
 		Name:     c.PostForm("name"),
@@ -47,10 +47,10 @@ func CreatePlug(c *gin.Context) {
 		return
 	}
 
-	err = models.AddPlugInfo(pi)
+	err1 := models.AddPlugInfo(pi)
 
-	if err != nil {
-		resp.JSON(c, resp.AddFail, err.Error())
+	if err1 != nil {
+		resp.JSON(c, resp.AddFail, err1.Error())
 		return
 	}
 
