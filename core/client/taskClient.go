@@ -116,7 +116,7 @@ func GetTaskPress(hostInfo *define.Host, taskdata *define.DetailTask) (bool, err
 		return false, errors.New(responseJson.Msg)
 	}
 
-	if responseJson.Code == 200 && responseJson.All == responseJson.Ok {
+	if responseJson.Code == 200 && responseJson.All != 0 && responseJson.All == responseJson.Ok {
 		return true, nil
 	} else {
 		models.UpdatePress(taskdata.RunTaskId, responseJson.Ok*100/responseJson.All)
