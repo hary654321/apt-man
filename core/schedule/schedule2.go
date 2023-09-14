@@ -854,17 +854,17 @@ func plug(taskdata *define.DetailTask, pid string) {
 	if taskdata.Cronexpr != "" {
 		succRun = 1
 	}
-	if err == nil {
-		// 更新任务状态
-		slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
-		model.UpdateTaskStatus(context.Background(), taskdata.ID, succRun, define.TASK_STATUS_DONE)
+	// if err == nil {
+	// 	// 更新任务状态
+	// 	slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
+	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, succRun, define.TASK_STATUS_DONE)
 
-		models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
-	} else {
-		model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
+	// 	models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
+	// } else {
+	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
 
-		models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
-	}
+	// 	models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
+	// }
 
 	xml := utils.Read(path)
 
