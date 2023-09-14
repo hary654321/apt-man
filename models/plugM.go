@@ -18,9 +18,10 @@ func BatchAddPlugInfo(datas []map[string]any) int64 {
 	return res.RowsAffected
 }
 
-func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugInfo []define.PlugInfo, total int64) {
+func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugInfoRes []define.PlugInfo, total int64) {
 	dbTmp := db.Table("plug")
 
+	var PlugInfo []define.PlugInfo
 	if maps["name"] != nil {
 		dbTmp = dbTmp.Where("name LIKE ?", "%"+maps["name"].(string)+"%")
 		delete(maps, "name")
@@ -28,6 +29,12 @@ func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugIn
 
 	dbTmp.Where("is_deleted", 0).Where(maps).Count(&total)
 	dbTmp.Where("is_deleted", 0).Where(maps).Offset(pageNum).Limit(pageSize).Order("id  desc").Find(&PlugInfo)
+
+	for _, v := range PlugInfo {
+		v.StatusStr = v.Status.String()
+
+		PlugInfoRes = append(PlugInfoRes, v)
+	}
 
 	return
 }
@@ -51,7 +58,7 @@ func GetPlugInfoById(name string) (PlugMatch define.PlugInfoAdd) {
 func GetPlugSelect() (PlugInfo []define.PlugIdName) {
 	dbTmp := db.Table("plug")
 
-	dbTmp.Where("is_deleted", 0).Order("update_time  desc").Find(&PlugInfo)
+	dbTmp.Where("is_deleted", 0).Where("status", define.PLUG_SUCC).Order("update_time  desc").Find(&PlugInfo)
 
 	return
 }
