@@ -846,14 +846,14 @@ func plug(taskdata *define.DetailTask, pid string) {
 	slog.Println(slog.DEBUG, taskdata.ID, "====", taskdata.TaskType)
 
 	pluginfo := models.GetPlugInfoById(pid)
-	path, err := cmd.Plug(taskdata.RunTaskId, taskdata.Ip, taskdata.Port, pluginfo.Cmd)
+	path, _ := cmd.Plug(taskdata.RunTaskId, taskdata.Ip, taskdata.Port, pluginfo.Cmd)
 
 	slog.Println(slog.WARN, "path", path)
 
-	succRun := 0
-	if taskdata.Cronexpr != "" {
-		succRun = 1
-	}
+	// succRun := 0
+	// if taskdata.Cronexpr != "" {
+	// 	succRun = 1
+	// }
 	// if err == nil {
 	// 	// 更新任务状态
 	// 	slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
@@ -888,19 +888,19 @@ func plug(taskdata *define.DetailTask, pid string) {
 	}
 
 	// 保存结果
-	err = models.AddPlugRes(data)
+	models.AddPlugRes(data)
 
-	if err == nil {
-		// 更新任务状态
-		slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
-		model.UpdateTaskStatus(context.Background(), taskdata.ID, succRun, define.TASK_STATUS_DONE)
+	// if err == nil {
+	// 	// 更新任务状态
+	// 	slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
+	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, succRun, define.TASK_STATUS_DONE)
 
-		models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
-	} else {
-		model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
+	// 	models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
+	// } else {
+	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
 
-		models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
-	}
+	// 	models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
+	// }
 
 	return
 }
