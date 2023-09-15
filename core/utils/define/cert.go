@@ -24,9 +24,9 @@ type TaskRes struct {
 }
 
 type Cert struct {
-	Ip              string `gorm:"column:ip"json:"ip"`
-	Port            string `gorm:"column:port"json:"port"`
-	Probe_name      string `gorm:"column:probe_name"json:"probe_name"`
+	// Ip              string `gorm:"column:ip"json:"ip"`
+	// Port            string `gorm:"column:port"json:"port"`
+	// Probe_name string `gorm:"column:probe_name"json:"probe_name"`
 	CertBase64      string `gorm:"column:cert_base64"json:"cert_base64"`
 	CertFingerprint string `gorm:"column:cert_fingerprint"json:"cert_fingerprint"`
 	CertIssuer      string `gorm:"column:cert_issuer"json:"cert_issuer"`
@@ -40,7 +40,7 @@ type Cert struct {
 	CertSubjectO    string `gorm:"column:cert_subject_o" json:"cert_subject_o"`
 	ValidFrom       string `gorm:"column:valid_from" json:"valid_from"`
 	ValidTo         string `gorm:"column:valid_to" json:"valid_to"`
-	RunTaskID       string `gorm:"column:run_task_id" json:"run_task_id"`
+	// RunTaskID       string `gorm:"column:run_task_id" json:"run_task_id"`
 }
 
 type CertRes struct {
