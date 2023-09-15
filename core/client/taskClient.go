@@ -172,7 +172,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 				ps.RunTaskID = taskdata.RunTaskId
 				ps.Cert = ""
 				if obj.SslResult.Cert.CertBase64 != "" {
-					m := utils.StructToMap(obj.SslResult.Cert)
+					m := utils.StructToMapJson(obj.SslResult.Cert)
 					ps.Cert = utils.Map2Str(m, "cert_base64")
 				}
 
