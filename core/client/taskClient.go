@@ -161,6 +161,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 
 				var ps define.ProbeResCreate
 				ps.Ctime = utils.GetTimeStr()
+				ps.Utime = utils.GetTimeStr()
 
 				Arr := strings.Split(obj.ProbeResult.ReqInfo.Addr, ":")
 				ps.IP = Arr[0]

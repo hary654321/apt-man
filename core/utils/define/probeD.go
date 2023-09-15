@@ -85,6 +85,7 @@ type ProbeResCreate struct {
 	RunTaskID string `gorm:"column:run_task_id" json:"run_task_id"`
 	Matched   int    `gorm:"column:matched" json:"matched"`
 	Ctime     string `gorm:"column:create_time" json:"create_time"`
+	Utime     string `gorm:"column:update_time" json:"update_time"`
 	D         int    `gorm:"column:is_deleted" json:"is_deleted"`
 
 	// Utime   string `gorm:"column:update_time" json:"update_time"`
