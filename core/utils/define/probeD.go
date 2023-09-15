@@ -82,6 +82,7 @@ type ProbeResCreate struct {
 	Port      string `gorm:"column:port" json:"port" `
 	Hex       string `gorm:"column:hex" json:"hex" `
 	Res       string `gorm:"column:response" json:"response" `
+	Cert      string `gorm:"column:cert" json:"cert" `
 	RunTaskID string `gorm:"column:run_task_id" json:"run_task_id"`
 	Matched   int    `gorm:"column:matched" json:"matched"`
 	Ctime     string `gorm:"column:create_time" json:"create_time"`
@@ -112,6 +113,7 @@ type ProbeRes struct {
 	Port      string      `gorm:"column:port" json:"port" `
 	Hex       string      `gorm:"column:hex" json:"hex" `
 	Res       string      `gorm:"column:response" json:"response" `
+	Cert      string      `gorm:"column:cert" json:"cert" `
 	RunTaskID string      `gorm:"column:run_task_id" json:"run_task_id"`
 	Matched   MatchStatus `gorm:"column:matched" json:"matched"`
 	Dealed    DealStatus  `gorm:"column:dealed" json:"dealed"`

@@ -170,6 +170,11 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 				ps.Hex = obj.ProbeResult.ResHex
 				ps.Res = obj.ProbeResult.ResPlain
 				ps.RunTaskID = taskdata.RunTaskId
+				ps.Cert = ""
+				if obj.SslResult.Cert.CertBase64 != "" {
+					m := utils.StructToMap(obj.SslResult.Cert)
+					ps.Cert = utils.Map2Str(m, "cert_base64")
+				}
 
 				models.AddProbeRes(ps)
 			}
@@ -177,20 +182,20 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 		}
 	}
 	//证书的结果
-	if responseJson.Code == 200 && len(responseJson.Data) > 0 {
-		for _, obj := range responseJson.Data {
-			if obj.SslResult.Cert.CertBase64 != "" {
+	// if responseJson.Code == 200 && len(responseJson.Data) > 0 {
+	// 	for _, obj := range responseJson.Data {
+	// 		if obj.SslResult.Cert.CertBase64 != "" {
 
-				Arr := strings.Split(obj.ProbeResult.ReqInfo.Addr, ":")
-				obj.SslResult.Cert.Ip = Arr[0]
-				obj.SslResult.Cert.Port = Arr[1]
-				obj.SslResult.Cert.Probe_name = obj.ProbeResult.ReqInfo.ProbeName
-				obj.SslResult.Cert.RunTaskID = taskdata.RunTaskId
-				models.AddCertRes(obj.SslResult.Cert)
-			}
+	// 			Arr := strings.Split(obj.ProbeResult.ReqInfo.Addr, ":")
+	// 			obj.SslResult.Cert.Ip = Arr[0]
+	// 			obj.SslResult.Cert.Port = Arr[1]
+	// 			obj.SslResult.Cert.Probe_name = obj.ProbeResult.ReqInfo.ProbeName
+	// 			obj.SslResult.Cert.RunTaskID = taskdata.RunTaskId
+	// 			models.AddCertRes(obj.SslResult.Cert)
+	// 		}
 
-		}
-	}
+	// 	}
+	// }
 
 	//端口的结果
 	if responseJson.Code == 200 && len(responseJson.Res) > 0 {

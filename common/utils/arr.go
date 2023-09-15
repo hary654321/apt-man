@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 )
@@ -110,6 +111,18 @@ func Str2int(str string) int {
 func IntArr2Str(arrstr []int) (res []string) {
 	for _, v := range arrstr {
 		res = append(res, GetInterfaceToString(v))
+	}
+
+	return
+}
+
+func Map2Str(maps map[string]interface{}, paichu string) (result string) {
+
+	for key, value := range maps {
+		if key == paichu {
+			continue
+		}
+		result += fmt.Sprintf("%s:%s\n", key, value)
 	}
 
 	return

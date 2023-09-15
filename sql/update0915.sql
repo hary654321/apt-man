@@ -1,0 +1,1 @@
+ALTER TABLE `probe_result` ADD COLUMN `cert` TEXT NOT NULL AFTER `hex`;
