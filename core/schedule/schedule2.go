@@ -923,7 +923,7 @@ func GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 
 		}
 		if res {
-			time.Sleep(3 * time.Second)
+			time.Sleep(10 * time.Second)
 			err := client.GetTaskRes(hostInfo, taskdata)
 			if err != nil {
 				if taskdata.Cronexpr == "" {
