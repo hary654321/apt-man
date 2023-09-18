@@ -58,6 +58,13 @@ func Macth(ps define.ProbeRes) {
 		}
 	}
 
+	if probeInfo.MT == "cert" {
+		if strings.Contains(ps.Cert, probeInfo.Recv) {
+			models.UpdateProbeMatch(ps.Id, define.Matched)
+			return
+		}
+	}
+
 	models.UpdateProbeMatch(ps.Id, define.NotMatched)
 
 }
