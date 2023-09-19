@@ -68,15 +68,15 @@ func UpdateProbeMatch(id int, matched define.MatchStatus) error {
 	return res.Error
 }
 
-func GetTaskProbe(taskId string) []define.ProbeRes {
+func GetTaskProbe(taskId string) []define.ProbeResJJ {
 	dbTmp := db.Table("probe_result")
 
-	var ProbeRes []define.ProbeRes
+	var ProbeRes []define.ProbeResJJ
 	dbTmp.Where("run_task_id like ? ", taskId+"%").Where("matched", define.Matched).Order("id  desc").Find(&ProbeRes)
 
 	havemap := make(map[string]int)
 
-	var ProbeResUnique []define.ProbeRes
+	var ProbeResUnique []define.ProbeResJJ
 	for _, v := range ProbeRes {
 
 		if havemap[v.IP+v.Port] == 1 {

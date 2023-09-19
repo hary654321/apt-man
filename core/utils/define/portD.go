@@ -45,6 +45,23 @@ type PortRes struct {
 	D           int       `gorm:"column:is_deleted" json:"is_deleted"`
 }
 
+type PortResJJ struct {
+	Id          int       `gorm:"column:id" json:"id"`
+	IP          string    `gorm:"column:ip" json:"ip" `
+	Port        string    `gorm:"column:port" json:"port" `
+	Os          string    `gorm:"column:os" json:"os"`
+	Type        string    `gorm:"column:type" json:"type" `
+	Service     string    `gorm:"column:service" json:"service" `
+	ProductName string    `gorm:"column:product_name" json:"product_name"`
+	Version     string    `gorm:"column:version" json:"version" `
+	Pname       string    `gorm:"column:probe_name" json:"probe_name" `
+	RunTaskID   string    `gorm:"column:run_task_id" json:"run_task_id"`
+	Remark      string    `gorm:"column:remark" json:"remark"`
+	Ctime       LocalTime `gorm:"column:create_time" json:"create_time"`
+	Utime       LocalTime `gorm:"column:update_time" json:"update_time"`
+	D           int       `gorm:"column:is_deleted" json:"is_deleted"`
+}
+
 type PortResEdit struct {
 	Id     int    `gorm:"column:id" json:"id" binding:"required"`
 	Remark string `gorm:"column:remark" json:"remark"`

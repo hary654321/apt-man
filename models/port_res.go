@@ -29,15 +29,15 @@ func DeletePortRes(ids []int) int64 {
 	return res.RowsAffected
 }
 
-func GetTaskPortRes(taskId string) []define.PortRes {
+func GetTaskPortRes(taskId string) []define.PortResJJ {
 	dbTmp := db.Table("port_result")
 
-	var PortRes []define.PortRes
+	var PortRes []define.PortResJJ
 	dbTmp.Where("run_task_id like ? ", taskId+"%").Order("id  desc").Find(&PortRes)
 
 	havemap := make(map[string]int)
 
-	var PortResUnique []define.PortRes
+	var PortResUnique []define.PortResJJ
 
 	for _, v := range PortRes {
 

@@ -126,6 +126,28 @@ type ProbeRes struct {
 	// Type    string `gorm:"column:type" json:"type" `
 }
 
+type ProbeResJJ struct {
+	Id        int         `gorm:"column:id" json:"id"`
+	IP        string      `gorm:"column:ip" json:"ip" `
+	Pname     string      `gorm:"column:probe_name" json:"probe_name" `
+	Pg        string      `gorm:"column:probe_group" json:"probe_group" `
+	Tags      string      `gorm:"column:probe_tags" json:"probe_tags" `
+	Region    string      `gorm:"column:probe_group_region" json:"probe_group_region" `
+	Finger    string      `gorm:"column:probe_recv" json:"finger" `
+	Port      string      `gorm:"column:port" json:"port" `
+	Cert      string      `gorm:"column:cert" json:"cert" `
+	RunTaskID string      `gorm:"column:run_task_id" json:"run_task_id"`
+	Matched   MatchStatus `gorm:"column:matched" json:"matched"`
+	Dealed    DealStatus  `gorm:"column:dealed" json:"dealed"`
+	Remark    string      `gorm:"column:remark" json:"remark"`
+	Ctime     LocalTime   `gorm:"column:create_time" json:"create_time"`
+	Utime     LocalTime   `gorm:"column:update_time" json:"update_time"`
+	D         int         `gorm:"column:is_deleted" json:"is_deleted"`
+
+	// Utime   string `gorm:"column:update_time" json:"update_time"`
+	// Type    string `gorm:"column:type" json:"type" `
+}
+
 type MatchStatus int
 
 const (
