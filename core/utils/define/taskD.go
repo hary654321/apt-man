@@ -123,6 +123,7 @@ type GetTask struct {
 	CreateByUID       string        `json:"create_byuid"`
 	HostGroup         string        `json:"host_group" comment:"主机组"`
 	HostGroupID       string        `json:"host_groupid"`
+	Priority          string        `json:"priority" comment:"优先级"`
 	Cronexpr          string        `json:"cronexpr" comment:"CronExpr"`
 	Timeout           int           `json:"timeout" comment:"超时时间"`
 	Threads           int           `json:"threads" comment:"超时时间"`
@@ -261,14 +262,15 @@ type Task struct {
 	TaskType          TaskType `gorm:"column:taskType"  json:"task_type"  binding:"required" ` // 任务类型
 	Ip                string   `gorm:"column:ip"  json:"ip" binding:"required"  `              // 任务数据
 	Port              string   `gorm:"column:port"  json:"port" `
-	Run               bool     `gorm:"column:run" json:"run" `                             // 是否可以自动调度  如果为false则只能手动或者被其他任务依赖运行
+	Run               int      `gorm:"column:run" json:"run" `                             // 是否可以自动调度  如果为false则只能手动或者被其他任务依赖运行
 	ParentRunParallel bool     `gorm:"column:parentRunParallel" json:"parent_runparallel"` // 是否以并行运行父任务 0否 1是
 	ChildRunParallel  bool     `gorm:"column:childRunParallel" json:"child_runparallel"`   // 是否以并行运行子任务 否 1是
 	// CreateBy          string      `gorm:"column:create_by" json:"create_by"`                                 // 创建人
 	CreateByUID string `gorm:"column:createByID" json:"create_byuid"` // 创建人ID
 	// HostGroup    string      `gorm:"column:host_group" json:"host_group" `                              // 主机组
-	HostGroupID string      `gorm:"column:hostGroupID" json:"host_groupid" binding:"required"`      // 主机组ID
-	Cronexpr    string      `gorm:"column:cronExpr" json:"cronexpr" binding:"max=1000"`             // 执行任务表达式
+	HostGroupID string      `gorm:"column:hostGroupID" json:"host_groupid" binding:"required"` // 主机组ID
+	Cronexpr    string      `gorm:"column:cronExpr" json:"cronexpr" binding:"max=1000"`        // 执行任务表达式
+	Priority    int         `gorm:"column:priority" json:"priority" binding:"required,min=-1"`
 	Timeout     int         `gorm:"column:timeout" json:"timeout" binding:"required,min=-1"`        // 任务超时时间 (s) -1 no limit
 	RoutePolicy RoutePolicy `gorm:"column:routePolicy" json:"route_policy" "required,min=1,max=4" ` // how to select a run worker from hostgroup
 	//ExpectCode        int         `json:"expect_code"`                                  // expect task return code. if not set 0 or 200

@@ -18,6 +18,7 @@ import (
 	"zrDispatch/core/middleware"
 	"zrDispatch/core/model"
 	"zrDispatch/core/schedule"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 	"zrDispatch/core/utils/resp"
 
@@ -80,7 +81,6 @@ func CreateTask(c *gin.Context) {
 		return
 	}
 	// task.CreateByUID = c.GetString("uid")
-	task.Run = true
 	task.ID = utils.GetID()
 	task.CreateByUID = c.GetString("uid")
 	err = models.AddTask(task)
@@ -124,6 +124,8 @@ func ChangeTask(c *gin.Context) {
 
 	task := define.ChangeTask{}
 	err := c.ShouldBindJSON(&task)
+
+	slog.Println(slog.DEBUG, task.Run)
 	if err != nil {
 		log.Error("ShouldBindJSON failed", zap.Error(err))
 		resp.JSON(c, resp.ErrBadRequest, nil)
@@ -180,21 +182,41 @@ func ChangeTask(c *gin.Context) {
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
-	event := schedule.EventData{
-		TaskID: task.ID,
-		TE:     schedule.AddEvent,
-	}
-	res, err := json.Marshal(event)
-	if err != nil {
-		log.Error("json.Marshal failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
-		return
-	}
-	schedule.Cron2.PubTaskEvent(res)
+
+	changeRun(task.ID, task.Run)
 	//schedule.Cron.Add(task.ID, task.Name, task.Cronexpr,
 	//	schedule.GetRoutePolicy(task.HostGroupID, task.RoutePolicy))
 
 	resp.JSON(c, resp.Success, nil)
+	return
+}
+
+func changeRun(taskId string, run int) {
+	if run == 1 {
+		event := schedule.EventData{
+			TaskID: taskId,
+			TE:     schedule.ChangeEvent,
+		}
+		res, err := json.Marshal(event)
+		if err != nil {
+			log.Error("json.Marshal failed", zap.Error(err))
+			return
+		}
+		schedule.Cron2.PubTaskEvent(res)
+	} else {
+		event := schedule.EventData{
+			TaskID: taskId,
+			TE:     schedule.DeleteEvent,
+		}
+		res, err := json.Marshal(event)
+		if err != nil {
+			log.Error("json.Marshal failed", zap.Error(err))
+			return
+		}
+		schedule.Cron2.PubTaskEvent(res)
+
+	}
+
 }
 
 // DeleteTask delete task
@@ -901,7 +923,7 @@ func CloneTask(c *gin.Context) {
 	taskInfo.ID = utils.GetID()
 	taskInfo.Name = task.Name
 	taskInfo.CreateByUID = c.GetString("uid")
-	taskInfo.Run = false
+	taskInfo.Run = 0
 
 	err = models.AddTask(*taskInfo)
 

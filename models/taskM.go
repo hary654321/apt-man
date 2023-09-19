@@ -18,7 +18,9 @@ func AddTask(data define.CreateTask) error {
 
 func EditTask(pge define.ChangeTask) error {
 
-	res := db.Table("task").Select("TaskType", "ip", "port", "cronExpr", "timeout", "routePolicy", "remark", "probeId", "plug", "hostGroupID", "run", "threads", "name").Model(&define.ChangeTask{}).Where("id = ?", pge.ID).Updates(pge)
+	slog.Println(slog.DEBUG, pge.Run)
+
+	res := db.Table("task").Select("TaskType", "ip", "port", "cronExpr", "timeout", "routePolicy", "remark", "probeId", "plug", "hostGroupID", "run", "threads", "name", "priority").Model(&define.ChangeTask{}).Where("id = ?", pge.ID).Updates(pge)
 
 	return res.Error
 }
