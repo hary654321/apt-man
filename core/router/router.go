@@ -140,6 +140,7 @@ func NewHTTPRouter() *http.Server {
 		rt.GET("/select", task.GetSelect)
 		rt.GET("/stop", task.Stop)
 		rt.GET("/report", task.Report)
+		rt.GET("/exportDoc", task.ExportDoc)
 	}
 	rh := v1.Group("/host")
 	{

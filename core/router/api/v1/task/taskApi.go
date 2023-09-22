@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 	"zrDispatch/models"
@@ -1045,4 +1046,18 @@ func Report(c *gin.Context) {
 	data["port_count"] = len(utils.GetAddrs(task.Ip, task.Port))
 	resp.JSON(c, resp.Success, data)
 
+}
+
+func ExportDoc(c *gin.Context) {
+
+	file, err := os.Open("test.docx")
+	if err != nil {
+		resp.JSONNew(c, resp.ErrBadRequest, "文件不存在")
+		return
+	}
+	defer file.Close()
+
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "test.docx"))
+	c.Header("Content-Type", "application/octet-stream") // Set Content-Type to audio/mpeg
+	io.Copy(c.Writer, file)
 }
