@@ -101,16 +101,16 @@ type Common struct {
 
 // User Struct
 type User struct {
-	Role      Role     `json:"role"`                               // 用户类型: 1 普通用户 2 管理员 3访客
-	Roles     []string `json:"roles"`                              // 管理员
-	RoleStr   string   `json:"rolestr,omitempty" comment:"用户类型"`   // 用户类型
-	Forbid    bool     `json:"forbid" comment:"禁止用户"`              // 禁止用户登陆
-	Password  string   `json:"password,omitempty" comment:"密码"`    // 用户密码
-	Email     string   `json:"email" binding:"email" comment:"邮箱"` // 用户邮箱 日后任务的通知信息会发送给此邮件
-	WeChat    string   `json:"wechat" comment:"WeChat"`            // wechat id
-	DingPhone string   `json:"dingphone" comment:"钉钉"`             // dingding phone
-	Slack     string   `json:"slack" comment:"Slack"`              // slack user name
-	Telegram  string   `json:"telegram" comment:"Telegram"`        // telegram bot chat id
+	Role     Role     `json:"role"`                             // 用户类型: 1 普通用户 2 管理员 3访客
+	Roles    []string `json:"roles"`                            // 管理员
+	RoleStr  string   `json:"rolestr,omitempty" comment:"用户类型"` // 用户类型
+	Forbid   bool     `json:"forbid" comment:"禁止用户"`            // 禁止用户登陆
+	Password string   `json:"password,omitempty" comment:"密码"`  // 用户密码
+	// Email     string   `json:"email" binding:"email" comment:"邮箱"` // 用户邮箱 日后任务的通知信息会发送给此邮件
+	// WeChat    string   `json:"wechat" comment:"WeChat"`            // wechat id
+	// DingPhone string   `json:"dingphone" comment:"钉钉"`             // dingding phone
+	Slack string `json:"slack" comment:"Slack"` // slack user name
+	// Telegram  string   `json:"telegram" comment:"Telegram"`        // telegram bot chat id
 	Common
 }
 
@@ -139,14 +139,14 @@ type AdminChangeUser struct {
 
 // ChangeUserSelf change self's config
 type ChangeUserSelf struct {
-	ID        string `json:"id"  binding:"required"`  // user id
-	Name      string `json:"name" binding:"required"` // 用户名称
-	Email     string `json:"email"`                   // 用户邮箱
-	WeChat    string `json:"wechat"`                  // wechat id
-	DingPhone string `json:"dingphone"`               // dingding phone
-	Telegram  string `json:"telegram"`                // telegram bot chat id
-	Password  string `json:"password"`
-	Remark    string `json:"remark"`
+	ID   string `json:"id"  binding:"required"`  // user id
+	Name string `json:"name" binding:"required"` // 用户名称
+	// Email     string `json:"email"`                   // 用户邮箱
+	// WeChat    string `json:"wechat"`                  // wechat id
+	// DingPhone string `json:"dingphone"`               // dingding phone
+	// Telegram  string `json:"telegram"`                // telegram bot chat id
+	Password string `json:"password"`
+	Remark   string `json:"remark"`
 }
 
 // Log task log

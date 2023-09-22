@@ -108,10 +108,6 @@ func getusers(ctx context.Context, uids []string, name string, offset, limit int
 					role,
 					forbid,
 					hashpassword,
-					email,
-					wechat,
-					dingphone,
-					telegram,
 					remark,
 					createTime,
 					updateTime
@@ -173,10 +169,6 @@ func getusers(ctx context.Context, uids []string, name string, offset, limit int
 			&user.Role,
 			&user.Forbid,
 			&user.Password,
-			&user.Email,
-			&user.WeChat,
-			&user.DingPhone,
-			&user.Telegram,
 			&user.Remark,
 			&createTime,
 			&updateTime,
@@ -310,7 +302,7 @@ func AdminChangeUser(ctx context.Context, id string, role define.Role, forbid bo
 
 // ChangeUserInfo user change self's config define.ChangeUserSelf
 // func ChangeUserInfo(ctx context.Context, id string, changeinfo *define.ChangeUserSelf) error {
-func ChangeUserInfo(ctx context.Context, id, name, email, wechat, dingding, telegram, password, remark string) error {
+func ChangeUserInfo(ctx context.Context, id, name, password, remark string) error {
 	var (
 		changeuser   string
 		hashpassword string
@@ -353,10 +345,6 @@ func ChangeUserInfo(ctx context.Context, id, name, email, wechat, dingding, tele
 
 	_, err = stmt.ExecContext(ctx, hashpassword,
 		name,
-		email,
-		wechat,
-		dingding,
-		telegram,
 		updateTime,
 		remark,
 		id,

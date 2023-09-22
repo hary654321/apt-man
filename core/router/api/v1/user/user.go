@@ -196,10 +196,6 @@ func ChangeUserInfo(c *gin.Context) {
 	err = model.ChangeUserInfo(ctx,
 		uid,
 		newinfo.Name,
-		newinfo.Email,
-		newinfo.WeChat,
-		newinfo.DingPhone,
-		newinfo.Telegram,
 		newinfo.Password,
 		newinfo.Remark)
 	if err != nil {

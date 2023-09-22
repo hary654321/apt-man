@@ -177,24 +177,24 @@ func sendalarm(notifyuids []string, taskname, taskid, starttime, endtime, status
 	alarmSlack := make([]string, 0, len(alarmusers)) // tg
 	alarmTelegram := make([]string, 0, len(alarmusers))
 
-	for _, user := range alarmusers {
-		if user.Email != "" {
-			alarmEmail = append(alarmEmail, user.Email)
-		}
-		if user.WeChat != "" {
-			alarmWeChat = append(alarmWeChat, user.WeChat)
-		}
-		if user.DingPhone != "" {
-			alarmDingDing = append(alarmDingDing, user.DingPhone)
-		}
-		if user.Slack != "" {
-			alarmSlack = append(alarmSlack, user.Slack)
-		}
-		if user.Telegram != "" {
-			alarmTelegram = append(alarmTelegram, user.Telegram)
-		}
-		alarmUsernNames = append(alarmUsernNames, user.Name)
-	}
+	// for _, user := range alarmusers {
+	// 	if user.Email != "" {
+	// 		alarmEmail = append(alarmEmail, user.Email)
+	// 	}
+	// 	if user.WeChat != "" {
+	// 		alarmWeChat = append(alarmWeChat, user.WeChat)
+	// 	}
+	// 	if user.DingPhone != "" {
+	// 		alarmDingDing = append(alarmDingDing, user.DingPhone)
+	// 	}
+	// 	if user.Slack != "" {
+	// 		alarmSlack = append(alarmSlack, user.Slack)
+	// 	}
+	// 	if user.Telegram != "" {
+	// 		alarmTelegram = append(alarmTelegram, user.Telegram)
+	// 	}
+	// 	alarmUsernNames = append(alarmUsernNames, user.Name)
+	// }
 
 	notifymsg := notifymsg{
 		TaskName:       taskname,

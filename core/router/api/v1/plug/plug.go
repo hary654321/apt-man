@@ -33,7 +33,7 @@ func CreatePlug(c *gin.Context) {
 		Status:   define.PLUG_JYZ,
 	}
 
-	res := models.GetPlugInfoByName(pi.Name)
+	res := models.GetPlugInfoByName(pi.Name, "")
 
 	if res.Name != "" {
 		resp.JSON(c, resp.PnameExits, nil)
@@ -114,7 +114,7 @@ func EditPlug(c *gin.Context) {
 		ID:   c.PostForm("id"),
 	}
 
-	res := models.GetPlugInfoByName(pi.Name)
+	res := models.GetPlugInfoByName(pi.Name, pi.ID)
 
 	if res.Name != "" {
 		resp.JSON(c, resp.PnameExits, nil)
@@ -138,8 +138,9 @@ func EditPlug(c *gin.Context) {
 		resp.JSON(c, resp.AddFail, serr.Error())
 		return
 	}
-
-	go checkPlug(pi.Name, f.Filename)
+	if f != nil {
+		go checkPlug(pi.Name, f.Filename)
+	}
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{
 		"code": code,

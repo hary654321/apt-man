@@ -39,10 +39,10 @@ func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugIn
 	return
 }
 
-func GetPlugInfoByName(name string) (PlugMatch define.PlugInfoAdd) {
+func GetPlugInfoByName(name string, id string) (PlugMatch define.PlugInfoAdd) {
 	dbTmp := db.Table("plug")
 
-	dbTmp.Where("name = ?", name).Take(&PlugMatch)
+	dbTmp.Where("name = ?", name).Where("id != ?", id).Take(&PlugMatch)
 
 	return
 }
