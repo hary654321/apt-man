@@ -83,6 +83,10 @@ const (
 	TASK_STATUS_DONE
 
 	TASK_STATUS_Fail
+
+	TASK_STATUS_STOP
+
+	TASK_STATUS_GQ
 )
 
 func (s TaskOneStatus) String() string {
@@ -95,6 +99,10 @@ func (s TaskOneStatus) String() string {
 		return "执行完成"
 	case TASK_STATUS_Fail:
 		return "执行失败"
+	case TASK_STATUS_STOP:
+		return "终止执行"
+	case TASK_STATUS_GQ:
+		return "挂起"
 	default:
 		return "unknow"
 	}

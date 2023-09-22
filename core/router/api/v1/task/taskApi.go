@@ -83,25 +83,13 @@ func CreateTask(c *gin.Context) {
 	// task.CreateByUID = c.GetString("uid")
 	task.ID = utils.GetID()
 	task.CreateByUID = c.GetString("uid")
+	task.Run = 0
 	err = models.AddTask(task)
 	if err != nil {
 		log.Error("CreateTask failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
-
-	event := schedule.EventData{
-		TaskID: task.ID,
-		TE:     schedule.AddEvent,
-	}
-	res, err := json.Marshal(event)
-	if err != nil {
-		log.Error("json.Marshal failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
-		return
-	}
-
-	schedule.Cron2.PubTaskEvent(res)
 
 	//log.Debug("start Add Schedule Cron", zap.String("taskid", id))
 	//schedule.Cron.Add(id, task.Name, task.Cronexpr,
@@ -412,7 +400,11 @@ func Changestate(c *gin.Context) {
 		resp.JSON(c, resp.ErrBadRequest, nil)
 		return
 	}
-	err = models.ChangeTaskState(runtask.ID, runtask.RUN)
+	run := 0
+	if runtask.RUN > 0 {
+		run = 1
+	}
+	err = models.ChangeTaskRun(runtask.ID, run)
 
 	if err != nil {
 		log.Error("修改失败", zap.Error(err))
@@ -421,6 +413,8 @@ func Changestate(c *gin.Context) {
 	}
 
 	if runtask.RUN == 1 {
+
+		models.ChangeTaskStatus(runtask.ID, define.TASK_STATUS_RUNING)
 		event := schedule.EventData{
 			TaskID: runtask.ID,
 			TE:     schedule.ChangeEvent,
@@ -443,6 +437,18 @@ func Changestate(c *gin.Context) {
 			resp.JSON(c, resp.ErrInternalServer, nil)
 			return
 		}
+
+		status := define.TASK_STATUS_INIT
+		if runtask.RUN == -1 {
+			status = define.TASK_STATUS_STOP
+		}
+
+		if runtask.RUN == 0 {
+			status = define.TASK_STATUS_GQ
+		}
+
+		models.ChangeTaskStatus(runtask.ID, status)
+
 		schedule.Cron2.PubTaskEvent(res)
 	}
 	resp.JSON(c, resp.Success, nil)

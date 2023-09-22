@@ -215,3 +215,37 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 
 	return nil
 }
+
+func Stop(hostInfo *define.Host, taskdata *define.DetailTask) error {
+
+	var reqD RequestData
+	reqD.TaskId = taskdata.RunTaskId
+
+	//base64的payload
+	// slog.Println(slog.DEBUG, "===任务开始===", reqD.Payload)
+	jsonData, _ := sonic.Marshal(&reqD)
+
+	// slog.Println(slog.DEBUG, string(jsonData))
+
+	var responseJson ResponseJson
+
+	url := getUrl(hostInfo.Ip, hostInfo.ServicePort, "/v1/"+taskdata.TaskType.Value()+"/stop")
+
+	body, err := Send(url, string(jsonData))
+
+	if err != nil {
+		slog.Println(slog.DEBUG, "err", zap.Error(err))
+		return err
+	}
+
+	if err = json.Unmarshal(body, &responseJson); err != nil {
+		slog.Println(slog.DEBUG, "json读取失败==", zap.Error(err))
+		return err
+	}
+
+	if responseJson.Code != 200 {
+		slog.Println(slog.DEBUG, "===任务返回错误:"+responseJson.Msg)
+		return err
+	}
+	return nil
+}

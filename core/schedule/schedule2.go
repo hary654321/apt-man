@@ -737,8 +737,8 @@ func (t *task2) runMultiTasks(ctx context.Context, RunParallel bool,
 }
 
 // start run task,log will store
-func (t *task2) runTask(ctx context.Context, /*real run task id*/
-	id string, taskruntype define.TaskRespType) error {
+func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskRespType) error {
+	t.status = define.TASK_STATUS_RUNING
 	var (
 		// error
 		err error
@@ -813,7 +813,7 @@ func (t *task2) runTask(ctx context.Context, /*real run task id*/
 		err := client.RunTask(hostInfo, taskdata)
 		if err == nil {
 			model.UpdateTaskStatus(context.Background(), taskdata.ID, 1, define.TASK_STATUS_RUNING)
-			go GetRes(hostInfo, taskdata)
+			go t.GetRes(hostInfo, taskdata)
 			go plugs(taskdata)
 		} else {
 			if taskdata.Cronexpr == "" {
@@ -905,10 +905,22 @@ func plug(taskdata *define.DetailTask, pid string) {
 	return
 }
 
+func (t *task2) stop() {
+	t.status = define.TASK_STATUS_STOP
+}
+
 // 获取任务的结果
-func GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
+func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 	time.Sleep(4 * time.Second)
 	for {
+		if t.status != define.TASK_STATUS_RUNING {
+			slog.Println(slog.DEBUG, "任务终止了", t.status, "====", define.TASK_STATUS_RUNING)
+
+			client.Stop(hostInfo, taskdata)
+
+			models.ChangeTaskRun(taskdata.ID, 0)
+			return
+		}
 		res, err := client.GetTaskPress(hostInfo, taskdata)
 		if err != nil {
 			slog.Println(slog.DEBUG, "任务出问题了：不再重试===", hostInfo.Ip, taskdata.RunTaskId, err)
@@ -936,7 +948,7 @@ func GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 			slog.Println(slog.DEBUG, "ProbeId", taskdata.ProbeId)
 			if taskdata.TaskType == define.TYPE_PORT && taskdata.ProbeId[0] != "" {
 				taskdata.TaskType = define.TYPE_PROBE
-				GetRes(hostInfo, taskdata)
+				t.GetRes(hostInfo, taskdata)
 			} else {
 				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
 
@@ -1071,11 +1083,14 @@ func (s *cacheSchedule2) deletetask(taskid string) {
 // killTask will stop running task
 func (s *cacheSchedule2) killtask(taskid string) {
 	task, exist := s.gettask(taskid)
+	task.stop()
+	slog.Println(slog.WARN, "停止任务", task, exist)
 	if !exist {
 		log.Warn("stoptask failed,task is not exist", zap.String("taskid", taskid))
 		return
 	}
 	if task.ctxcancel != nil {
+		slog.Println(slog.WARN, "停止任务")
 		task.ctxcancel()
 	}
 }
