@@ -104,7 +104,7 @@ func toProbeCsv(data []define.ProbeInfoRes, name string) (string, error) {
 	//写入UTF-8 BOM,此处如果不写入就会导致写入的汉字乱码
 	xlsFile.WriteString("\xEF\xBB\xBF")
 	wStr := csv.NewWriter(xlsFile)
-	wStr.Write([]string{"探针名称", "探针组", "协议", "匹配类型", "请求载荷", "结果匹配", "描述"})
+	wStr.Write([]string{"规则名称", "规则组", "协议", "匹配类型", "请求载荷", "结果匹配", "描述"})
 
 	for _, s := range data {
 		wStr.Write([]string{s.Name, s.Group, s.Pro, s.MT, s.Send, s.Recv, s.Desc})

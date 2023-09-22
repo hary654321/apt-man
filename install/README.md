@@ -77,11 +77,11 @@ chmod +x install.sh
 
 ### 初始化的数据
 
-探针 
+规则 
 
 ![Alt text](./img/%E6%8E%A2%E9%92%88%E5%88%97%E8%A1%A8.png)
 
-探针分组
+规则分组
 
 ![Alt text](./img/%E6%8E%A2%E9%92%88%E5%88%86%E7%BB%84.png)
 

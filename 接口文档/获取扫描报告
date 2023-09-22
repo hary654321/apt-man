@@ -20,14 +20,14 @@
 |name |是  |string |任务名称   |
 |ip |是 |string |填写IP地址或IP段，支持单个IP、CIDR或IP范围，多个条目之间使用逗号连接，如:1.1.1.1,1.1.1.1/24,1.1.1.1-1.1.1.3  |
 |port |否  |string |填写多个端口或端口范围，多个条目之间使用逗号连接，如22,80,443,8080-8088;可使用TOP100、TOP1000，默认为22,80,443 |
-|task_type |是  |int | 1端口扫描  2探针扫描 3 nmap扫描|
+|task_type |是  |int | 1端口扫描  2规则扫描 3 nmap扫描|
 |host_groupid |是  |string | 任务执行的机器组id|
 |timeout     |是  |int | 扫描 超时时间  单位秒    |
 |threads     |是  |int | 扫描的并发线程 |
 |cronexpr     |否  |string | Cron表达式/不填为一次性任务 |
 |route_policy     |是  |int | 1随机 2轮询 3权重|
 |cronexpr     |否  |string | Cron表达式/不填为一次性任务 |
-|probeId     |否  |array | 要使用的探针ID |
+|probeId     |否  |array | 要使用的规则ID |
 ##### 参数示例
 ```
 {

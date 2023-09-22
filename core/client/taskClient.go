@@ -154,7 +154,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 
 	// fmt.Println("%#", responseJson)
 
-	//探针的结果
+	//规则的结果
 	if responseJson.Code == 200 && len(responseJson.Data) > 0 {
 		for _, obj := range responseJson.Data {
 			if obj.ProbeResult.ResPlain != "" {
