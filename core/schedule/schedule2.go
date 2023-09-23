@@ -57,12 +57,12 @@ type task2 struct {
 	sync.RWMutex               // lock
 	redis        *redis.Client // redis client
 	once         sync.Once     //
-
-	errTaskID   string              // run fail task's id
-	errTask     string              // run fail task's id
-	errCode     int                 // failed task return code
-	errMsg      string              // task run failed errmsg
-	errTasktype define.TaskRespType // failed task type
+	Priority     int
+	errTaskID    string              // run fail task's id
+	errTask      string              // run fail task's id
+	errCode      int                 // failed task return code
+	errMsg       string              // task run failed errmsg
+	errTasktype  define.TaskRespType // failed task type
 }
 
 const (
@@ -850,22 +850,6 @@ func plug(taskdata *define.DetailTask, pid string) {
 
 	slog.Println(slog.WARN, "path", path)
 
-	// succRun := 0
-	// if taskdata.Cronexpr != "" {
-	// 	succRun = 1
-	// }
-	// if err == nil {
-	// 	// 更新任务状态
-	// 	slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
-	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, succRun, define.TASK_STATUS_DONE)
-
-	// 	models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
-	// } else {
-	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
-
-	// 	models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
-	// }
-
 	xml := utils.Read(path)
 
 	mewXml := ""
@@ -889,18 +873,6 @@ func plug(taskdata *define.DetailTask, pid string) {
 
 	// 保存结果
 	models.AddPlugRes(data)
-
-	// if err == nil {
-	// 	// 更新任务状态
-	// 	slog.Println(slog.DEBUG, taskdata.ID, "修改状态")
-	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, succRun, define.TASK_STATUS_DONE)
-
-	// 	models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
-	// } else {
-	// 	model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
-
-	// 	models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
-	// }
 
 	return
 }
@@ -949,11 +921,10 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 			if taskdata.TaskType == define.TYPE_PORT && taskdata.ProbeId[0] != "" {
 				taskdata.TaskType = define.TYPE_PROBE
 				t.GetRes(hostInfo, taskdata)
-			} else {
+			} else if taskdata.Cronexpr == "" {
 				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
-
-				models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			}
+			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			break
 		}
 		time.Sleep(3 * time.Second)
@@ -1022,7 +993,7 @@ func Init2() error {
 	}
 	log.Debug("start init task", zap.Int("task", len(eps)))
 	for _, t := range eps {
-		Cron2.addtask(t.ID, t.Name, t.Cronexpr, GetRoutePolicy(t.HostGroupID, t.RoutePolicy), t.Run, t.Status)
+		Cron2.addtask(t.ID, t.Name, t.Cronexpr, GetRoutePolicy(t.HostGroupID, t.RoutePolicy), t.Run, t.Status, t.Priority)
 	}
 
 	go RecvEvent()
@@ -1031,7 +1002,7 @@ func Init2() error {
 }
 
 // Add task to schedule
-func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next Next, canrun bool, status define.TaskOneStatus) {
+func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next Next, canrun bool, status define.TaskOneStatus, Priority int) {
 	log.Debug("start add task", zap.String("taskid", taskid), zap.String("taskname", taskname))
 
 	oldtask, exist := s.gettask(taskid)
@@ -1051,9 +1022,30 @@ func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next 
 		canrun:   canrun,
 		status:   status,
 		redis:    s.redis,
+		Priority: Priority,
 	}
 	s.Lock()
+
+	if t.cronexpr == "" {
+		loop := true
+		for loop {
+			loop = false
+			for key, ot := range s.ts {
+				fmt.Println("Key:", key, "Value:", ot)
+
+				//有优先级高的
+				if ot.status == define.TASK_STATUS_RUNING && ot.Priority > t.Priority && ot.cronexpr == "" {
+					slog.Println(slog.DEBUG, ot)
+					loop = true
+					break
+				}
+			}
+			time.Sleep(3 * time.Second)
+		}
+	}
 	s.ts[taskid] = &t
+
+	models.ChangeTaskStatus(taskid, define.TASK_STATUS_RUNING)
 	s.Unlock()
 	go s.runSchedule(taskid)
 }

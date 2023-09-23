@@ -8,7 +8,7 @@ func GetOneLog(runTaskId string) (log define.Log) {
 }
 
 func UpdatePress(runTaskId string, p int) error {
-	res := db.Table("log").Where("runTaskId = ? ", runTaskId).Update("progress", p)
+	res := db.Table("log").Where("runTaskId = ? ", runTaskId).Where("progress <= ?", p).Update("progress", p)
 	return res.Error
 }
 

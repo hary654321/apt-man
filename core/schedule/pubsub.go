@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 
-	"go.uber.org/zap"
 	"zrDispatch/common/log"
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
+
+	"go.uber.org/zap"
 )
 
 // TaskEvent task event
@@ -67,7 +69,8 @@ func dealEvent(data []byte) {
 			log.Error("model.GetTaskByID failed", zap.Error(err))
 			return
 		}
-		Cron2.addtask(task.ID, task.Name, task.Cronexpr, GetRoutePolicy(task.HostGroupID, task.RoutePolicy), task.Run, task.Status)
+		slog.Println(slog.WARN, "ChangeEvent")
+		Cron2.addtask(task.ID, task.Name, task.Cronexpr, GetRoutePolicy(task.HostGroupID, task.RoutePolicy), task.Run, task.Status, task.Priority)
 	case DeleteEvent:
 		Cron2.deletetask(subdata.TaskID)
 	case RunEvent:

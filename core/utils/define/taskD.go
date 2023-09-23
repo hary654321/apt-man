@@ -87,6 +87,8 @@ const (
 	TASK_STATUS_STOP
 
 	TASK_STATUS_GQ
+
+	TASK_STATUS_WAIT
 )
 
 func (s TaskOneStatus) String() string {
@@ -103,6 +105,8 @@ func (s TaskOneStatus) String() string {
 		return "终止执行"
 	case TASK_STATUS_GQ:
 		return "挂起"
+	case TASK_STATUS_WAIT:
+		return "待执行"
 	default:
 		return "unknow"
 	}
@@ -131,7 +135,7 @@ type GetTask struct {
 	CreateByUID       string        `json:"create_byuid"`
 	HostGroup         string        `json:"host_group" comment:"主机组"`
 	HostGroupID       string        `json:"host_groupid"`
-	Priority          string        `json:"priority" comment:"优先级"`
+	Priority          int           `json:"priority" comment:"优先级"`
 	Cronexpr          string        `json:"cronexpr" comment:"CronExpr"`
 	Timeout           int           `json:"timeout" comment:"超时时间"`
 	Threads           int           `json:"threads" comment:"超时时间"`

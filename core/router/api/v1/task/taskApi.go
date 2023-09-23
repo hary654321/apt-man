@@ -415,7 +415,7 @@ func Changestate(c *gin.Context) {
 
 	if runtask.RUN == 1 {
 
-		models.ChangeTaskStatus(runtask.ID, define.TASK_STATUS_RUNING)
+		models.ChangeTaskStatus(runtask.ID, define.TASK_STATUS_WAIT)
 		event := schedule.EventData{
 			TaskID: runtask.ID,
 			TE:     schedule.ChangeEvent,

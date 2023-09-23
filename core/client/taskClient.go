@@ -143,7 +143,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 		return err
 	}
 
-	slog.Println(slog.DEBUG, hostInfo.Ip, "====", string(body))
+	// slog.Println(slog.DEBUG, hostInfo.Ip, "====", string(body))
 
 	var responseJson *define.TaskRes
 
