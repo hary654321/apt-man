@@ -1030,12 +1030,10 @@ func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next 
 		loop := true
 		for loop {
 			loop = false
-			for key, ot := range s.ts {
-				fmt.Println("Key:", key, "Value:", ot)
-
+			for _, ot := range s.ts {
 				//有优先级高的
 				if ot.status == define.TASK_STATUS_RUNING && ot.Priority > t.Priority && ot.cronexpr == "" {
-					slog.Println(slog.DEBUG, ot)
+					slog.Println(slog.DEBUG, t.name, "====等待===", ot.name, "执行中")
 					loop = true
 					break
 				}
