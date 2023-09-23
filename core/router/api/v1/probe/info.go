@@ -48,6 +48,37 @@ func CreateProbe(c *gin.Context) {
 	resp.JSON(c, resp.Success, nil)
 }
 
+func CreateProbeMul(c *gin.Context) {
+
+	pi := []define.ProbeInfoAdd{}
+
+	err := c.ShouldBindJSON(&pi)
+	if err != nil {
+		log.Error("ShouldBindJSON failed", zap.Error(err))
+		resp.JSON(c, resp.ProbeInfoAdd, nil)
+		return
+	}
+
+	utils.WriteJsonLog(pi)
+
+	for _, v := range pi {
+		res := models.GetProbeInfoByName(v.Name)
+
+		if res.Name != "" {
+			continue
+		}
+
+		err = models.AddProbeInfo(v)
+	}
+
+	if err != nil {
+		resp.JSON(c, resp.AddFail, err.Error())
+		return
+	}
+
+	resp.JSON(c, resp.Success, nil)
+}
+
 func GetProbe(c *gin.Context) {
 
 	query := ginhelp.GetQueryParams(c)

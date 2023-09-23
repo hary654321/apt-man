@@ -97,6 +97,7 @@ func NewHTTPRouter() *http.Server {
 	pi := v1.Group("/probeinfo")
 	{
 		pi.POST("", probe.CreateProbe)
+		pi.POST("json", probe.CreateProbeMul)
 		pi.GET("", probe.GetProbe)
 		pi.GET("select", probe.GetPiSelect)
 		pi.DELETE("", probe.DelProbe)
