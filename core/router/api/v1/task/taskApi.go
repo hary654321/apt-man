@@ -11,6 +11,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"zrDispatch/core/doc"
 	"zrDispatch/models"
 
 	"zrDispatch/common/log"
@@ -1050,14 +1051,30 @@ func Report(c *gin.Context) {
 
 func ExportDoc(c *gin.Context) {
 
-	file, err := os.Open("test.docx")
+	taskId := c.Query("id")
+	data := make(map[string]interface{})
+	task, _ := models.GetTaskByID(taskId)
+	port_list := models.GetTaskPortRes(taskId)
+
+	data["port_list"] = port_list
+	data["live_port"] = len(port_list)
+	data["plug_list"] = models.GetTaskPlugRes(taskId)
+	data["probe_list"] = models.GetTaskProbe(taskId)
+	data["ip_count"] = len(utils.GetIpArr(task.Ip))
+	data["live_ip_count"] = models.GetTaskLiveIpCount(taskId)
+	data["match_ip_count"] = models.GetTaskMatchIpCount(taskId)
+	data["port_count"] = len(utils.GetAddrs(task.Ip, task.Port))
+
+	doc.ExportDoc(task, data)
+
+	file, err := os.Open("./report/" + task.Name + ".docx")
 	if err != nil {
 		resp.JSONNew(c, resp.ErrBadRequest, "文件不存在")
 		return
 	}
 	defer file.Close()
 
-	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", "test.docx"))
-	c.Header("Content-Type", "application/octet-stream") // Set Content-Type to audio/mpeg
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", task.Name+".docx"))
+	c.Header("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document") // Set Content-Type to audio/mpeg
 	io.Copy(c.Writer, file)
 }
