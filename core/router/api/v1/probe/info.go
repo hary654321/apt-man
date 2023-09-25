@@ -178,7 +178,7 @@ func ExportProbeCsv(c *gin.Context) {
 		resp.JSON(c, resp.Nodata, nil)
 	}
 
-	filename, err := toProbeCsv(data, "匹配结果")
+	filename, err := toProbeCsv(data, "ExportProbeCsv")
 
 	if err != nil {
 		slog.Println(slog.DEBUG, "t.toCsv() failed == ", err)
@@ -186,15 +186,15 @@ func ExportProbeCsv(c *gin.Context) {
 	if filename == "" {
 		slog.Println(slog.DEBUG, "export excel file failed == ", filename)
 	}
-	defer func() {
-		err := os.Remove("./" + filename) //下载后，删除文件
-		if err != nil {
-			slog.Println(slog.DEBUG, "remove  excel file failed", err)
-		}
-	}()
+	// defer func() {
+	// 	err := os.Remove("./" + filename) //下载后，删除文件
+	// 	if err != nil {
+	// 		slog.Println(slog.DEBUG, "remove  excel file failed", err)
+	// 	}
+	// }()
 	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
-	c.Writer.Header().Add("Content-Type", "application/octet-stream") //设置下载文件格式，流式下载
-	c.File("./" + filename)                                           //直接返回文件
+	c.Writer.Header().Add("Content-Type", "text/csv") //设置下载文件格式，流式下载
+	c.File("./" + filename)                           //直接返回文件
 
 }
 
@@ -225,7 +225,7 @@ func toProbeCsv(data []define.ProbeRes, name string) (string, error) {
 
 func ExportTem(c *gin.Context) {
 
-	filename, err := toCsv("上传模版")
+	filename, err := toCsv("ExportTem")
 
 	if err != nil {
 		slog.Println(slog.DEBUG, "t.toCsv() failed == ", err)
