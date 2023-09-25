@@ -293,16 +293,16 @@ func AdminDeleteUser(c *gin.Context) {
 		return
 	}
 	// 只能删除普通用户，不能删除admin用户
-	userinfo, err := model.GetUserByID(ctx, user.ID)
-	if err != nil {
-		log.Error("GetUserByID failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
-		return
-	}
-	if userinfo.Role == define.AdminUser {
-		resp.JSON(c, resp.ErrAcl, nil)
-		return
-	}
+	// userinfo, err := model.GetUserByID(ctx, user.ID)
+	// if err != nil {
+	// 	log.Error("GetUserByID failed", zap.Error(err))
+	// 	resp.JSON(c, resp.ErrInternalServer, nil)
+	// 	return
+	// }
+	// if userinfo.Role == define.AdminUser {
+	// 	resp.JSON(c, resp.ErrAcl, nil)
+	// 	return
+	// }
 	// TODO only admin
 	exist, err := model.Check(ctx, model.TBUser, model.ID, user.ID)
 	if err != nil {
