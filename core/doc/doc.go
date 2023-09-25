@@ -96,7 +96,7 @@ var (
 // 2.处理并输出报告
 func ExportDoc(task *define.DetailTask, data map[string]interface{}) {
 	// 打开一个已有格式的文档，这个是要打开的文档路径。
-	filesDir := "report.docx"
+	filesDir := "tem/report.docx"
 	// 添加页眉
 	r, err := docx.ReadDocxFile(filesDir)
 	if err != nil {
