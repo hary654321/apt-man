@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 	"zrDispatch/common/utils"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 
 	// "strconv"
@@ -116,12 +117,19 @@ func ExportDoc(task *define.DetailTask, data map[string]interface{}) {
 	docx1.Replace("task.update_time", utils.GetInterfaceToString(task.Utime), -1)
 
 	//汇总信息
-	docx1.Replace("ip_count", utils.GetInterfaceToString(data["ip_count"]), -1)
+	docx1.Replace("match_ip_count", utils.GetInterfaceToString(data["match_ip_count"]), -1)
 	docx1.Replace("live_ip_count", utils.GetInterfaceToString(data["live_ip_count"]), -1)
+	docx1.Replace("ip_count", utils.GetInterfaceToString(data["ip_count"]), -1)
 	docx1.Replace("port_count", utils.GetInterfaceToString(data["port_count"]), -1)
 	docx1.Replace("live_port", utils.GetInterfaceToString(data["live_port"]), -1)
 	docx1.Replace("ip_count", utils.GetInterfaceToString(data["ip_count"]), -1)
-	docx1.Replace("match_ip_count", utils.GetInterfaceToString(data["match_ip_count"]), -1)
+
+	//威胁信息
+	docx1.Replace("wxxx", utils.GetInterfaceToString(data["wxxx"]), -1)
+
+	//端口信息
+	slog.Println(slog.DEBUG, "dkxx", data["dkxx"])
+	docx1.Replace("dkxx", utils.GetInterfaceToString(data["dkxx"]), -1)
 
 	sp := "./report/" + task.Name + ".docx"
 	err = docx1.WriteToFile(sp)
