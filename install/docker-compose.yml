@@ -8,6 +8,7 @@ services:
           - 61665:61665
         volumes: 
           - $PWD/core_docker.toml:/app/core.toml
+          - $PWD/tem:/app/tem
           - $PWD/client:/app/client
         depends_on:
           - mysql
