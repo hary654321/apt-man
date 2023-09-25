@@ -923,6 +923,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 				t.GetRes(hostInfo, taskdata)
 			} else if taskdata.Cronexpr == "" {
 				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
+				t.status = define.TASK_STATUS_DONE
 			}
 			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			break
