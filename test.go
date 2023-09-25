@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+	"time"
 )
 
 type NotUsed struct {
@@ -23,9 +24,13 @@ type Client struct { // Our example struct, you can use "-" to ignore a field
 }
 
 func main() {
-	m := make(map[string]int)
+	println(time.Now().Unix())
+	sleep()
+	println(time.Now().Unix())
+}
 
-	fmt.Println(&m["qcrao"])
+func sleep() {
+	time.Sleep(time.Duration(1-1) * time.Second)
 }
 
 func encode() {

@@ -940,18 +940,6 @@ func CloneTask(c *gin.Context) {
 		return
 	}
 
-	event := schedule.EventData{
-		TaskID: taskInfo.ID,
-		TE:     schedule.AddEvent,
-	}
-	res, err := json.Marshal(event)
-	if err != nil {
-		log.Error("json.Marshal failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
-		return
-	}
-	schedule.Cron2.PubTaskEvent(res)
-
 	resp.JSON(c, resp.Success, nil)
 }
 
@@ -1025,6 +1013,7 @@ func CleanTaskLog(c *gin.Context) {
 
 	resp.JSON(c, resp.Success, del{DelCount: delcount})
 }
+
 func Stop(c *gin.Context) {
 
 	config.CoreConf.Server.Run = false
