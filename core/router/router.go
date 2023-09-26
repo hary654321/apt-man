@@ -66,6 +66,7 @@ func NewHTTPRouter() *http.Server {
 	ru := v1.Group("/user")
 	{
 		ru.POST("/registry", user.RegistryUser) // only admin // 管理员创建了新的用户。。。
+		ru.POST("/add", user.RegistryUser)      // only admin // 管理员创建了新的用户。。。
 		ru.GET("/info", user.GetUser)
 		ru.GET("/all", user.GetUsers)             // only admin
 		ru.PUT("/admin", user.AdminChangeUser)    // only admin  // 管理员修改了某某用户
