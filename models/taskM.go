@@ -64,3 +64,11 @@ func UpdateTaskCreate(id, uid string) {
 
 	db.Table("task").Where("id = ?", id).Update("createByID", uid)
 }
+
+func GetTaskInfoByName(name string) (ProbeMatch define.CreateTask) {
+	dbTmp := db.Table("task")
+
+	dbTmp.Where("name = ?", name).Where("isDeleted", 0).Take(&ProbeMatch)
+
+	return
+}

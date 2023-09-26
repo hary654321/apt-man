@@ -40,10 +40,6 @@ import (
 // @Router /api/v1/task [post]
 // @Security ApiKeyAuth
 func CreateTask(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(),
-		config.CoreConf.Server.DB.MaxQueryTime.Duration)
-	//config.CoreConf.Server.DB.MaxQueryTime.Duration)
-	defer cancel()
 
 	task := define.CreateTask{}
 	err := c.ShouldBindJSON(&task)
@@ -72,13 +68,8 @@ func CreateTask(c *gin.Context) {
 	}
 
 	// TODO 检查任务数据
-	exist, err := model.Check(ctx, model.TBTask, model.Name, task.Name)
-	if err != nil {
-		log.Error("IsExist failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
-		return
-	}
-	if exist {
+	taskInfo := models.GetTaskInfoByName(task.Name)
+	if taskInfo.Name != "" {
 		resp.JSON(c, resp.ErrTaskExist, nil)
 		return
 	}
