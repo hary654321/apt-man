@@ -193,8 +193,8 @@ func ExportProbeCsv(c *gin.Context) {
 	// 	}
 	// }()
 	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
-	c.Writer.Header().Add("Content-Type", "text/csv") //设置下载文件格式，流式下载
-	c.File("./" + filename)                           //直接返回文件
+	c.Writer.Header().Add("Content-Type", "text/csv;charset=gb2312") //设置下载文件格式，流式下载
+	c.File("./" + filename)                                          //直接返回文件
 
 }
 
@@ -240,8 +240,8 @@ func ExportTem(c *gin.Context) {
 		}
 	}()
 	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
-	c.Writer.Header().Add("Content-Type", "application/octet-stream") //设置下载文件格式，流式下载
-	c.File("./" + filename)                                           //直接返回文件
+	c.Writer.Header().Add("Content-Type", "text/csv;charset=gb2312") //设置下载文件格式，流式下载
+	c.File("./" + filename)                                          //直接返回文件
 
 }
 
