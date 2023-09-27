@@ -994,7 +994,20 @@ func Init2() error {
 	}
 	log.Debug("start init task", zap.Int("task", len(eps)))
 	for _, t := range eps {
-		go Cron2.addtask(t.ID, t.Name, t.Cronexpr, GetRoutePolicy(t.HostGroupID, t.RoutePolicy), t.Run, t.Status, t.Priority)
+		if t.Priority == 3 {
+			go Cron2.addtask(t.ID, t.Name, t.Cronexpr, GetRoutePolicy(t.HostGroupID, t.RoutePolicy), t.Run, t.Status, t.Priority)
+		}
+	}
+	for _, t := range eps {
+		if t.Priority == 2 {
+			go Cron2.addtask(t.ID, t.Name, t.Cronexpr, GetRoutePolicy(t.HostGroupID, t.RoutePolicy), t.Run, t.Status, t.Priority)
+		}
+	}
+
+	for _, t := range eps {
+		if t.Priority == 1 {
+			go Cron2.addtask(t.ID, t.Name, t.Cronexpr, GetRoutePolicy(t.HostGroupID, t.RoutePolicy), t.Run, t.Status, t.Priority)
+		}
 	}
 
 	go RecvEvent()
