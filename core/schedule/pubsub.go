@@ -70,7 +70,7 @@ func dealEvent(data []byte) {
 			return
 		}
 		slog.Println(slog.WARN, "ChangeEvent")
-		Cron2.addtask(task.ID, task.Name, task.Cronexpr, GetRoutePolicy(task.HostGroupID, task.RoutePolicy), task.Run, task.Status, task.Priority)
+		go Cron2.addtask(task.ID, task.Name, task.Cronexpr, GetRoutePolicy(task.HostGroupID, task.RoutePolicy), task.Run, task.Status, task.Priority)
 	case DeleteEvent:
 		Cron2.deletetask(subdata.TaskID)
 	case RunEvent:
