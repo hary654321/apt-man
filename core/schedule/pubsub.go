@@ -3,6 +3,7 @@ package schedule
 import (
 	"context"
 	"encoding/json"
+	"time"
 
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
@@ -70,7 +71,24 @@ func dealEvent(data []byte) {
 			return
 		}
 		slog.Println(slog.WARN, "ChangeEvent")
-		go Cron2.addtask(task.ID, task.Name, task.Cronexpr, GetRoutePolicy(task.HostGroupID, task.RoutePolicy), task.Run, task.Status, task.Priority)
+
+		if task.Cronexpr == "" {
+			loop := true
+			for loop {
+				loop = false
+				for _, ot := range Cron2.ts {
+					//有优先级高的
+					if ot.status == define.TASK_STATUS_RUNING && ot.Priority > task.Priority && ot.cronexpr == "" {
+						slog.Println(slog.DEBUG, task.Name, "====等待===", ot.name, "执行中")
+						loop = true
+						break
+					}
+				}
+				time.Sleep(3 * time.Second)
+			}
+		}
+
+		Cron2.addtask(task.ID, task.Name, task.Cronexpr, GetRoutePolicy(task.HostGroupID, task.RoutePolicy), task.Run, task.Status, task.Priority)
 	case DeleteEvent:
 		Cron2.deletetask(subdata.TaskID)
 	case RunEvent:
