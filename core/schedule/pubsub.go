@@ -72,6 +72,8 @@ func dealEvent(data []byte) {
 		}
 		slog.Println(slog.WARN, "ChangeEvent")
 
+		time.Sleep(time.Duration((3100-task.Priority*1000)*2) * time.Millisecond)
+
 		if task.Cronexpr == "" {
 			loop := true
 			for loop {

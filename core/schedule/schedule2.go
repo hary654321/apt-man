@@ -1019,7 +1019,6 @@ func Init2() error {
 func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next Next, canrun bool, status define.TaskOneStatus, Priority int) {
 	slog.Println(slog.WARN, "start add task", zap.String("taskid", taskid), zap.String("taskname", taskname))
 
-	time.Sleep(time.Duration(3100-Priority*1000) * time.Millisecond)
 	oldtask, exist := s.gettask(taskid)
 	if exist {
 		close(oldtask.close)
@@ -1035,7 +1034,7 @@ func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next 
 		close:    make(chan struct{}),
 		next:     next,
 		canrun:   canrun,
-		status:   status,
+		status:   define.TASK_STATUS_RUNING,
 		redis:    s.redis,
 		Priority: Priority,
 	}
