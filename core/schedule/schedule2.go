@@ -1004,7 +1004,7 @@ func Init2() error {
 
 // Add task to schedule
 func (s *cacheSchedule2) addtask(taskid, taskname string, cronExpr string, next Next, canrun bool, status define.TaskOneStatus, Priority int) {
-	log.Debug("start add task", zap.String("taskid", taskid), zap.String("taskname", taskname))
+	slog.Println(slog.WARN, "start add task", zap.String("taskid", taskid), zap.String("taskname", taskname))
 
 	time.Sleep(time.Duration(3100-Priority*1000) * time.Millisecond)
 	oldtask, exist := s.gettask(taskid)
