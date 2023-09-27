@@ -1,6 +1,6 @@
 #!/bin/bash
 
-array=("cyberspace-resources_zg" "cyberspace-resources_yg" "cyberspace-resources_hg","cyberspace-resources_gd1","cyberspace-resources_fg","cyberspace-resources_ads2")
+array=("cyberspace-resources_hg" "cyberspace-resources_gd1" "cyberspace-resources_fg" "cyberspace-resources_ads2")
 
 for element in "${array[@]}"
 do
