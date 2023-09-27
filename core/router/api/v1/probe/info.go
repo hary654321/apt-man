@@ -3,6 +3,7 @@ package probe
 import (
 	"encoding/csv"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"time"
@@ -186,15 +187,16 @@ func ExportProbeCsv(c *gin.Context) {
 	if filename == "" {
 		slog.Println(slog.DEBUG, "export excel file failed == ", filename)
 	}
-	// defer func() {
-	// 	err := os.Remove("./" + filename) //下载后，删除文件
-	// 	if err != nil {
-	// 		slog.Println(slog.DEBUG, "remove  excel file failed", err)
-	// 	}
-	// }()
-	c.Writer.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
-	c.Writer.Header().Add("Content-Type", "text/csv;charset=gb2312") //设置下载文件格式，流式下载
-	c.File("./" + filename)                                          //直接返回文件
+	file, err := os.Open("./" + filename)
+	if err != nil {
+		resp.JSONNew(c, resp.ErrBadRequest, "文件不存在")
+		return
+	}
+	defer file.Close()
+
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
+	c.Header("Content-Type", "text/csv;") // Set Content-Type to audio/mpeg
+	io.Copy(c.Writer, file)               //直接返回文件
 
 }
 
