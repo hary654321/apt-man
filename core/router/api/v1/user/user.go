@@ -225,22 +225,22 @@ func AdminChangeUser(c *gin.Context) {
 	err := c.ShouldBindJSON(&user)
 	if err != nil {
 		slog.Println(slog.DEBUG, "ShouldBindJSON failed", zap.Error(err))
-		resp.JSON(c, resp.ErrBadRequest, nil)
+		resp.JSON(c, resp.ErrBadRequest, err.Error())
 		return
 	}
 	if len(user.Password) > 0 && len(user.Password) < 8 {
 		slog.Println(slog.DEBUG, "password is short 8")
-		resp.JSON(c, resp.ErrBadRequest, nil)
+		resp.JSON(c, resp.ErrBadRequest, err.Error())
 		return
 	}
 	// TODO only admin
 	exist, err := model.Check(ctx, model.TBUser, model.ID, user.ID)
 	if err != nil {
 		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
+		resp.JSON(c, resp.ErrInternalServer, err.Error())
 	}
 	if !exist {
-		resp.JSON(c, resp.ErrUserNotExist, nil)
+		resp.JSON(c, resp.ErrUserNotExist, err.Error())
 		return
 	}
 	var role define.Role
@@ -248,14 +248,14 @@ func AdminChangeUser(c *gin.Context) {
 		role = v.(define.Role)
 	}
 	if role != define.AdminUser {
-		resp.JSON(c, resp.ErrAcl, nil)
+		resp.JSON(c, resp.ErrAcl, err.Error())
 		return
 	}
 
 	err = model.AdminChangeUser(ctx, user.ID, user.Role, user.Forbid, user.Password, user.Remark)
 	if err != nil {
 		slog.Println(slog.DEBUG, "AdminChangeUser failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
+		resp.JSON(c, resp.ErrInternalServer, err.Error())
 		return
 	}
 
