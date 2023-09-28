@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"zrDispatch/common/log"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 	"zrDispatch/core/utils/resp"
 
@@ -34,7 +34,7 @@ func RegistryUser(c *gin.Context) {
 	ruser := define.RegistryUser{}
 	err := c.ShouldBindJSON(&ruser)
 	if err != nil {
-		log.Error("ShouldBindJSON failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", zap.Error(err))
 		resp.JSON(c, resp.ErrBadRequest, nil)
 		return
 	}
@@ -42,14 +42,14 @@ func RegistryUser(c *gin.Context) {
 
 	hashpassword, err = utils.GenerateHashPass(ruser.Password)
 	if err != nil {
-		log.Error("GenerateHashPass failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "GenerateHashPass failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
 
 	exist, err := model.Check(ctx, model.TBUser, model.Name, ruser.Name)
 	if err != nil {
-		log.Error("IsExist failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -60,7 +60,7 @@ func RegistryUser(c *gin.Context) {
 
 	_, err = model.AddUser(ctx, ruser.Name, hashpassword, ruser.Role)
 	if err != nil {
-		log.Error("AddUser failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "AddUser failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -85,7 +85,7 @@ func GetUser(c *gin.Context) {
 	// check uid exist
 	exist, err := model.Check(ctx, model.TBUser, model.ID, uid)
 	if err != nil {
-		log.Error("IsExist failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -96,7 +96,7 @@ func GetUser(c *gin.Context) {
 
 	user, err := model.GetUserByID(ctx, uid)
 	if err != nil {
-		log.Error("GetUserByID failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "GetUserByID failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -130,7 +130,7 @@ func GetUsers(c *gin.Context) {
 
 	err = c.BindQuery(&q)
 	if err != nil {
-		log.Error("BindQuery offset failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "BindQuery offset failed", zap.Error(err))
 	}
 
 	if q.Limit == 0 {
@@ -138,7 +138,7 @@ func GetUsers(c *gin.Context) {
 	}
 	users, count, err := model.GetUsers(ctx, nil, q.Offset, q.Limit)
 	if err != nil {
-		log.Error("GetUsers failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "GetUsers failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -168,29 +168,29 @@ func ChangeUserInfo(c *gin.Context) {
 	newinfo := define.ChangeUserSelf{}
 	err := c.ShouldBindJSON(&newinfo)
 	if err != nil {
-		log.Error("ShouldBindJSON failed", zap.Error(err))
-		resp.JSON(c, resp.ErrBadRequest, nil)
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", zap.Error(err))
+		resp.JSONNew(c, resp.ErrBadRequest, err.Error())
 		return
 	}
 	if len(newinfo.Password) > 0 && len(newinfo.Password) < 8 {
-		log.Error("password is short 8")
-		resp.JSON(c, resp.ErrBadRequest, nil)
+		slog.Println(slog.DEBUG, "password is short 8")
+		resp.JSON(c, resp.ErrBadRequest, err.Error())
 		return
 	}
 	uid := c.GetString("uid")
 	if uid != newinfo.ID {
-		log.Error("uid is error", zap.String("uid", uid), zap.String("infoid", newinfo.ID))
-		resp.JSON(c, resp.ErrBadRequest, nil)
+		slog.Println(slog.DEBUG, "uid is error", zap.String("uid", uid), zap.String("infoid", newinfo.ID))
+		resp.JSON(c, resp.ErrBadRequest, err.Error())
 		return
 	}
 	exist, err := model.Check(ctx, model.TBUser, model.UserName, newinfo.Name, newinfo.ID)
 	if err != nil {
-		log.Error("IsExist failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
+		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
+		resp.JSON(c, resp.ErrInternalServer, err.Error())
 		return
 	}
 	if exist {
-		resp.JSON(c, resp.ErrUserNameExist, nil)
+		resp.JSON(c, resp.ErrUserNameExist, err.Error())
 		return
 	}
 	err = model.ChangeUserInfo(ctx,
@@ -199,8 +199,8 @@ func ChangeUserInfo(c *gin.Context) {
 		newinfo.Password,
 		newinfo.Remark)
 	if err != nil {
-		log.Error("ChangeUserInfo failed", zap.Error(err))
-		resp.JSON(c, resp.ErrInternalServer, nil)
+		slog.Println(slog.DEBUG, "ChangeUserInfo failed", zap.Error(err))
+		resp.JSON(c, resp.ErrInternalServer, err.Error())
 		return
 	}
 
@@ -224,19 +224,19 @@ func AdminChangeUser(c *gin.Context) {
 	user := define.AdminChangeUser{}
 	err := c.ShouldBindJSON(&user)
 	if err != nil {
-		log.Error("ShouldBindJSON failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", zap.Error(err))
 		resp.JSON(c, resp.ErrBadRequest, nil)
 		return
 	}
 	if len(user.Password) > 0 && len(user.Password) < 8 {
-		log.Error("password is short 8")
+		slog.Println(slog.DEBUG, "password is short 8")
 		resp.JSON(c, resp.ErrBadRequest, nil)
 		return
 	}
 	// TODO only admin
 	exist, err := model.Check(ctx, model.TBUser, model.ID, user.ID)
 	if err != nil {
-		log.Error("IsExist failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 	}
 	if !exist {
@@ -254,7 +254,7 @@ func AdminChangeUser(c *gin.Context) {
 
 	err = model.AdminChangeUser(ctx, user.ID, user.Role, user.Forbid, user.Password, user.Remark)
 	if err != nil {
-		log.Error("AdminChangeUser failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "AdminChangeUser failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -279,7 +279,7 @@ func AdminDeleteUser(c *gin.Context) {
 	user := define.GetID{}
 	err := c.ShouldBindJSON(&user)
 	if err != nil {
-		log.Error("ShouldBindJSON failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", zap.Error(err))
 		resp.JSON(c, resp.ErrBadRequest, nil)
 		return
 	}
@@ -295,7 +295,7 @@ func AdminDeleteUser(c *gin.Context) {
 	// 只能删除普通用户，不能删除admin用户
 	// userinfo, err := model.GetUserByID(ctx, user.ID)
 	// if err != nil {
-	// 	log.Error("GetUserByID failed", zap.Error(err))
+	// 	slog.Println(slog.DEBUG,"GetUserByID failed", zap.Error(err))
 	// 	resp.JSON(c, resp.ErrInternalServer, nil)
 	// 	return
 	// }
@@ -306,7 +306,7 @@ func AdminDeleteUser(c *gin.Context) {
 	// TODO only admin
 	exist, err := model.Check(ctx, model.TBUser, model.ID, user.ID)
 	if err != nil {
-		log.Error("IsExist failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 	}
 	if !exist {
@@ -316,13 +316,13 @@ func AdminDeleteUser(c *gin.Context) {
 	// 检查用户是否创建资源
 	ok1, err := model.Check(ctx, model.TBTask, model.CreateByID, user.ID)
 	if err != nil {
-		log.Error("Check failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "Check failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
 	ok2, err := model.Check(ctx, model.TBHostgroup, model.CreateByID, user.ID)
 	if err != nil {
-		log.Error("Check failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "Check failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -332,7 +332,7 @@ func AdminDeleteUser(c *gin.Context) {
 	}
 	err = model.DeleteUser(ctx, user.ID)
 	if err != nil {
-		log.Error("DeleteUser failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "DeleteUser failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -357,7 +357,7 @@ func LoginUser(c *gin.Context) {
 	}
 	token, err := model.LoginUser(ctx, username, password)
 	if err != nil {
-		log.Error("model.LoginUser failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "model.LoginUser failed", zap.Error(err))
 	}
 	switch err := errors.Unwrap(err); err.(type) {
 	case nil:
@@ -394,7 +394,7 @@ func GetSelect(c *gin.Context) {
 	defer cancel()
 	data, err := model.GetNameID(ctx, model.TBUser)
 	if err != nil {
-		log.Error("model.GetNameID failed", zap.Error(err))
+		slog.Println(slog.DEBUG, "model.GetNameID failed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
@@ -448,7 +448,7 @@ func GetOperateLog(c *gin.Context) {
 	// uid, method, module, limit, offset
 	oplogs, count, err := model.GetOperate(ctx, "", q.UserName, q.Method, q.Module, q.Limit, q.Offset)
 	if err != nil {
-		log.Error("model.GetOperate filed", zap.Error(err))
+		slog.Println(slog.DEBUG, "model.GetOperate filed", zap.Error(err))
 		resp.JSON(c, resp.ErrInternalServer, nil)
 		return
 	}
