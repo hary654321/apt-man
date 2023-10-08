@@ -16,7 +16,7 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 	res := "/tmp/" + taskId + "plugres"
 
 	if !strings.Contains(cmd, "nmap") {
-		cmd = "/zrtx/apt/bin"
+		cmd = "/app/" + cmd
 	}
 
 	cmd = strings.Replace(cmd, "{ip}", ipstr, -1)

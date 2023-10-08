@@ -21,7 +21,7 @@ func CreatePlug(c *gin.Context) {
 
 	f, _ := c.FormFile("file")
 	//SaveUploadedFile上传表单文件到指定的路径
-	c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
+	c.SaveUploadedFile(f, "/app/"+f.Filename)
 
 	slog.Println(slog.DEBUG, f.Header)
 
@@ -53,9 +53,9 @@ func CreatePlug(c *gin.Context) {
 }
 
 func checkPlug(pname, filename string) {
-	cmd.Exec("chmod +x " + "/zrtx/apt/bin/" + filename)
+	cmd.Exec("chmod +x " + "/app/" + filename)
 
-	_, err := cmd.Exec("/zrtx/apt/bin/" + filename)
+	_, err := cmd.Exec("/app/" + filename)
 
 	if err != nil {
 		slog.Println(slog.DEBUG, err)
@@ -126,7 +126,7 @@ func EditPlug(c *gin.Context) {
 	if f != nil {
 		pi.FileName = f.Filename
 		//SaveUploadedFile上传表单文件到指定的路径
-		c.SaveUploadedFile(f, "/zrtx/apt/bin/"+f.Filename)
+		c.SaveUploadedFile(f, "/app/"+f.Filename)
 
 	}
 

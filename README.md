@@ -55,3 +55,7 @@ go-bindata -o=core/utils/asset/asset.go -pkg=asset web/crocodile/... sql
 # 三 项目的安装
 
 数据库是先要新建的   表和数据是通过代码初始化的
+
+
+#
+vscan -host {ip} -p {port} -json -o {res}
