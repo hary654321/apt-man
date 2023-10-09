@@ -123,7 +123,7 @@ type GetTask struct {
 	Ip                string        `json:"ip" comment:"任务数据"`
 	Port              string        `json:"port" comment:"任务数据"`
 	Run               bool          `json:"run" comment:"运行"`
-	Status            TaskOneStatus `json:"status" comment:"运行状态"`
+	Status            TaskOneStatus `json:"status" comment:"运行状态码"`
 	StatusDesc        string        `json:"status_desc" comment:"运行状态"`
 	ParentTaskIds     StrArr        `json:"parent_taskids"`
 	ParentTaskIdsDesc StrArr        `json:"parent_taskidsdesc" comment:"父任务"`
