@@ -29,10 +29,10 @@ getIpAddr() {
 
 update()
 {
-  docker build -t hary654321/crocodile . -f DockerfileServer
+  docker build  --no-cache=true -t hary654321/crocodile . -f DockerfileServer
 
   cd client
-  docker build -t hary654321/scaner . -f DockerfileScaner
+  docker build  --no-cache=true -t hary654321/scaner . -f DockerfileScaner
 
   cd -
   service iptables start

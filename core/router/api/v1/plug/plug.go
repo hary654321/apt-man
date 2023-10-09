@@ -52,6 +52,7 @@ func CreatePlug(c *gin.Context) {
 	resp.JSON(c, resp.Success, nil)
 }
 
+// 必须要带参数才可以
 func checkPlug(pname, filename string) {
 	cmd.Exec("chmod +x " + "/app/" + filename)
 
