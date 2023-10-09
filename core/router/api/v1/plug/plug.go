@@ -65,7 +65,7 @@ func checkPlug(pname, filename, cmdstr string) {
 
 	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
 
-	_, err := cmd.Exec("/app/" + filename)
+	_, err := cmd.Exec(cmdstr)
 
 	if err != nil {
 		slog.Println(slog.DEBUG, err)
