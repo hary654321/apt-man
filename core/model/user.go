@@ -328,10 +328,6 @@ func ChangeUserInfo(ctx context.Context, id, name, password, remark string) erro
 	changeuser = `UPDATE user 
 					SET hashpassword=?,
 					    name=?,
-						email=?,
-						wechat=?,
-						dingphone=?,
-						telegram=?,
 						updateTime=?,
 						remark=? 
 					WHERE
