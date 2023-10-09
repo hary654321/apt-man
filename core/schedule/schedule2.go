@@ -850,24 +850,30 @@ func plug(taskdata *define.DetailTask, pid string) {
 
 	slog.Println(slog.WARN, "path", path)
 
-	xml := utils.Read(path)
+	res := utils.Read(path)
 
-	mewXml := ""
+	newRes := ""
+	if strings.Contains(res, "xml") {
+		mewXml := ""
 
-	arr := strings.Split(xml, "\n")
+		arr := strings.Split(res, "\n")
 
-	for _, v := range arr {
-		if strings.Contains(v, "stylesheet") {
-			continue
+		for _, v := range arr {
+			if strings.Contains(v, "stylesheet") {
+				continue
+			}
+			mewXml += v + "\n"
 		}
-		mewXml += v + "\n"
+		newRes = mewXml
+	} else {
+		newRes = res
 	}
 
 	data := define.PlugResAdd{
 
 		RunTaskID: taskdata.RunTaskId,
 		Plug:      pluginfo.Name,
-		Res:       mewXml,
+		Res:       newRes,
 		Ctime:     utils.GetTimeStr(),
 	}
 
