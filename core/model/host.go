@@ -157,7 +157,7 @@ func CreateHost(ctx context.Context, hostInfo HostInfo) (string, error) {
 		hostInfo.Hostname,
 		hostInfo.Weight,
 		hostInfo.Version,
-		time.Now().Unix(),
+		0,
 		hostInfo.Remark,
 	)
 	if err != nil {
