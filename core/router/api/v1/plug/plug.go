@@ -32,6 +32,7 @@ func CreatePlug(c *gin.Context) {
 		Cmd:      c.PostForm("cmd"),
 		FileName: f.Filename,
 		Status:   define.PLUG_JYZ,
+		Ctime:    utils.GetTimeStr(),
 	}
 
 	res := models.GetPlugInfoByName(pi.Name, "")

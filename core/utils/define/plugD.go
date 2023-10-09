@@ -20,6 +20,7 @@ type PlugInfoAdd struct {
 	FileName string     `gorm:"column:filename"  json:"filename" form:"filename"`
 	Cmd      string     `gorm:"column:cmd"  json:"cmd" form:"cmd"  binding:"required,min=1,max=255"`
 	Desc     string     `gorm:"column:desc"  json:"desc" form:"desc"  binding:"required,min=1,max=300"`
+	Ctime    string     `gorm:"column:create_time" json:"create_time"`
 	Sys      int        `gorm:"column:sys" json:"sys"`
 	Status   PlugStatus `gorm:"column:status" json:"status"`
 }
