@@ -2,6 +2,7 @@ package plug
 
 import (
 	"net/http"
+	"strings"
 
 	"zrDispatch/common/cmd"
 	"zrDispatch/common/log"
@@ -47,14 +48,22 @@ func CreatePlug(c *gin.Context) {
 		return
 	}
 
-	go checkPlug(pi.Name, f.Filename)
+	go checkPlug(pi.Name, f.Filename, pi.Cmd)
 
 	resp.JSON(c, resp.Success, nil)
 }
 
 // 必须要带参数才可以
-func checkPlug(pname, filename string) {
+func checkPlug(pname, filename, cmdstr string) {
 	cmd.Exec("chmod +x " + "/app/" + filename)
+
+	cmdstr = "/app/" + cmdstr
+
+	cmdstr = strings.Replace(cmdstr, "{ip}", "127.0.0.1", -1)
+
+	cmdstr = strings.Replace(cmdstr, "{port}", "80", -1)
+
+	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
 
 	_, err := cmd.Exec("/app/" + filename)
 
