@@ -26,24 +26,23 @@ type ChangeHostGroup struct {
 type Host struct {
 	ID                 string   `json:"id" comment:"ID"`
 	Status             int      `json:"status" comment:"状态"`
-	Addr               string   `json:"addr" comment:"Worker地址"`
+	Addr               string   `json:"addr" `
 	Ip                 string   `json:"ip" comment:"客户端ip"`
-	HostName           string   `json:"hostname"`
+	HostName           string   `json:"hostname" comment:"主机名称"`
 	Online             bool     `json:"online"`
 	Weight             int      `json:"weight"`
-	SshPort            int      `json:"sshPort"`
+	SshPort            int      `json:"sshPort" comment:"ssh端口"`
 	ServicePort        int      `json:"servicePort"`
 	RunningTasks       []string `json:"running_tasks"`
 	Version            string   `json:"version"`
-	SshUser            string   `json:"sshUser"`
+	SshUser            string   `json:"sshUser" comment:"ssh用户"`
 	SshPwd             string   `json:"sshPwd"`
-	Stop               bool     `json:"stop" comment:"暂停"`
+	Stop               bool     `json:"stop" comment:"暂停调度"`
 	LastUpdateTimeUnix int64    `json:"last_updatetimeunix"`
 	LastUpdateTime     string   `json:"last_updatetime" comment:"更新时间"`
 	Remark             string   `json:"remark"`
 }
 
-//
 type HostGorm struct {
 	ID          string `gorm:"column:id" json:"id" comment:"ID"`
 	Ip          string `gorm:"column:ip" json:"ip" comment:"客户端ip"`

@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 	"zrDispatch/common/utils"
+	"zrDispatch/models"
 
 	"zrDispatch/common/log"
 	"zrDispatch/core/config"
@@ -26,6 +27,7 @@ const (
 	hostgroup = "hostgroup"
 	host      = "host"
 	user      = "user"
+	probe     = "probe"
 )
 
 var moduleMap = map[string]string{
@@ -33,6 +35,7 @@ var moduleMap = map[string]string{
 	hostgroup: "主机组",
 	host:      "主机",
 	user:      "用户",
+	probe:     "规则",
 }
 
 // save all user operate log
@@ -276,7 +279,7 @@ func Oprtation() func(c *gin.Context) {
 					c.Next()
 					return
 				}
-				modulename = hostData.Addr
+				modulename = hostData.HostName
 				oldData = *hostData
 			case task:
 				taskData, err := model.GetTaskByID(ctx, id)
@@ -326,6 +329,11 @@ func Oprtation() func(c *gin.Context) {
 				}
 				modulename = hostgroupData.Name
 				newData = *hostgroupData
+			case host:
+				hostgroupData := models.GetHostByName(name)
+
+				modulename = hostgroupData.HostName
+				newData = hostgroupData
 			case task:
 				taskData, err := model.GetTaskByName(ctx, name)
 				if err != nil {

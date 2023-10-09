@@ -5,7 +5,7 @@ import (
 	"zrDispatch/core/utils/define"
 )
 
-func Gethost(hostname string) (host define.Host) {
+func GetHostByName(hostname string) (host define.Host) {
 
 	db.Table("host").Where("hostname = ? ", hostname).Take(&host)
 	return
