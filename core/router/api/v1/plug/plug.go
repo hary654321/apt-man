@@ -149,7 +149,7 @@ func EditPlug(c *gin.Context) {
 		return
 	}
 	if f != nil {
-		go checkPlug(pi.Name, f.Filename)
+		go checkPlug(pi.Name, f.Filename, pi.Cmd)
 	}
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{
