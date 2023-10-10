@@ -47,10 +47,10 @@ func GetPlugInfoByName(name string, id string) (PlugMatch define.PlugInfoAdd) {
 	return
 }
 
-func GetPlugInfoById(name string) (PlugMatch define.PlugInfoAdd) {
+func GetPlugInfoById(id string) (PlugMatch define.PlugInfoAdd) {
 	dbTmp := db.Table("plug")
 
-	dbTmp.Where("id = ?", name).Take(&PlugMatch)
+	dbTmp.Where("id = ?", id).Take(&PlugMatch)
 
 	return
 }

@@ -141,6 +141,8 @@ func EditPlug(c *gin.Context) {
 
 	}
 
+	old := models.GetPlugInfoById(pi.ID)
+
 	data := make(map[string]interface{})
 
 	serr := models.EditPlugInfo(pi)
@@ -151,6 +153,9 @@ func EditPlug(c *gin.Context) {
 	}
 	if f != nil {
 		go checkPlug(pi.Name, f.Filename, pi.Cmd)
+	}
+	if old.Cmd != pi.Cmd {
+		go checkPlug(pi.Name, old.FileName, pi.Cmd)
 	}
 	code := resp.Success
 	c.JSON(http.StatusOK, gin.H{
