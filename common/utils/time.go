@@ -10,7 +10,8 @@ var HouarArr = []string{"00", "01", "02", "03", "04", "05", "06", "07", "08", "0
 // UnixToStr change int to strc
 func UnixToStr(i int64) string {
 	// return time.Unix(i,0).Location().String()
-	return time.Unix(i, 0).Local().Format("2006-01-02 15:04:05")
+	var cstZone = time.FixedZone("CST", 8*3600) // 东八
+	return time.Unix(i, 0).In(cstZone).Format("2006-01-02 15:04:05")
 
 }
 

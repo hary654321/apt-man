@@ -59,18 +59,19 @@ func LoginUser(ctx context.Context, name string, password string) (string, error
 }
 
 // AddUser add new user
-func AddUser(ctx context.Context, name, hashpassword string, role define.Role) (string, error) {
+func AddUser(ctx context.Context, name, hashpassword, remark string, role define.Role) (string, error) {
 	adduser := `INSERT INTO user (
 					id,
 					name,
 					hashpassword,
+					remark,
 					role,
 					forbid,
 					createTime,
 					updateTime
 				)
 				VALUES
-				(?,?,?,?,?,?,?)`
+				(?,?,?,?,?,?,?,?)`
 	conn, err := db.GetConn(ctx)
 	if err != nil {
 		return "", fmt.Errorf("db.Db.GetConn failed: %w", err)
@@ -85,7 +86,7 @@ func AddUser(ctx context.Context, name, hashpassword string, role define.Role) (
 
 	now := time.Now().Unix()
 	id := utils.GetID()
-	_, err = stmt.ExecContext(ctx, id, name, hashpassword, role, false, now, now)
+	_, err = stmt.ExecContext(ctx, id, name, hashpassword, remark, role, false, now, now)
 	if err != nil {
 		return id, fmt.Errorf("stmt.ExecContext failed: %w", err)
 	}
