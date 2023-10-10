@@ -1078,12 +1078,16 @@ func (s *cacheSchedule2) deletetask(taskid string) {
 // killTask will stop running task
 func (s *cacheSchedule2) killtask(taskid string) {
 	task, exist := s.gettask(taskid)
-	task.stop()
-	slog.Println(slog.WARN, "停止任务", task, exist)
+
 	if !exist {
 		log.Warn("stoptask failed,task is not exist", zap.String("taskid", taskid))
 		return
 	}
+
+	task.stop()
+
+	slog.Println(slog.WARN, "停止任务", task, exist)
+
 	if task.ctxcancel != nil {
 		slog.Println(slog.WARN, "停止任务")
 		task.ctxcancel()

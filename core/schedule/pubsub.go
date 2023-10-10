@@ -77,16 +77,24 @@ func dealEvent(data []byte) {
 		if task.Cronexpr == "" {
 			loop := true
 			for loop {
+
+				taskInfo, _ := model.GetTaskByID(ctx, subdata.TaskID)
+				// slog.Println(slog.DEBUG, taskInfo)
+				if taskInfo.Status == define.TASK_STATUS_STOP {
+					slog.Println(slog.DEBUG, taskInfo.Name, "被终止了")
+					return
+				}
+
 				loop = false
 				for _, ot := range Cron2.ts {
 					//有优先级高的
 					if ot.status == define.TASK_STATUS_RUNING && ot.Priority > task.Priority && ot.cronexpr == "" {
 						slog.Println(slog.DEBUG, task.Name, "====等待===", ot.name, "执行中")
 						loop = true
+						time.Sleep(3 * time.Second)
 						break
 					}
 				}
-				time.Sleep(3 * time.Second)
 			}
 		}
 
