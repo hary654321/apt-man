@@ -56,6 +56,12 @@ func CreatePlug(c *gin.Context) {
 
 // 必须要带参数才可以
 func checkPlug(pname, filename, cmdstr string) {
+
+	if cmdstr == "" {
+		models.ChangePlugState(pname, int(define.PLUG_FAIL))
+		return
+	}
+
 	cmd.Exec("chmod +x " + "/app/" + filename)
 
 	cmdstr = "/app/" + cmdstr

@@ -9,6 +9,10 @@ import (
 
 func Plug(taskId, ip, port, cmd string) (string, error) {
 
+	if cmd == "" {
+		return "", nil
+	}
+
 	ipstr := strings.Join(utils.GetIpArr(ip), " ")
 
 	portstr := strings.Join(utils.GetPortArr(port), ",")

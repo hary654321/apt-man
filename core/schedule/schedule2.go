@@ -848,6 +848,10 @@ func plug(taskdata *define.DetailTask, pid string) {
 	pluginfo := models.GetPlugInfoById(pid)
 	path, _ := cmd.Plug(taskdata.RunTaskId, taskdata.Ip, taskdata.Port, pluginfo.Cmd)
 
+	if path == "" {
+		return
+	}
+
 	slog.Println(slog.WARN, "path", path)
 
 	res := utils.Read(path)
