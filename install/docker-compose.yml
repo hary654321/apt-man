@@ -1,30 +1,5 @@
 version: '3.3'
 services: 
-    master: 
-        image: hary654321/crocodile
-        container_name: crocodile_server
-        restart: always
-        ports: 
-          - 61665:61665
-        volumes: 
-          - $PWD/core_docker.toml:/app/core.toml
-          - $PWD/tem:/app/tem
-          - $PWD/client:/app/client
-        depends_on:
-          - mysql
-          - redis
-          - scaner
-        network_mode: "host"
-    scaner: 
-        image: hary654321/scaner
-        container_name: crocodile_scaner
-        restart: always
-        volumes: 
-          - $PWD/client/conf.toml:/app/conf.toml
-          - $PWD/client/pem:/app/pem
-        ports: 
-          - 61666:61666
-        network_mode: "host"
     mysql:
         image: mysql:8.0
         container_name: crocodile_mysql
