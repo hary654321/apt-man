@@ -859,7 +859,7 @@ func plug(taskdata *define.DetailTask, pid string) {
 		arr := strings.Split(res, "\n")
 
 		for _, v := range arr {
-			if strings.Contains(v, "stylesheet") {
+			if strings.Contains(v, "stylesheet") || strings.Contains(v, "initiated") {
 				continue
 			}
 			mewXml += v + "\n"
