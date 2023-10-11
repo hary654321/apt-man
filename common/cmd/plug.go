@@ -17,6 +17,7 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 
 	if !strings.Contains(cmd, "nmap") {
 		cmd = "/app/" + cmd
+		ipstr = strings.Join(utils.GetIpArr(ip), ",")
 	}
 
 	cmd = strings.Replace(cmd, "{ip}", ipstr, -1)

@@ -61,3 +61,6 @@ go-bindata -o=core/utils/asset/asset.go -pkg=asset web/crocodile/... sql
 vscan -host {ip} -p {port} -json -o {res}
 
  apt install libpcap-dev
+
+
+kscan -t {ip} -p {port} -oJ {res}
