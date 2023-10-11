@@ -108,9 +108,9 @@ func GetIpArr(expr string) (ipArrRes []string) {
 
 func GetPortArr(port string) (portRes []string) {
 
-	if strings.ToLower(port) == "all" {
-		return GetAllPort()
-	}
+	// if strings.ToLower(port) == "all" {
+	// 	return GetAllPort()
+	// }
 
 	if strings.Contains(port, "\n") {
 
