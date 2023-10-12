@@ -61,6 +61,20 @@ func DelProbeGroup(c *gin.Context) {
 	}
 	data := make(map[string]interface{})
 
+	pg := models.GetProbeGroupByID(id.ID)
+
+	if pg == nil {
+		resp.JSONNew(c, resp.ErrBadRequest, "不存在的ID")
+		return
+	}
+
+	phave := models.GetProbeInfoByPName(pg.Name)
+
+	if phave.Name != "" {
+		resp.JSONNew(c, resp.ErrBadRequest, "规则组使用用不可以删除")
+		return
+	}
+
 	data["count"] = models.DeleteProbeGroup([]int{id.ID})
 
 	c.JSON(http.StatusOK, gin.H{

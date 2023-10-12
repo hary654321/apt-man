@@ -27,6 +27,14 @@ func GetProbeGroup(pageNum int, pageSize int, maps map[string]interface{}) (prob
 	return
 }
 
+func GetProbeGroupByID(id int) (probeGroup *define.ProbeGroupRes) {
+	dbTmp := db.Table("probe_group")
+
+	dbTmp.Where("probe_group_id = ?", id).Where("is_deleted", 0).Take(&probeGroup)
+
+	return
+}
+
 func DeleteProbeGroup(ids []int) int64 {
 
 	res := db.Table("probe_group").Where("probe_group_id in (?) ", ids).Update("is_deleted", 1)

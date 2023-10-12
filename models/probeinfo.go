@@ -41,6 +41,14 @@ func GetProbeInfoByName(name string) (ProbeMatch define.ProbeInfoAdd) {
 	return
 }
 
+func GetProbeInfoByPName(pgname string) (ProbeMatch define.ProbeInfoAdd) {
+	dbTmp := db.Table("probe_info")
+
+	dbTmp.Where("probe_group = ?", pgname).Take(&ProbeMatch)
+
+	return
+}
+
 func GetProbeSelect() (ProbeInfo []define.IdName) {
 	dbTmp := db.Table("probe_info")
 
