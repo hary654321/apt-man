@@ -111,7 +111,7 @@ func Check(ctx context.Context, table string, checkType checkType, args ...inter
 		// 检查UID状态是否正常
 		check += "id=? AND forbid=false"
 	case HostGroupID:
-		check += "hostGroupID=?"
+		check += "hostGroupID=? and isDeleted=0"
 	case CreateByID:
 		check += "createByID=?"
 	case UserName:
