@@ -8,6 +8,7 @@ import (
 
 	"zrDispatch/common/db"
 	"zrDispatch/common/log"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 
 	"go.uber.org/zap"
@@ -363,7 +364,7 @@ func UpdateTaskStatus(ctx context.Context, taskId string, run int, status define
 		return fmt.Errorf("result.RowsAffected failed: %w", err)
 	}
 	if line <= 0 {
-		log.Error("修改失败")
+		slog.Println(slog.DEBUG, "修改失败")
 	}
 	return nil
 }
