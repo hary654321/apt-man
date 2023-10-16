@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"strings"
-	"zrDispatch/core/slog"
 )
 
 // DataCode run code
@@ -160,7 +159,7 @@ type StrArr []string
 
 func (t *StrArr) Scan(value interface{}) error {
 
-	slog.Println(slog.DEBUG, value)
+	// slog.Println(slog.DEBUG, value)
 
 	if value == nil {
 		*t = StrArr{}
@@ -356,4 +355,3 @@ func (tt TaskType) Value() string {
 		return "unknow"
 	}
 }
-
