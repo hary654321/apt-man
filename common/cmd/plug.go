@@ -20,8 +20,20 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 	res := "/tmp/" + taskId + "plugres"
 
 	if !strings.Contains(cmd, "nmap") {
+
+		exe := strings.Split(cmd, " ")[0]
+		exe = "/app/" + exe
+		if !utils.PathExist(exe) {
+			slog.Println(slog.DEBUG, "文件不存在", exe)
+			return "", nil
+		}
 		cmd = "/app/" + cmd
 		ipstr = strings.Join(utils.GetIpArr(ip), ",")
+	} else {
+		if !utils.PathExist("/usr/bin/nmap") {
+			slog.Println(slog.DEBUG, "nmap不存在")
+			return "", nil
+		}
 	}
 
 	cmd = strings.Replace(cmd, "{ip}", ipstr, -1)

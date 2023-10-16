@@ -912,6 +912,13 @@ func CloneTask(c *gin.Context) {
 		return
 	}
 
+	// TODO 检查任务数据
+	taskE := models.GetTaskInfoByName(task.Name)
+	if taskE.Name != "" {
+		resp.JSON(c, resp.ErrTaskExist, nil)
+		return
+	}
+
 	taskInfo, err := models.GetTaskByIDClone(task.ID)
 
 	if err != nil {

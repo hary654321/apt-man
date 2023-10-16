@@ -7,6 +7,7 @@ import (
 
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
+	"zrDispatch/models"
 
 	"zrDispatch/common/log"
 	"zrDispatch/core/config"
@@ -70,7 +71,7 @@ func dealEvent(data []byte) {
 			log.Error("model.GetTaskByID failed", zap.Error(err))
 			return
 		}
-		slog.Println(slog.WARN, "ChangeEvent")
+		slog.Println(slog.WARN, "ChangeEvent",Cron2.ts)
 
 		time.Sleep(time.Duration((3100-task.Priority*1000)*2) * time.Millisecond)
 
@@ -78,8 +79,12 @@ func dealEvent(data []byte) {
 			loop := true
 			for loop {
 
-				taskInfo, _ := model.GetTaskByID(ctx, subdata.TaskID)
-				// slog.Println(slog.DEBUG, taskInfo)
+				taskInfo, err := models.GetTaskByID(subdata.TaskID)
+				if err != err {
+					slog.Println(slog.DEBUG, err)
+					return
+				}
+				slog.Println(slog.DEBUG, subdata, "=======", taskInfo)
 				if taskInfo.Status == define.TASK_STATUS_STOP {
 					slog.Println(slog.DEBUG, taskInfo.Name, "被终止了")
 					return
@@ -114,3 +119,4 @@ func dealEvent(data []byte) {
 		log.Warn("unsupport task event", zap.Any("data", subdata))
 	}
 }
+

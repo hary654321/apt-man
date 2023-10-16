@@ -49,7 +49,7 @@ func GetAddrs(expr, ports string) (res []string) {
 
 	for _, i := range ipArr {
 		for _, p := range portArr {
-			slog.Println(slog.DEBUG, i+":"+p)
+			//	slog.Println(slog.DEBUG, i+":"+p)
 			res = append(res, i+":"+p)
 		}
 	}
@@ -123,6 +123,9 @@ func GetPortArr(port string) (portRes []string) {
 				startPort, _ := strconv.Atoi(portRange[0])
 				endPort, _ := strconv.Atoi(portRange[1])
 				for i := startPort; i <= endPort; i++ {
+					if !IsPortValid(i) {
+						continue
+					}
 					portRes = append(portRes, strconv.Itoa(i))
 				}
 			} else {
@@ -141,7 +144,9 @@ func GetPortArr(port string) (portRes []string) {
 				endPort, _ := strconv.Atoi(portRange[1])
 
 				for i := startPort; i <= endPort; i++ {
-
+					if !IsPortValid(i) {
+						continue
+					}
 					portRes = append(portRes, strconv.Itoa(i))
 
 				}
@@ -157,7 +162,9 @@ func GetPortArr(port string) (portRes []string) {
 			endPort, _ := strconv.Atoi(portRange[1])
 
 			for i := startPort; i <= endPort; i++ {
-
+				if !IsPortValid(i) {
+					continue
+				}
 				portRes = append(portRes, strconv.Itoa(i))
 
 			}
@@ -173,10 +180,22 @@ func GetPortArr(port string) (portRes []string) {
 		portRes = IntArr2Str(define.TOP_1000[0:numInt])
 	}
 
-	if isNumeric(port) {
+	if isNumeric(port) && IsPortValid(Str2Int(port)) {
 		portRes = append(portRes, port)
 	}
 
+	return
+}
+
+func IsPortValid(port int) bool {
+	if port < 0 || port > 65535 {
+		return false
+	}
+	return true
+}
+
+func Str2Int(a string) (b int) {
+	b, _ = strconv.Atoi(a)
 	return
 }
 

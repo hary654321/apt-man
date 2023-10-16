@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"zrDispatch/core/slog"
 )
 
 // DataCode run code
@@ -52,6 +53,7 @@ type DetailTask struct {
 	Task
 	RID
 	Time
+	Status TaskOneStatus `json:"status" comment:"运行状态码"`
 }
 
 type Time struct {
@@ -158,10 +160,10 @@ type StrArr []string
 
 func (t *StrArr) Scan(value interface{}) error {
 
-	// slog.Println(slog.DEBUG, value)
+	slog.Println(slog.DEBUG, value)
 
 	if value == nil {
-		*t = StrArr{""}
+		*t = StrArr{}
 	}
 
 	val, ok := value.([]byte)
@@ -172,10 +174,20 @@ func (t *StrArr) Scan(value interface{}) error {
 
 	}
 
-	*t = StrArr(strings.Split(string(val), ","))
+	*t = StrArr(Split(string(val)))
 
 	return nil
 
+}
+
+func Split(a string) (res []string) {
+	arr := strings.Split(a, ",")
+	for _, v := range arr {
+		if v != "" {
+			res = append(res, v)
+		}
+	}
+	return
 }
 
 //Implement Valuer interface
@@ -344,3 +356,4 @@ func (tt TaskType) Value() string {
 		return "unknow"
 	}
 }
+
