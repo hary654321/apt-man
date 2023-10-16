@@ -26,6 +26,7 @@ type ProbeGroupAdd struct {
 	Type   string `gorm:"column:probe_group_type" json:"probe_group_type"`
 	Region string `gorm:"column:probe_group_region" json:"probe_group_region"`
 	Desc   string `gorm:"column:probe_group_desc" json:"probe_group_desc"`
+	Ctime  string `gorm:"column:probe_group_create_time" json:"probe_group_create_time"`
 }
 
 type ProbeGroupE struct {
@@ -59,6 +60,7 @@ type ProbeInfoAdd struct {
 	Send  string `gorm:"column:probe_send" json:"probe_send" binding:"required"`
 	Recv  string `gorm:"column:probe_recv" json:"probe_recv" binding:"required"`
 	Desc  string `gorm:"column:probe_desc" json:"probe_desc" `
+	Ctime string `gorm:"column:probe_create_time" json:"probe_create_time"`
 }
 
 type ProbeInfoE struct {

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"zrDispatch/common/utils"
 	"zrDispatch/core/utils/define"
 )
 
@@ -12,6 +13,7 @@ func AddProbeGroup(data define.ProbeGroupAdd) {
 		Name:   data.Name,
 		Region: data.Region,
 		Desc:   data.Desc,
+		Ctime:  utils.GetTimeStr(),
 	}
 
 	db.Table("probe_group").Create(&ProbeGroupRes)

@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/base64"
+	"zrDispatch/common/utils"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 )
@@ -9,6 +10,7 @@ import (
 // 创建任务
 func AddProbeInfo(pi define.ProbeInfoAdd) error {
 
+	pi.Ctime = utils.GetTimeStr()
 	res := db.Table("probe_info").Create(&pi)
 	return res.Error
 }
