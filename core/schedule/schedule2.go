@@ -817,7 +817,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 			go plugs(taskdata)
 		} else {
 			if taskdata.Cronexpr == "" {
-						t.status = define.TASK_STATUS_Fail
+				t.status = define.TASK_STATUS_Fail
 				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
 			}
 			models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
