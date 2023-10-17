@@ -8,6 +8,10 @@ import (
 // 保存结果
 func AddPortRes(c define.PortScan) int {
 
+	if c.Os != "" {
+		AddOs(Os{IP: c.IP, Os: c.Os})
+	}
+
 	res := db.Table("port_result").Create(&c)
 	return int(res.RowsAffected)
 }

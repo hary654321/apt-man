@@ -123,7 +123,7 @@ type ProbeRes struct {
 	Ctime     LocalTime   `gorm:"column:create_time" json:"create_time"`
 	Utime     LocalTime   `gorm:"column:update_time" json:"update_time"`
 	D         int         `gorm:"column:is_deleted" json:"is_deleted"`
-
+	Os        string      `gorm:"column:os" json:"os"`
 	// Utime   string `gorm:"column:update_time" json:"update_time"`
 	// Type    string `gorm:"column:type" json:"type" `
 }
