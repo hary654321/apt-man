@@ -877,6 +877,11 @@ func plug(taskdata *define.DetailTask, pid string) {
 			if strings.Contains(v, "stylesheet") || strings.Contains(v, "initiated") {
 				continue
 			}
+
+			if strings.Contains(v, "scanner") {
+				v = "<nmaprun>"
+			}
+
 			mewXml += v + "\n"
 		}
 		newRes = mewXml
