@@ -37,7 +37,7 @@ func GetTaskPortRes(taskId string) []define.PortResJJ {
 	dbTmp := db.Table("port_result")
 
 	var PortRes []define.PortResJJ
-	dbTmp.Where("run_task_id like ? ", taskId+"%").Order("id  desc").Find(&PortRes)
+	dbTmp.Select("ip,port,os,service,product_name,probe_name,version").Where("run_task_id like ? ", taskId+"%").Order("id  desc").Find(&PortRes)
 
 	havemap := make(map[string]int)
 
