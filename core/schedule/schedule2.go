@@ -882,6 +882,10 @@ func plug(taskdata *define.DetailTask, pid string) {
 				v = "<nmaprun>"
 			}
 
+			if strings.Contains(v, "scaninfo") {
+				v = "<scaninfo/>"
+			}
+
 			mewXml += v + "\n"
 		}
 		newRes = mewXml
