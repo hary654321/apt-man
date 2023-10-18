@@ -44,16 +44,16 @@ var (
 // task running status
 // redis key name:
 type task2 struct {
-	id        string               // taskid
-	name      string               // taskname
-	cronexpr  string               // cronexpr
-	cronsub   time.Duration        // cronexpt sub
-	close     chan struct{}        // stop schedule
-	ctxcancel context.CancelFunc   // store cancelfunc could cancel all task by this cancel
-	next      Next                 // it save a func Next by route policy
-	canrun    bool                 // task status
-	status    define.TaskOneStatus // task status
-
+	id           string               // taskid
+	name         string               // taskname
+	cronexpr     string               // cronexpr
+	cronsub      time.Duration        // cronexpt sub
+	close        chan struct{}        // stop schedule
+	ctxcancel    context.CancelFunc   // store cancelfunc could cancel all task by this cancel
+	next         Next                 // it save a func Next by route policy
+	canrun       bool                 // task status
+	status       define.TaskOneStatus // task status
+	cornRun      bool
 	sync.RWMutex               // lock
 	redis        *redis.Client // redis client
 	once         sync.Once     //
@@ -577,11 +577,11 @@ func (t *task2) StartRun(trigger define.Trigger) {
 	// time.Sleep(time.Microsecond * time.Duration(rand.Int()%100))
 	ok, err = t.getlock(randstr)
 	if err != nil {
-		log.Error("t.getlock failed", zap.Error(err))
+		slog.Println(slog.WARN, "t.getlock failed", zap.Error(err))
 		return
 	}
 	if !ok {
-		log.Warn("can not get lock", zap.String("taskname", t.name))
+		slog.Println(slog.WARN, "can not get lock", zap.String("taskname", t.name))
 		return
 	}
 
@@ -738,7 +738,17 @@ func (t *task2) runMultiTasks(ctx context.Context, RunParallel bool,
 
 // start run task,log will store
 func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskRespType) error {
+
+	if t.cornRun == true {
+		slog.Println(slog.DEBUG, "运行中")
+		return nil
+	}
+
 	t.status = define.TASK_STATUS_RUNING
+
+	defer func() {
+		t.cornRun = false
+	}()
 	var (
 		// error
 		err error
@@ -813,8 +823,8 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 		err := client.RunTask(hostInfo, taskdata)
 		if err == nil {
 			model.UpdateTaskStatus(context.Background(), taskdata.ID, 1, define.TASK_STATUS_RUNING)
-			go t.GetRes(hostInfo, taskdata)
-			go plugs(taskdata)
+			t.GetRes(hostInfo, taskdata)
+			plugs(taskdata)
 		} else {
 			if taskdata.Cronexpr == "" {
 				t.status = define.TASK_STATUS_Fail
@@ -928,7 +938,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 				}
 			}
 			//如果是端口扫描任务，需要将任务类型改为探测任务 继续拉数据
-			slog.Println(slog.DEBUG, "ProbeId", taskdata.ProbeId)
+			// slog.Println(slog.DEBUG, "ProbeId", taskdata.ProbeId)
 			if taskdata.TaskType == define.TYPE_PORT && taskdata.ProbeId[0] != "" {
 				taskdata.TaskType = define.TYPE_PROBE
 				t.GetRes(hostInfo, taskdata)
