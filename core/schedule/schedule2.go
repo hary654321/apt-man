@@ -913,7 +913,7 @@ func (t *task2) stop() {
 
 // 获取任务的结果
 func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
-	time.Sleep(4 * time.Second)
+	time.Sleep(5 * time.Second)
 	for {
 		if t.status != define.TASK_STATUS_RUNING {
 			slog.Println(slog.DEBUG, "任务终止了", t.status, "====", define.TASK_STATUS_RUNING)
@@ -958,7 +958,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			break
 		}
-		time.Sleep(3 * time.Second)
+		time.Sleep(5 * time.Second)
 	}
 }
 
