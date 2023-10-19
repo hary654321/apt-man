@@ -87,6 +87,7 @@ const (
 	TBPlugRes    string = "plug_result"
 	TBCertRes    string = "cert_result"
 	TBMatchRes   string = "match_result"
+	TBos         string = "os"
 )
 
 // Check check some msg is valid
