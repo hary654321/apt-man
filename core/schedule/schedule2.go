@@ -958,7 +958,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			break
 		}
-		time.Sleep(5 * time.Second)
+		time.Sleep(10 * time.Second)
 	}
 }
 
@@ -1110,12 +1110,14 @@ func (s *cacheSchedule2) killtask(taskid string) {
 
 	task.stop()
 
-	slog.Println(slog.WARN, "停止任务", task, exist)
+	slog.Println(slog.DEBUG, "停止任务", task, exist)
 
 	if task.ctxcancel != nil {
-		slog.Println(slog.WARN, "停止任务")
+		slog.Println(slog.DEBUG, "停止任务")
 		task.ctxcancel()
 	}
+	s.deletetask(taskid)
+	s.removerunningtask(&define.RunTask{ID: taskid})
 }
 
 func (s *cacheSchedule2) runSchedule(taskid string) {
