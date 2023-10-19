@@ -948,7 +948,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 			}
 			//如果是端口扫描任务，需要将任务类型改为探测任务 继续拉数据
 			// slog.Println(slog.DEBUG, "ProbeId", taskdata.ProbeId)
-			if taskdata.TaskType == define.TYPE_PORT && taskdata.ProbeId[0] != "" {
+			if taskdata.TaskType == define.TYPE_PORT && len(taskdata.ProbeId) != 0 {
 				taskdata.TaskType = define.TYPE_PROBE
 				t.GetRes(hostInfo, taskdata)
 			} else if taskdata.Cronexpr == "" {
