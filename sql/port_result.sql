@@ -3,7 +3,7 @@ CREATE TABLE `port_result` (
 	`run_task_id` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`ip` VARCHAR(40) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`port` VARCHAR(5) NOT NULL COLLATE 'utf8_general_ci',
-	`hex` TEXT NOT NULL COLLATE 'utf8_general_ci',
+	`cert` TEXT NOT NULL COLLATE 'utf8_general_ci',
 	`response` TEXT NOT NULL COLLATE 'utf8_general_ci',
 	`type` VARCHAR(40) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`service` VARCHAR(40) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',

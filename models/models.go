@@ -7,6 +7,8 @@ import (
 	"zrDispatch/core/config"
 	"zrDispatch/core/slog"
 
+	"gorm.io/gorm/logger"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -22,7 +24,7 @@ func Setup() {
 
 	slog.Println(slog.DEBUG, config.CoreConf.Server.DB.Drivename, config.CoreConf.Server.DB.Dsn)
 	db, err = gorm.Open(mysql.Open(config.CoreConf.Server.DB.Dsn), &gorm.Config{
-		// Logger: logger.Default.LogMode(logger.Info),
+		Logger: logger.Default.LogMode(logger.Info),
 	})
 
 	if err != nil {

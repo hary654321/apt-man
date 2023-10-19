@@ -78,11 +78,11 @@ type Pyload struct {
 
 // probe_name
 type ProbeResCreate struct {
-	Id        int    `gorm:"column:id" json:"id"`
-	IP        string `gorm:"column:ip" json:"ip" `
-	Pname     string `gorm:"column:probe_name" json:"probe_name" `
-	Port      string `gorm:"column:port" json:"port" `
-	Hex       string `gorm:"column:hex" json:"hex" `
+	Id    int    `gorm:"column:id" json:"id"`
+	IP    string `gorm:"column:ip" json:"ip" `
+	Pname string `gorm:"column:probe_name" json:"probe_name" `
+	Port  string `gorm:"column:port" json:"port" `
+	// Hex       string `gorm:"column:hex" json:"hex" `
 	Res       string `gorm:"column:response" json:"response" `
 	Cert      string `gorm:"column:cert" json:"cert" `
 	RunTaskID string `gorm:"column:run_task_id" json:"run_task_id"`

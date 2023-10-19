@@ -1,12 +1,12 @@
 package define
 
 type PortScan struct {
-	IP          string `gorm:"column:ip" json:"IP"`
-	Port        string `gorm:"column:port" json:"Port"`
-	Response    string `gorm:"column:response" json:"Response"`
-	Service     string `gorm:"column:service" json:"Service"`
-	Version     string `gorm:"column:version" json:"Version"`
-	Hex         string `gorm:"column:hex" json:"Hex"`
+	IP       string `gorm:"column:ip" json:"IP"`
+	Port     string `gorm:"column:port" json:"Port"`
+	Response string `gorm:"column:response" json:"Response"`
+	Service  string `gorm:"column:service" json:"Service"`
+	Version  string `gorm:"column:version" json:"Version"`
+	// Hex         string `gorm:"column:hex" json:"Hex"`
 	ProbeName   string `gorm:"column:probe_name" json:"ProbeName"`
 	ProductName string `gorm:"column:product_name" json:"ProductName"`
 	RunTaskID   string `gorm:"column:run_task_id" json:"runTaskID"`

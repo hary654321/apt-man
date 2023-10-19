@@ -1,7 +1,6 @@
 package client
 
 import (
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"strings"
@@ -167,7 +166,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 				ps.IP = Arr[0]
 				ps.Port = Arr[1]
 				ps.Pname = obj.ProbeResult.ReqInfo.ProbeName
-				ps.Hex = obj.ProbeResult.ResHex
+				// ps.Hex = obj.ProbeResult.ResHex
 				ps.Res = obj.ProbeResult.ResPlain
 				ps.RunTaskID = taskdata.RunTaskId
 				ps.Cert = ""
@@ -206,7 +205,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 				return err
 			}
 
-			portInfo.Hex = hex.Dump([]byte(portInfo.Response))
+			// portInfo.Hex = hex.Dump([]byte(portInfo.Response))
 
 			portInfo.Ctime = utils.GetTimeStr()
 			models.AddPortRes(portInfo)
