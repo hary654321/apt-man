@@ -24,9 +24,7 @@ type Client struct { // Our example struct, you can use "-" to ignore a field
 }
 
 func main() {
-	println(time.Now().Unix())
-	sleep()
-	println(time.Now().Unix())
+	encode()
 }
 
 func sleep() {

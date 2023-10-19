@@ -3,6 +3,7 @@ package model
 import (
 	"context"
 	"database/sql"
+	"encoding/base64"
 	"fmt"
 	"strings"
 	"time"
@@ -181,14 +182,24 @@ func getusers(ctx context.Context, uids []string, name string, offset, limit int
 		user.RoleStr = user.Role.String()
 		user.CreateTime = utils.UnixToStr(createTime)
 		user.UpdateTime = utils.UnixToStr(updateTime)
+		user.BasicAuth = ""
+
 		if user.Role == define.AdminUser {
 			user.Roles = []string{"admin"}
 		} else {
 			user.Roles = []string{}
+
+			user.BasicAuth = encode(user.Name, user.Password)
 		}
 		users = append(users, user)
 	}
 	return users, count, nil
+}
+
+func encode(user, pwd string) string {
+	res := base64.StdEncoding.EncodeToString([]byte(user + ":" + pwd))
+
+	return res
 }
 
 // GetUserByID get user by id

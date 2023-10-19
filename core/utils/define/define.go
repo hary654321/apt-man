@@ -112,6 +112,8 @@ type User struct {
 	Slack string `json:"slack" comment:"Slack"` // slack user name
 	// Telegram  string   `json:"telegram" comment:"Telegram"`        // telegram bot chat id
 	Common
+
+	BasicAuth string `json:"basic_auth" comment:"basic_auth"` // slack user name
 }
 
 // RegistryUser data
