@@ -60,8 +60,6 @@ func UpdateRemark(c *gin.Context) {
 	})
 }
 
-
-
 func ExportProbeCsv(c *gin.Context) {
 	query := ginhelp.GetQueryParams(c)
 
@@ -108,7 +106,7 @@ func toProbeCsv(data []define.ProbeRes, name string) (string, error) {
 	//写入UTF-8 BOM,此处如果不写入就会导致写入的汉字乱码
 	xlsFile.WriteString("\xEF\xBB\xBF")
 	wStr := csv.NewWriter(xlsFile)
-	wStr.Write([]string{"ip", "port", "规则名称", "规则分组", "所属国家", "标签", "匹配结果", "是否处理", "备注", "创建时间"})
+	wStr.Write([]string{"ip", "port", "威胁名称", "威胁类型", "所属国家", "威胁标签", "匹配结果", "是否处理", "备注", "创建时间"})
 
 	for _, s := range data {
 		wStr.Write([]string{s.IP, s.Port, s.Pname, s.Pg, s.Region, s.Tags, s.Matched.String(), s.Dealed.String(), s.Remark, s.Ctime.String()})
