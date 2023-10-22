@@ -86,6 +86,7 @@ type ProbeResCreate struct {
 	Res       string `gorm:"column:response" json:"response" `
 	Cert      string `gorm:"column:cert" json:"cert" `
 	RunTaskID string `gorm:"column:run_task_id" json:"run_task_id"`
+	TaskID    string `gorm:"column:task_id" json:"task_id"`
 	Matched   int    `gorm:"column:matched" json:"matched"`
 	Ctime     string `gorm:"column:create_time" json:"create_time"`
 	Utime     string `gorm:"column:update_time" json:"update_time"`

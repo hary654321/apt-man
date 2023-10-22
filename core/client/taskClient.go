@@ -169,6 +169,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 				// ps.Hex = obj.ProbeResult.ResHex
 				ps.Res = obj.ProbeResult.ResPlain
 				ps.RunTaskID = taskdata.RunTaskId
+				ps.TaskID = taskdata.ID
 				ps.Cert = ""
 				if obj.SslResult.Cert.CertBase64 != "" {
 					m := utils.StructToMapJson(obj.SslResult.Cert)
@@ -208,6 +209,7 @@ func GetTaskRes(hostInfo *define.Host, taskdata *define.DetailTask) error {
 			// portInfo.Hex = hex.Dump([]byte(portInfo.Response))
 
 			portInfo.Ctime = utils.GetTimeStr()
+			portInfo.TaskID = taskdata.ID
 			models.AddPortRes(portInfo)
 		}
 	}
