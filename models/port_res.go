@@ -57,6 +57,22 @@ func GetTaskPortRes(taskId string) []define.PortResJJ {
 	return PortResUnique
 }
 
+type Result struct {
+	Service string
+	Total   int
+}
+
+func GetTaskPortGroup(taskId string) (PortRes []Result, live_port int) {
+	dbTmp := db.Table("port_result")
+
+	dbTmp.Select("count(DISTINCT(`ip`))  as total ,service").Group("service").Where("run_task_id like ? ", taskId+"%").Scan(&PortRes)
+
+	for _, v := range PortRes {
+		live_port += v.Total
+	}
+	return
+}
+
 func GetTaskLiveIpCount(taskId string) (ipcount int64) {
 	dbTmp := db.Table("port_result")
 

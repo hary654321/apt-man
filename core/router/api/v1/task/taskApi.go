@@ -1025,7 +1025,7 @@ func Report(c *gin.Context) {
 	data := make(map[string]interface{})
 	task, _ := models.GetTaskByID(taskId)
 	data["task_info"] = task
-	data["port_list"] = models.GetTaskPortRes(taskId)
+	data["port_list"], data["live_port"] = models.GetTaskPortGroup(taskId)
 	data["plug_list"] = models.GetTaskPlugRes(taskId)
 	data["probe_list"] = models.GetTaskProbe(taskId)
 	data["ip_count"] = len(utils.GetIpArr(task.Ip))
@@ -1041,9 +1041,9 @@ func ExportDoc(c *gin.Context) {
 	taskId := c.Query("id")
 	data := make(map[string]interface{})
 	task, _ := models.GetTaskByID(taskId)
-	port_list := models.GetTaskPortRes(taskId)
+	port_list, live_port := models.GetTaskPortGroup(taskId)
 
-	data["live_port"] = len(port_list)
+	data["live_port"] = live_port
 	data["plug_list"] = models.GetTaskPlugRes(taskId)
 
 	data["ip_count"] = len(utils.GetIpArr(task.Ip))
@@ -1063,7 +1063,7 @@ func ExportDoc(c *gin.Context) {
 	dkxx := ""
 	for _, v := range port_list {
 
-		dkxx += v.IP + ":" + v.Port + "    " + v.ProductName + "\n"
+		dkxx += v.Service + ":" + utils.GetInterfaceToString(v.Total) + "\n"
 	}
 	data["dkxx"] = dkxx
 
