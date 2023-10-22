@@ -76,7 +76,7 @@ func GetTaskPortGroup(taskId string) (PortRes []Result, live_port int) {
 func GetTaskLiveIpCount(taskId string) (ipcount int64) {
 	dbTmp := db.Table("port_result")
 
-	dbTmp.Where("run_task_id like ? ", taskId+"%").Select("distinct ip").Distinct("ip").Count(&ipcount)
+	dbTmp.Where("task_id = ? ", taskId).Select("distinct ip").Distinct("ip").Count(&ipcount)
 
 	return
 }
