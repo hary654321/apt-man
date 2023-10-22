@@ -73,7 +73,7 @@ func GetTaskProbe(taskId string) []define.ProbeResJJ {
 	dbTmp := db.Table("probe_result")
 
 	var ProbeRes []define.ProbeResJJ
-	dbTmp.Select("ip,port,probe_name").Where("run_task_id like ? ", taskId+"%").Where("matched", define.Matched).Order("id  desc").Find(&ProbeRes)
+	dbTmp.Select("ip,port,probe_name").Where("task_id = ? ", taskId).Where("matched", define.Matched).Order("id  desc").Find(&ProbeRes)
 
 	havemap := make(map[string]int)
 
