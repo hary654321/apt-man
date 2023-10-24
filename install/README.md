@@ -127,3 +127,6 @@ https://github.com/docker/compose/releases
 //aarch64
 docker-18.06.3-ce.tgz
 ```
+
+
+tar -cvf install.tar apt-server client/ wl.toml wlupdate.sh install.sh  docker-compose.yml 

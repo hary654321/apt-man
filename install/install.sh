@@ -168,6 +168,18 @@ make_must_dir() {
 #建目录
 make_must_dir
 
+run() {
+mkdir -p /zrtx/apt
+mkdir -p /app
+yes | cp -rf  ./client/* /zrtx/apt
+ulimit -n 50000
+
+nohup ./apt-server  wl.toml>>m.log &
+cd /zrtx/apt  && nohup  ./apt-scan >>s.log &
+
+cd - &&  nohup ./wlaqxc.sh>>monitor.log  &
+
+}
 
 install()
 {
@@ -177,6 +189,7 @@ install()
   runContainer
   service iptables stop
   getIpAddr
+  run
   info "后台地址：http://${local_ip}:61665/crocodile/"
   info '安装顺利完成！'
 }
