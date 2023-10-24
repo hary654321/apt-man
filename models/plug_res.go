@@ -15,7 +15,7 @@ func GetTaskPlugRes(taskId string) []define.PlugRes {
 	dbTmp := db.Table("plug_result")
 
 	var PlugRes []define.PlugRes
-	dbTmp.Where("run_task_id like ? ", taskId+"%").Order("id  desc").Find(&PlugRes)
+	dbTmp.Where("task_id = ? ", taskId).Order("id  desc").Find(&PlugRes)
 
 	havemap := make(map[string]int)
 
