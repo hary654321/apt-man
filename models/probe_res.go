@@ -25,9 +25,10 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	dbTmp := db.Table("probe_result")
 
-	dbTmp = dbTmp.Select("os.os,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark, probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags,probe_group.probe_group_region").
+	dbTmp = dbTmp.Select("task.name as task_name,os.os,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark, probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags,probe_group.probe_group_region").
 		Joins("left join probe_info on probe_info.probe_name = probe_result.probe_name").
 		Joins("left join os on probe_result.ip = os.ip").
+		Joins("left join task on task.id = probe_result.task_id").
 		Joins("left join probe_group on probe_group.probe_group_name = probe_info.probe_group")
 
 	if utils.GetInterfaceToString(maps["probe_group"]) != "" {
@@ -38,6 +39,11 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 	if maps["probe_name"] != "" {
 		dbTmp = dbTmp.Where("probe_result.probe_name LIKE ?", "%"+utils.GetInterfaceToString(maps["probe_name"])+"%")
 		delete(maps, "probe_name")
+	}
+
+	if maps["task_name"] != "" {
+		dbTmp = dbTmp.Where("task.name LIKE ?", "%"+utils.GetInterfaceToString(maps["task_name"])+"%")
+		delete(maps, "task_name")
 	}
 
 	dbTmp.Where(maps).Count(&total)

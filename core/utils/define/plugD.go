@@ -2,6 +2,7 @@ package define
 
 type PlugResAdd struct {
 	RunTaskID string `gorm:"column:run_task_id" json:"run_task_id"`
+	TaskID    string `gorm:"column:task_id" json:"task_id"`
 	Plug      string `gorm:"column:plug" json:"plug" `
 	Res       string `gorm:"column:res" json:"res" `
 	Ctime     string `gorm:"column:create_time" json:"create_time"`

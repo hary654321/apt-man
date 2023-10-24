@@ -4,3 +4,10 @@ ALTER TABLE `plug_result` ADD COLUMN `task_id` CHAR(18) NOT NULL DEFAULT '' AFTE
 ALTER TABLE `port_result`	ADD INDEX `task_id` (`task_id`);
 ALTER TABLE `plug_result`	ADD INDEX `task_id` (`task_id`);
 ALTER TABLE `probe_result`	ADD INDEX `task_id` (`task_id`);
+UPDATE `apt`.`probe_info` SET `probe_name`='特种木马-frp-http' WHERE  `probe_name`='frp-http';
+UPDATE `apt`.`probe_info` SET `probe_name`='特种木马-fuso' WHERE  `probe_name`='fuso';
+UPDATE `apt`.`probe_info` SET `probe_name`='后门-gortcp' WHERE  `probe_name`='gortcp';
+UPDATE `apt`.`probe_info` SET `probe_name`='特种木马-gost' WHERE  `probe_name`='gost';
+UPDATE `apt`.`probe_info` SET `probe_name`='后门-frp-tcp' WHERE  `probe_name`='frp-tcp';
+UPDATE `apt`.`probe_info` SET `probe_name`='后门-nps-http' WHERE  `probe_name`='nps-http';
+UPDATE `apt`.`probe_info` SET `probe_name`='特种木马-nps-backend' WHERE  `probe_name`='nps-backend';

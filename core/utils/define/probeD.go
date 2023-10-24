@@ -105,15 +105,16 @@ type ProbeResEdit struct {
 
 // probe_name
 type ProbeRes struct {
-	Id      int    `gorm:"column:id" json:"id"`
-	IP      string `gorm:"column:ip" json:"ip" `
-	Pname   string `gorm:"column:probe_name" json:"probe_name" `
-	Pg      string `gorm:"column:probe_group" json:"probe_group" `
-	Tags    string `gorm:"column:probe_tags" json:"probe_tags" `
-	Region  string `gorm:"column:probe_group_region" json:"probe_group_region" `
-	Payload string `gorm:"column:probe_send" json:"payload" `
-	Finger  string `gorm:"column:probe_recv" json:"finger" `
-	Port    string `gorm:"column:port" json:"port" `
+	Id       int    `gorm:"column:id" json:"id"`
+	IP       string `gorm:"column:ip" json:"ip" `
+	TaskName string `gorm:"column:task_name" json:"task_name" `
+	Pname    string `gorm:"column:probe_name" json:"probe_name" `
+	Pg       string `gorm:"column:probe_group" json:"probe_group" `
+	Tags     string `gorm:"column:probe_tags" json:"probe_tags" `
+	Region   string `gorm:"column:probe_group_region" json:"probe_group_region" `
+	Payload  string `gorm:"column:probe_send" json:"payload" `
+	Finger   string `gorm:"column:probe_recv" json:"finger" `
+	Port     string `gorm:"column:port" json:"port" `
 	// Hex       string      `gorm:"column:hex" json:"hex" `
 	Res       string      `gorm:"column:response" json:"response" `
 	Cert      string      `gorm:"column:cert" json:"cert" `
