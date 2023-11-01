@@ -1044,7 +1044,7 @@ func ExportDoc(c *gin.Context) {
 	port_list, live_port := models.GetTaskPortGroup(taskId)
 
 	data["live_port"] = live_port
-	data["plug_list"] = models.GetTaskPlugRes(taskId)
+	plug_list := models.GetTaskPlugRes(taskId)
 
 	data["ip_count"] = len(utils.GetIpArr(task.Ip))
 	data["live_ip_count"] = models.GetTaskLiveIpCount(taskId)
@@ -1066,6 +1066,14 @@ func ExportDoc(c *gin.Context) {
 		dkxx += v.Service + ":" + utils.GetInterfaceToString(v.Total) + "\n"
 	}
 	data["dkxx"] = dkxx
+
+	cjxx := ""
+	for _, v := range plug_list {
+
+		cjxx += v.Plug + "\n"
+		cjxx += v.Res + "\n"
+	}
+	data["cjxx"] = cjxx
 
 	doc.ExportDoc(task, data)
 

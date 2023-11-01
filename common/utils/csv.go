@@ -36,7 +36,7 @@ func GetcsvData(filename string) []map[string]any {
 	return ResData
 }
 
-func GetcsvDataPro(filename string) (ResData []map[string]any, err error) {
+func GetcsvDataPro(filename string, mapa map[string]string) (ResData []map[string]any, err error) {
 
 	file, err := os.ReadFile(filename)
 
@@ -69,7 +69,7 @@ func GetcsvDataPro(filename string) (ResData []map[string]any, err error) {
 					continue
 				}
 
-				rowData[v] = line[k]
+				rowData[v] = mapa[line[k]]
 				slog.Println(slog.DEBUG, v, "========", line[k])
 			}
 

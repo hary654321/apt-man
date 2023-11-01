@@ -170,24 +170,6 @@ func EditPlug(c *gin.Context) {
 	})
 }
 
-func Import(c *gin.Context) {
-	//FormFile返回所提供的表单键的第一个文件
-	f, _ := c.FormFile("file")
-	//SaveUploadedFile上传表单文件到指定的路径
-	c.SaveUploadedFile(f, "./"+f.Filename)
-
-	data, _ := utils.GetcsvDataPro(f.Filename)
-
-	res := models.BatchAddPlugInfo(data)
-
-	if res == 0 {
-		resp.JSON(c, resp.AddFail, nil)
-		return
-	}
-
-	resp.JSON(c, resp.Success, map[string]string{"msg": "导入成功"})
-}
-
 func GetPiSelect(c *gin.Context) {
 
 	data := models.GetPlugSelect()

@@ -141,13 +141,27 @@ func EditProbe(c *gin.Context) {
 	})
 }
 
+// wStr.Write([]string{"probe_desc", "probe_name", "probe_protocol", "probe_send", "probe_recv", "probe_group", "probe_tags", "probe_match_type"})
+// wStr.Write([]string{"规则名称", "规则分组", "规则标签", "规则协议", "匹配类型", "规则荷载", "结果匹配", "描述"})
+
+var mapa = map[string]string{
+	"规则名称": "probe_name",
+	"规则分组": "probe_group",
+	"规则标签": "probe_tags",
+	"规则协议": "probe_protocol",
+	"匹配类型": "probe_match_type",
+	"规则荷载": "probe_send",
+	"结果匹配": "probe_recv",
+	"描述":   "probe_desc",
+}
+
 func Import(c *gin.Context) {
 	//FormFile返回所提供的表单键的第一个文件
 	f, _ := c.FormFile("file")
 	//SaveUploadedFile上传表单文件到指定的路径
 	c.SaveUploadedFile(f, "./"+f.Filename)
 
-	data, _ := utils.GetcsvDataPro(f.Filename)
+	data, _ := utils.GetcsvDataPro(f.Filename, mapa)
 
 	res := models.BatchAddProbeInfo(data)
 
@@ -264,7 +278,8 @@ func toCsv(name string) (string, error) {
 	//写入UTF-8 BOM,此处如果不写入就会导致写入的汉字乱码
 	xlsFile.WriteString("\xEF\xBB\xBF")
 	wStr := csv.NewWriter(xlsFile)
-	wStr.Write([]string{"probe_desc", "probe_name", "probe_protocol", "probe_send", "probe_recv", "probe_group", "probe_tags", "probe_match_type"})
+	// wStr.Write([]string{"probe_desc", "probe_name", "probe_protocol", "probe_send", "probe_recv", "probe_group", "probe_tags", "probe_match_type"})
+	wStr.Write([]string{"规则名称", "规则分组", "规则标签", "规则协议", "匹配类型", "规则荷载", "结果匹配", "描述"})
 
 	wStr.Flush() //写入文件
 	return filename, nil

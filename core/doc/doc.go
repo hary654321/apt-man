@@ -128,8 +128,12 @@ func ExportDoc(task *define.DetailTask, data map[string]interface{}) {
 	docx1.Replace("wxxx", utils.GetInterfaceToString(data["wxxx"]), -1)
 
 	//端口信息
-	slog.Println(slog.DEBUG, "dkxx", data["dkxx"])
+	// slog.Println(slog.DEBUG, "dkxx", data["dkxx"])
 	docx1.Replace("dkxx", utils.GetInterfaceToString(data["dkxx"]), -1)
+
+	//插件信息
+	slog.Println(slog.DEBUG, "cjxx", data["cjxx"])
+	docx1.Replace("cjxx", utils.GetInterfaceToString(data["cjxx"]), -1)
 
 	sp := "./report/" + task.Name + ".docx"
 	err = docx1.WriteToFile(sp)
