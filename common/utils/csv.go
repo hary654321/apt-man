@@ -69,7 +69,7 @@ func GetcsvDataPro(filename string, mapa map[string]string) (ResData []map[strin
 					continue
 				}
 
-				rowData[v] = mapa[line[k]]
+				rowData[mapa[v]] = line[k]
 				slog.Println(slog.DEBUG, v, "========", line[k])
 			}
 
