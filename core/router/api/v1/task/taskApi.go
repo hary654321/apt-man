@@ -84,9 +84,6 @@ func CreateTask(c *gin.Context) {
 		return
 	}
 
-	//log.Debug("start Add Schedule Cron", zap.String("taskid", id))
-	//schedule.Cron.Add(id, task.Name, task.Cronexpr,
-	//	schedule.GetRoutePolicy(task.HostGroupID, task.RoutePolicy))
 	resp.JSON(c, resp.Success, task)
 }
 

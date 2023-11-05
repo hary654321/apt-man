@@ -117,8 +117,7 @@ func (s TaskOneStatus) String() string {
 
 // GetTask get task
 type GetTask struct {
-	//
-	//TaskId            string        `json:"task_id" comment:"任务id"`
+	Group             string        `json:"group" comment:"分组"`
 	TaskType          TaskType      `json:"task_type"`
 	TaskTypeDesc      string        `json:"task_typedesc" comment:"任务类型"`
 	Ip                string        `json:"ip" comment:"任务数据"`
@@ -282,6 +281,7 @@ type TaskResp struct {
 // Task define Task
 
 type Task struct {
+	Group             string   `gorm:"column:group"  json:"group" form:"group"  binding:"required,min=1,max=30"`
 	TaskType          TaskType `gorm:"column:taskType"  json:"task_type"  binding:"required" ` // 任务类型
 	Ip                string   `gorm:"column:ip"  json:"ip" binding:"required"  `              // 任务数据
 	Port              string   `gorm:"column:port"  json:"port" `
