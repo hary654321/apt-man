@@ -82,6 +82,7 @@ func GetPayload(ids []string) (p []define.Pyload, err error) {
 
 	for i := 0; i < len(p); i++ {
 		p[i].Payload = base64.StdEncoding.EncodeToString([]byte(p[i].Payload))
+		p[i].PortArr = utils.GetPortArr(p[i].Port)
 	}
 	err = res.Error
 	return

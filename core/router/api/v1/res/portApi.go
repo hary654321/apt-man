@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetPoertRes(c *gin.Context) {
+func GetPortRes(c *gin.Context) {
 
 	query := ginhelp.GetQueryParams(c)
 
@@ -28,6 +28,26 @@ func GetPoertRes(c *gin.Context) {
 	}
 
 	data, count := models.GetPortRes(q.Offset, q.Limit, query)
+
+	resp.JSON(c, resp.Success, data, int(count))
+}
+
+func GetIpRes(c *gin.Context) {
+
+	query := ginhelp.GetQueryParams(c)
+
+	var q define.Query
+
+	err := c.BindQuery(&q)
+	if err != nil {
+		slog.Printf(slog.DEBUG, "BindQuery offset failed", err)
+	}
+
+	if q.Limit == 0 {
+		q.Limit = define.DefaultLimit
+	}
+
+	data, count := models.GetIpRes(q.Offset, q.Limit, query)
 
 	resp.JSON(c, resp.Success, data, int(count))
 }

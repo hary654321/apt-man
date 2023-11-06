@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strings"
+	"zrDispatch/common/cmd"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
@@ -46,7 +47,8 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 	reqD.TaskId = taskdata.RunTaskId
 	reqD.Timeout = taskdata.Timeout
 	reqD.Threads = taskdata.Threads
-	reqD.Addrs = utils.GetAddrs(taskdata.Ip, taskdata.Port)
+	reqD.Addrs = utils.GetIpArr(taskdata.Ip)
+	go addIP(reqD.Addrs)
 	reqD.Payload, _ = models.GetPayload(taskdata.ProbeId)
 
 	//base64的payload
@@ -76,6 +78,14 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 		return err
 	}
 	return nil
+}
+
+func addIP(ips []string) {
+	for _, ip := range ips {
+		if utils.Ping(ip, 3) {
+			models.AddOs(define.OsAdd{IP: ip, Os: cmd.GetOpInfo(ip), Port: "", Ctime: utils.GetCurrentTimeText()})
+		}
+	}
 }
 
 type GetTaskPressRequestData struct {

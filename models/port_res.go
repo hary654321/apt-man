@@ -8,9 +8,9 @@ import (
 // 保存结果
 func AddPortRes(c define.PortScan) int {
 
-	if c.Os != "" {
-		AddOs(Os{IP: c.IP, Os: c.Os})
-	}
+	// if c.Os != "" {
+	// 	AddOs(Os{IP: c.IP, Os: c.Os})
+	// }
 
 	res := db.Table("port_result").Create(&c)
 	return int(res.RowsAffected)
@@ -77,14 +77,6 @@ func GetTaskLiveIpCount(taskId string) (ipcount int64) {
 	dbTmp := db.Table("port_result")
 
 	dbTmp.Where("task_id = ? ", taskId).Select("distinct ip").Distinct("ip").Count(&ipcount)
-
-	return
-}
-
-func GetOsSelect() (os []define.Os) {
-	dbTmp := db.Table("port_result")
-
-	dbTmp.Where("os!=?", "").Select("os").Distinct("os").Find(&os)
 
 	return
 }

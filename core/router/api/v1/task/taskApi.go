@@ -1028,7 +1028,7 @@ func Report(c *gin.Context) {
 	data["ip_count"] = len(utils.GetIpArr(task.Ip))
 	data["live_ip_count"] = models.GetTaskLiveIpCount(taskId)
 	data["match_ip_count"] = models.GetTaskMatchIpCount(taskId)
-	data["port_count"] = len(utils.GetAddrs(task.Ip, task.Port))
+	// data["port_count"] = len(utils.GetAddrs(task.Ip, task.Port))
 	resp.JSON(c, resp.Success, data)
 
 }
@@ -1046,7 +1046,7 @@ func ExportDoc(c *gin.Context) {
 	data["ip_count"] = len(utils.GetIpArr(task.Ip))
 	data["live_ip_count"] = models.GetTaskLiveIpCount(taskId)
 	data["match_ip_count"] = models.GetTaskMatchIpCount(taskId)
-	data["port_count"] = len(utils.GetAddrs(task.Ip, task.Port))
+	// data["port_count"] = len(utils.GetAddrs(task.Ip, task.Port))
 
 	probe_list := models.GetTaskProbe(taskId)
 
