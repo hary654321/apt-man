@@ -64,6 +64,7 @@ func dealEvent(data []byte) {
 	case AddEvent:
 		fallthrough
 	case ChangeEvent:
+		slog.Println(slog.WARN, "ChangeEvent", ChangeEvent)
 		ctx, cancel := context.WithTimeout(context.Background(), config.CoreConf.Server.DB.MaxQueryTime.Duration)
 		defer cancel()
 		task, err := model.GetTaskByID(ctx, subdata.TaskID)
@@ -71,7 +72,7 @@ func dealEvent(data []byte) {
 			log.Error("model.GetTaskByID failed", zap.Error(err))
 			return
 		}
-		slog.Println(slog.WARN, "ChangeEvent",Cron2.ts)
+		slog.Println(slog.WARN, "ChangeEvent", Cron2.ts)
 
 		time.Sleep(time.Duration((3100-task.Priority*1000)*2) * time.Millisecond)
 
@@ -119,4 +120,3 @@ func dealEvent(data []byte) {
 		log.Warn("unsupport task event", zap.Any("data", subdata))
 	}
 }
-

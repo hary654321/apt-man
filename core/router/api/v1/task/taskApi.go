@@ -415,6 +415,7 @@ func Changestate(c *gin.Context) {
 			resp.JSON(c, resp.ErrInternalServer, nil)
 			return
 		}
+		slog.Println(slog.DEBUG, "schedule.ChangeEvent", schedule.ChangeEvent)
 		schedule.Cron2.PubTaskEvent(res)
 	} else {
 		event := schedule.EventData{
