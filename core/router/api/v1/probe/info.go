@@ -161,7 +161,12 @@ func Import(c *gin.Context) {
 	//SaveUploadedFile上传表单文件到指定的路径
 	c.SaveUploadedFile(f, "./"+f.Filename)
 
-	data, _ := utils.GetcsvDataPro(f.Filename, mapa)
+	data, err := utils.GetcsvDataPro(f.Filename, mapa)
+
+	if err != nil {
+		resp.JSONNew(c, resp.ErrBadRequest, err.Error())
+		return
+	}
 
 	res := models.BatchAddProbeInfo(data)
 

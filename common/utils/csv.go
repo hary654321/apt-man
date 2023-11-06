@@ -3,6 +3,7 @@ package utils
 import (
 	"bytes"
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -69,6 +70,16 @@ func GetcsvDataPro(filename string, mapa map[string]string) (ResData []map[strin
 					continue
 				}
 
+				if mapa[v] == "probe_protocol" && !In_array(line[k], []string{"HTTP", "TCP"}) {
+
+					slog.Println(slog.DEBUG, v, "协议不对", line[k])
+					return ResData, errors.New("协议不对")
+				}
+				if mapa[v] == "probe_match_type" && !In_array(line[k], []string{"keyword", "==", "re", "cert"}) {
+
+					slog.Println(slog.DEBUG, v, "匹配类型不对", line[k])
+					return ResData, errors.New("匹配类型不对")
+				}
 				rowData[mapa[v]] = line[k]
 				slog.Println(slog.DEBUG, v, "========", line[k])
 			}
