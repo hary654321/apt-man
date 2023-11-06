@@ -88,7 +88,6 @@ const (
 	TBCertRes    string = "cert_result"
 	TBMatchRes   string = "match_result"
 	TBos         string = "os"
-	TBip         string = "ip"
 )
 
 // Check check some msg is valid

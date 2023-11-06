@@ -62,10 +62,10 @@ func CreateTask(c *gin.Context) {
 		return
 	}
 
-	if len(utils.GetPortArr(task.Port)) == 0 {
-		resp.JSONNew(c, 400, "请按照规定格式填写Port")
-		return
-	}
+	// if len(utils.GetPortArr(task.Port)) == 0 {
+	// 	resp.JSONNew(c, 400, "请按照规定格式填写Port")
+	// 	return
+	// }
 
 	// TODO 检查任务数据
 	taskInfo := models.GetTaskInfoByName(task.Name)
@@ -77,6 +77,7 @@ func CreateTask(c *gin.Context) {
 	task.ID = utils.GetID()
 	task.CreateByUID = c.GetString("uid")
 	task.Run = 0
+	task.TaskType = define.TYPE_PORT
 	err = models.AddTask(task)
 	if err != nil {
 		log.Error("CreateTask failed", zap.Error(err))

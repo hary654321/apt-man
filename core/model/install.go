@@ -38,7 +38,6 @@ var crcocodileTables = []string{
 	TBPortRes,
 	TBPlugRes,
 	TBos,
-	TBip,
 }
 
 // QueryIsInstall check table is create

@@ -30,7 +30,7 @@ func main() {
 	model.InitRabc()
 	models.Setup()
 
-	model.Update()
+	go model.Update()
 	// model.Pi()
 
 	go client.HeartBeat() // 心跳检测

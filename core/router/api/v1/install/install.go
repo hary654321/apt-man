@@ -6,8 +6,6 @@ import (
 	"zrDispatch/common/log"
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
-	"zrDispatch/core/schedule"
-	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 	"zrDispatch/core/utils/resp"
 	"zrDispatch/core/version"
@@ -67,10 +65,10 @@ func StartInstall(c *gin.Context) {
 	}
 
 	//初始化定时任务
-	err = schedule.Init2()
-	if err != nil {
-		slog.Printf(slog.DEBUG, "init schedule failed", zap.Error(err))
-	}
+	// err = schedule.Init2()
+	// if err != nil {
+	// 	slog.Printf(slog.DEBUG, "init schedule failed", zap.Error(err))
+	// }
 
 	resp.JSON(c, resp.Success, nil)
 }

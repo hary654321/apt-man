@@ -46,10 +46,14 @@ type EventData struct {
 
 // RecvEvent recv task event
 func RecvEvent() {
-	sub := Cron2.redis.Subscribe(pubsubChannel)
-	for msg := range sub.Channel() {
-		log.Debug("recv event", zap.String("data", msg.Payload))
-		go dealEvent([]byte(msg.Payload))
+	for {
+		slog.Println(slog.WARN, "RecvEvent")
+		sub := Cron2.redis.Subscribe(pubsubChannel)
+		for msg := range sub.Channel() {
+			slog.Println(slog.WARN, "recv event", zap.String("data", msg.Payload))
+			go dealEvent([]byte(msg.Payload))
+		}
+		time.Sleep(time.Second)
 	}
 }
 
