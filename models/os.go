@@ -1,12 +1,23 @@
 package models
 
-import "zrDispatch/core/utils/define"
+import (
+	"zrDispatch/core/slog"
+	"zrDispatch/core/utils/define"
+)
 
 // 创建任务
 func AddOs(pi define.OsAdd) error {
 
 	res := db.Table("os").Create(&pi)
 	return res.Error
+}
+
+func IPCont(ip string) int64 {
+	dbTmp := db.Table("os")
+	var os define.Os
+	res := dbTmp.Where("ip=?", ip).First(&os)
+	slog.Println(slog.DEBUG, "res.RowsAffected", res.RowsAffected)
+	return res.RowsAffected
 }
 
 func GetOsSelect() (os []define.Os) {

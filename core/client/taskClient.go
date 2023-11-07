@@ -48,7 +48,7 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 	reqD.Timeout = taskdata.Timeout
 	reqD.Threads = taskdata.Threads
 	reqD.Addrs = utils.GetIpArr(taskdata.Ip)
-	go addIP(reqD.Addrs)
+	addIP(reqD.Addrs)
 	reqD.Payload, _ = models.GetPayload(taskdata.ProbeId)
 
 	//base64的payload
@@ -82,7 +82,7 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 
 func addIP(ips []string) {
 	for _, ip := range ips {
-		if utils.Ping(ip, 3) {
+		if utils.Ping(ip, 3) && models.IPCont(ip) == 0 {
 			models.AddOs(define.OsAdd{IP: ip, Os: cmd.GetOpInfo(ip), Port: "", Ctime: utils.GetCurrentTimeText()})
 		}
 	}
