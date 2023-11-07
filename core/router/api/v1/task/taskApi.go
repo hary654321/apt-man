@@ -62,6 +62,11 @@ func CreateTask(c *gin.Context) {
 		return
 	}
 
+	if len(utils.GetIpArr(task.Ip)) > 65536 {
+		resp.JSONNew(c, 400, "最多65536个IP")
+		return
+	}
+
 	// if len(utils.GetPortArr(task.Port)) == 0 {
 	// 	resp.JSONNew(c, 400, "请按照规定格式填写Port")
 	// 	return

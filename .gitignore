@@ -12,3 +12,4 @@ vendor
 *.zip
 *.csv
 report
+./*.sql

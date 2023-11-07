@@ -61,6 +61,7 @@ type ProbeInfoAdd struct {
 	Recv  string `gorm:"column:probe_recv" json:"probe_recv" binding:"required"`
 	Desc  string `gorm:"column:probe_desc" json:"probe_desc" `
 	Ctime string `gorm:"column:probe_create_time" json:"probe_create_time"`
+	Port  string `gorm:"column:probe_port"  json:"probe_port" `
 }
 
 type ProbeInfoE struct {
