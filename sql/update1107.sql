@@ -2,6 +2,7 @@ ALTER TABLE `task` ADD COLUMN `group` VARCHAR(30) NOT NULL DEFAULT '' COMMENT 'å
 ALTER TABLE `os` ADD COLUMN `port` TEXT NULL AFTER `os`,ADD COLUMN `create_time` DATETIME NULL AFTER `port`;
 ALTER TABLE `os` DROP INDEX `ip_os`, ADD UNIQUE INDEX `ip` (`ip`);
 TRUNCATE `os`;
+ALTER TABLE `port_result` DROP COLUMN `probe_name`;
 ALTER TABLE `probe_info` ADD COLUMN `probe_port` TEXT NULL AFTER `probe_desc`;
 UPDATE `probe_info` SET `probe_port`='80,443,8443,50050,8080,8443,8888,81' ;
 UPDATE `probe_info` SET `probe_port`='7000' WHERE  `probe_name` like '%frp%';
