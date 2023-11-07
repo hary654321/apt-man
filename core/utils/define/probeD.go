@@ -69,13 +69,13 @@ type ProbeInfoE struct {
 }
 
 type Pyload struct {
-	Payload       string   `gorm:"column:probe_send" json:"payload"`
-	Name          string   `gorm:"column:probe_name" json:"probe_name"`
-	ProbeProtocol string   `gorm:"column:probe_protocol" json:"probe_protocol"`
-	Recv          string   `gorm:"column:probe_recv" json:"probe_recv"`
-	MT            string   `gorm:"column:probe_match_type" json:"probe_match_type"`
-	Port          string   `gorm:"column:port"  json:"port" `
-	PortArr       []string `  json:"portArr" `
+	Payload       string `gorm:"column:probe_send" json:"payload"`
+	Name          string `gorm:"column:probe_name" json:"probe_name"`
+	ProbeProtocol string `gorm:"column:probe_protocol" json:"probe_protocol"`
+	Recv          string `gorm:"column:probe_recv" json:"probe_recv"`
+	MT            string `gorm:"column:probe_match_type" json:"probe_match_type"`
+	Port          string `gorm:"column:probe_port"  json:"port" `
+	// PortArr       []string `  json:"portArr" `
 }
 
 // probe_name

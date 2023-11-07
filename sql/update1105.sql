@@ -1,2 +1,3 @@
 ALTER TABLE `task` ADD COLUMN `group` VARCHAR(30) NOT NULL DEFAULT '' COMMENT '分组' AFTER `name`;
 ALTER TABLE `os` ADD COLUMN `port` TEXT NULL AFTER `os`,ADD COLUMN `create_time` DATETIME NULL AFTER `port`;
+ALTER TABLE `probe_info` ADD COLUMN `probe_port` TEXT NULL AFTER `probe_desc`;

@@ -7,7 +7,7 @@ type PortScan struct {
 	Service  string `gorm:"column:service" json:"Service"`
 	Version  string `gorm:"column:version" json:"Version"`
 	// Hex         string `gorm:"column:hex" json:"Hex"`
-	ProbeName   string `gorm:"column:probe_name" json:"ProbeName"`
+	// ProbeName   string `gorm:"column:probe_name" json:"ProbeName"`
 	ProductName string `gorm:"column:product_name" json:"ProductName"`
 	RunTaskID   string `gorm:"column:run_task_id" json:"runTaskID"`
 	TaskID      string `gorm:"column:task_id" json:"TaskID"`

@@ -763,7 +763,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 	t.setdata(taskruntype, id, define.TsRun, taskstatus)
 
 	taskdata, err = models.GetTaskByID(id)
-
+	model.UpdateTaskStatus(context.Background(), taskdata.ID, 1, define.TASK_STATUS_RUNING)
 	taskdata.RunTaskId = taskdata.ID + "-" + utils.GetTime()
 
 	if err != nil {
@@ -810,6 +810,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 		ErrTaskID:   t.errTaskID,
 		StartTime:   utils.GetHaoMiao(),
 		ErrTask:     t.errTask,
+		Trigger:     define.Port,
 	}
 	errM := model.SaveLog(context.Background(), tasklogres)
 	if errM != nil {
@@ -817,22 +818,56 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 		return fmt.Errorf("model.SaveLogfailed: %w", err)
 	}
 
-	if taskdata.TaskType == define.TYPE_PORT || taskdata.TaskType == define.TYPE_PROBE {
-		slog.Println(slog.DEBUG, taskdata.ID, "====", taskdata.TaskType)
+	slog.Println(slog.DEBUG, taskdata.ID, "====", taskdata.TaskType)
 
-		err := client.RunTask(hostInfo, taskdata)
-		if err == nil {
-			model.UpdateTaskStatus(context.Background(), taskdata.ID, 1, define.TASK_STATUS_RUNING)
-			t.GetRes(hostInfo, taskdata)
-			plugs(taskdata)
-		} else {
-			if taskdata.Cronexpr == "" {
-				t.status = define.TASK_STATUS_Fail
-				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
-			}
-			models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
+	plugs(taskdata)
+
+	err = client.RunTask(hostInfo, taskdata)
+	if err == nil {
+		t.GetRes(hostInfo, taskdata)
+	} else {
+		if taskdata.Cronexpr == "" {
+			t.status = define.TASK_STATUS_Fail
+			model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
 		}
-		return nil
+		models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
+	}
+
+	taskdata.TaskType = define.TYPE_PROBE
+	taskdata.RunTaskId = taskdata.ID + "-" + utils.GetTime()
+	//日志保存
+	tasklogres = &define.Log{
+		Name:        taskdata.Name,
+		TaskID:      id,
+		RunTaskID:   taskdata.RunTaskId,
+		HostId:      hostInfo.ID,
+		EndTime:     utils.GetHaoMiao(),
+		ErrCode:     t.errCode,
+		ErrMsg:      t.errMsg,
+		ErrTasktype: t.errTasktype,
+		ErrTaskID:   t.errTaskID,
+		StartTime:   utils.GetHaoMiao(),
+		ErrTask:     t.errTask,
+		Trigger:     define.Probe,
+	}
+	errM = model.SaveLog(context.Background(), tasklogres)
+	if errM != nil {
+		log.Error("model.SaveLog failed", zap.Error(errM))
+		return fmt.Errorf("model.SaveLogfailed: %w", err)
+	}
+
+	err = client.RunTask(hostInfo, taskdata)
+	if err == nil {
+		t.GetRes(hostInfo, taskdata)
+
+		model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
+		t.status = define.TASK_STATUS_DONE
+	} else {
+		if taskdata.Cronexpr == "" {
+			t.status = define.TASK_STATUS_Fail
+			model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_Fail)
+		}
+		models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
 	}
 
 	return nil
@@ -914,7 +949,7 @@ func (t *task2) stop() {
 
 // 获取任务的结果
 func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
-	time.Sleep(5 * time.Second)
+	time.Sleep(3 * time.Second)
 	for {
 		if t.status != define.TASK_STATUS_RUNING {
 			slog.Println(slog.DEBUG, "任务终止了", t.status, "====", define.TASK_STATUS_RUNING)
@@ -938,7 +973,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 
 		}
 		if res {
-			time.Sleep(10 * time.Second)
+			time.Sleep(3 * time.Second)
 			err := client.GetTaskRes(hostInfo, taskdata)
 			if err != nil {
 				if taskdata.Cronexpr == "" {
@@ -947,19 +982,12 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 					models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
 				}
 			}
-			//如果是端口扫描任务，需要将任务类型改为探测任务 继续拉数据
-			// slog.Println(slog.DEBUG, "ProbeId", taskdata.ProbeId)
-			if taskdata.TaskType == define.TYPE_PORT && len(taskdata.ProbeId) != 0 {
-				taskdata.TaskType = define.TYPE_PROBE
-				t.GetRes(hostInfo, taskdata)
-			} else if taskdata.Cronexpr == "" {
-				model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
-				t.status = define.TASK_STATUS_DONE
-			}
+
 			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			break
 		}
-		time.Sleep(10 * time.Second)
+
+		time.Sleep(3 * time.Second)
 	}
 }
 

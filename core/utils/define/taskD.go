@@ -241,6 +241,10 @@ const (
 	Auto Trigger = iota + 1
 	// Manual trigger run task
 	Manual
+
+	Port
+
+	Probe
 )
 
 func (t Trigger) String() string {
@@ -249,6 +253,10 @@ func (t Trigger) String() string {
 		return "自动触发"
 	case Manual:
 		return "手动触发"
+	case Port:
+		return "端口扫描"
+	case Probe:
+		return "规则扫描"
 	default:
 		return "UnKnown"
 	}

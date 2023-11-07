@@ -66,7 +66,7 @@ func GetOpInfo(ip string) string {
 	for _, line := range strArr {
 		//slog.Println(slog.DEBUG,  line)
 		if utils.GetStrACount("OS details", line) > 0 {
-			return SubStrAfter(line, ":")
+			return strings.TrimSpace(SubStrAfter(line, ":"))
 		}
 	}
 
