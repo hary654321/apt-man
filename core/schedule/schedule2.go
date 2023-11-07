@@ -820,7 +820,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 
 	slog.Println(slog.DEBUG, taskdata.ID, "====", taskdata.TaskType)
 
-	plugs(taskdata)
+	go plugs(taskdata)
 
 	err = client.RunTask(hostInfo, taskdata)
 	if err == nil {
