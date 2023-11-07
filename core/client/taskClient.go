@@ -48,7 +48,9 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 	reqD.Timeout = taskdata.Timeout
 	reqD.Threads = taskdata.Threads
 	reqD.Addrs = utils.GetIpArr(taskdata.Ip)
-	addIP(reqD.Addrs)
+	if taskdata.TaskType == define.TYPE_PORT {
+		go addIP(reqD.Addrs)
+	}
 	reqD.Payload, _ = models.GetPayload(taskdata.ProbeId)
 
 	//base64的payload
