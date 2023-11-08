@@ -1,6 +1,7 @@
 package models
 
 import (
+	"zrDispatch/common/utils"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 )
@@ -8,9 +9,13 @@ import (
 // 保存结果
 func AddPortRes(c define.PortScan) int {
 
-	// if c.Os != "" {
-	// 	AddOs(Os{IP: c.IP, Os: c.Os})
-	// }
+	if c.Os != "" && IPCont(c.IP) == 0 {
+		AddOs(define.OsAdd{IP: c.IP, Os: c.Os, Ctime: utils.GetCurrentTimeText()})
+	}
+
+	if c.Os != "" && IPOsCont(c.IP) == 0 {
+		ChangeOs(c.IP, c.Os)
+	}
 
 	res := db.Table("port_result").Create(&c)
 	return int(res.RowsAffected)

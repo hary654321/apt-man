@@ -20,6 +20,21 @@ func IPCont(ip string) int64 {
 	return res.RowsAffected
 }
 
+func IPOsCont(ip string) int64 {
+	dbTmp := db.Table("os")
+	var os define.Os
+	res := dbTmp.Where("ip=?", ip).Where("os!=?", "").First(&os)
+	slog.Println(slog.DEBUG, "res.RowsAffected", res.RowsAffected)
+	return res.RowsAffected
+}
+
+func ChangeOs(ip, os string) error {
+
+	res := db.Table("task").Where("ip", ip).Update("os", os)
+
+	return res.Error
+}
+
 func GetOsSelect() (os []define.Os) {
 	dbTmp := db.Table("os")
 

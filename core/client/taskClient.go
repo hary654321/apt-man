@@ -84,7 +84,7 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 
 func addIP(ips []string) {
 	for _, ip := range ips {
-		if utils.Ping(ip, 3) && models.IPCont(ip) == 0 {
+		if utils.Ping(ip, 10) && models.IPCont(ip) == 0 {
 			models.AddOs(define.OsAdd{IP: ip, Os: cmd.GetOpInfo(ip), Port: "", Ctime: utils.GetCurrentTimeText()})
 		}
 	}
