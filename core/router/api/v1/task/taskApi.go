@@ -935,6 +935,7 @@ func CloneTask(c *gin.Context) {
 	taskInfo.Name = task.Name
 	taskInfo.CreateByUID = c.GetString("uid")
 	taskInfo.Run = 0
+	taskInfo.CreateTime = utils.GetTimeStr()
 
 	err = models.AddTask(*taskInfo)
 
