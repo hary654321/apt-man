@@ -31,6 +31,11 @@ func CreateProbe(c *gin.Context) {
 		return
 	}
 
+	port := utils.GetPortArr(pi.Port)
+	if len(port) < 1 {
+		resp.JSONNew(c, resp.ProbeInfoAdd, "请按照规定格式填写port")
+		return
+	}
 	res := models.GetProbeInfoByName(pi.Name)
 
 	utils.WriteJsonLog(res)
