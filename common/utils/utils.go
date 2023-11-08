@@ -113,11 +113,6 @@ func PathExists(path string) bool {
 	return false
 }
 
-// GetCurrentTimeText 获取当前时间format
-func GetCurrentTimeText() string {
-	return time.Now().Format("2006-01-02 15:04:05")
-}
-
 // BindArgsWithGin 绑定请求参数
 func BindArgsWithGin(c *gin.Context, req interface{}) error {
 	return c.ShouldBindWith(req, binding.Default(c.Request.Method, c.ContentType()))

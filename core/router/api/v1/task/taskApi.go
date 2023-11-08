@@ -83,6 +83,7 @@ func CreateTask(c *gin.Context) {
 	task.CreateByUID = c.GetString("uid")
 	task.Run = 0
 	task.TaskType = define.TYPE_PORT
+	task.CreateTime = utils.GetTimeStr()
 	err = models.AddTask(task)
 	if err != nil {
 		log.Error("CreateTask failed", zap.Error(err))

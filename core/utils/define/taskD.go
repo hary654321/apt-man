@@ -149,7 +149,11 @@ type GetTask struct {
 	AlarmStatusDesc   string        `json:"alarm_statusdesc" comment:"报警策略"`
 	ProbeId           StrArr        `json:"probeId" comment:"规则"`
 	Plug              StrArr        `json:"plug" comment:"插件"`
-	Common
+	ID                string        `json:"id" comment:"ID"`
+	Name              string        `json:"name,omitempty" comment:"名称"`
+	CreateTime        LocalTime     `json:"create_time,omitempty" comment:"创建时间"` // 创建时间
+	UpdateTime        LocalTime     `json:"update_time,omitempty" comment:"更新时间"` // 最后一次更新时间
+	Remark            string        `json:"remark" comment:"备注"`                  // 备注
 }
 
 type StrArr []string
@@ -311,6 +315,7 @@ type Task struct {
 	ProbeId     StrArr      `gorm:"column:probeId" json:"probeId" comment:"规则"`
 	Plug        StrArr      `gorm:"column:plug" json:"plug" comment:"插件"`
 	Threads     int         `gorm:"column:threads" json:"threads" binding:"required,min=-1"` // 任务超时时间 (s) -1 no limit
+	CreateTime  string      `gorm:"column:createTime" json:"createTime"`
 }
 
 type RID struct {

@@ -10,7 +10,7 @@ import (
 func AddPortRes(c define.PortScan) int {
 
 	if c.Os != "" && IPCont(c.IP) == 0 {
-		AddOs(define.OsAdd{IP: c.IP, Os: c.Os, Ctime: utils.GetCurrentTimeText()})
+		AddOs(define.OsAdd{IP: c.IP, Os: c.Os, Ctime: utils.GetTimeStr()})
 	}
 
 	if c.Os != "" && IPOsCont(c.IP) == 0 {

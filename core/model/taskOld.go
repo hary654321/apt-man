@@ -252,7 +252,6 @@ func getTasks(ctx context.Context,
 		t := define.GetTask{}
 		var (
 			parentTaskIds, childTaskIds string
-			createTime, updateTime      string
 			alarmUserids                string
 		)
 
@@ -282,8 +281,8 @@ func getTasks(ctx context.Context,
 			&t.HostGroup,
 			&t.HostGroupID,
 			&t.Remark,
-			&createTime,
-			&updateTime,
+			&t.CreateTime,
+			&t.UpdateTime,
 		)
 		if err != nil {
 			log.Error("rows.Scan ", zap.Error(err))
@@ -339,7 +338,6 @@ func getTasks(ctx context.Context,
 		t.TaskTypeDesc = t.TaskType.String()
 		t.AlarmStatusDesc = t.AlarmStatus.String()
 		t.StatusDesc = t.Status.String()
-
 		tasks = append(tasks, t)
 	}
 	return tasks, count, nil
