@@ -3,7 +3,6 @@ package res
 import (
 	"encoding/csv"
 	"fmt"
-	"io"
 	"net/http"
 	"os"
 	"time"
@@ -77,16 +76,7 @@ func ExportProbeCsv(c *gin.Context) {
 	if filename == "" {
 		slog.Println(slog.DEBUG, "export excel file failed == ", filename)
 	}
-	file, err := os.Open("./" + filename)
-	if err != nil {
-		resp.JSONNew(c, resp.ErrBadRequest, "文件不存在")
-		return
-	}
-	defer file.Close()
-
-	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
-	c.Header("Content-Type", "text/csv;") // Set Content-Type to audio/mpeg
-	io.Copy(c.Writer, file)               //直接返回文件
+	resp.JSON(c, resp.Success, filename)
 
 }
 
@@ -96,7 +86,7 @@ func toProbeCsv(data []define.ProbeRes, name string) (string, error) {
 	strTime := time.Now().Format("20060102150405")
 	//创建csv文件
 	filename := fmt.Sprintf("%s-%s.csv", name, strTime)
-	xlsFile, fErr := os.OpenFile("./"+filename, os.O_RDWR|os.O_CREATE, 0766)
+	xlsFile, fErr := os.OpenFile("tem/"+filename, os.O_RDWR|os.O_CREATE, 0766)
 	if fErr != nil {
 		slog.Println(slog.DEBUG, "Export:created excel file failed ==", fErr)
 		return "", fErr
