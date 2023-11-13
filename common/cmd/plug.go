@@ -42,7 +42,7 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 
 	cmd = strings.Replace(cmd, "{res}", res, -1)
 
-	// slog.Println(slog.DEBUG, cmd)
+	slog.Println(slog.DEBUG, cmd)
 
 	cmd1 := exec.Command("bash", "-c", cmd)
 

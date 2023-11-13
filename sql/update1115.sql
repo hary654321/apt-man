@@ -1,0 +1,1 @@
+UPDATE `plug` SET `cmd`='nmap -T5 -oX  {res}  {ip}' WHERE  `name`='NMAP';
