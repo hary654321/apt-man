@@ -68,7 +68,7 @@ func ExportProbeCsv(c *gin.Context) {
 		resp.JSON(c, resp.Nodata, nil)
 	}
 
-	filename, err := toProbeCsv(data, "ExportProbeCsv")
+	filename, err := toProbeCsv(data, "规则扫描结果")
 
 	if err != nil {
 		slog.Println(slog.DEBUG, "t.toCsv() failed == ", err)
