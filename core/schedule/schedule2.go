@@ -797,6 +797,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 	// defer conn.Close()
 	t.writelogt(taskruntype, id, "start run task %s[%s] on host %s", taskdata.Name, id, hostInfo.Ip)
 
+	taskdata.TaskType = define.TYPE_PROBE
 	//日志保存
 	tasklogres := &define.Log{
 		Name:        taskdata.Name,
@@ -810,7 +811,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 		ErrTaskID:   t.errTaskID,
 		StartTime:   utils.GetHaoMiao(),
 		ErrTask:     t.errTask,
-		Trigger:     define.Port,
+		Trigger:     define.Probe,
 	}
 	errM := model.SaveLog(context.Background(), tasklogres)
 	if errM != nil {
@@ -833,7 +834,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 		models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
 	}
 
-	taskdata.TaskType = define.TYPE_PROBE
+	taskdata.TaskType = define.TYPE_PORT
 	taskdata.RunTaskId = taskdata.ID + "-" + utils.GetTime()
 	//日志保存
 	tasklogres = &define.Log{
@@ -848,7 +849,7 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 		ErrTaskID:   t.errTaskID,
 		StartTime:   utils.GetHaoMiao(),
 		ErrTask:     t.errTask,
-		Trigger:     define.Probe,
+		Trigger:     define.Port,
 	}
 	errM = model.SaveLog(context.Background(), tasklogres)
 	if errM != nil {
