@@ -1,0 +1,1 @@
+UPDATE `apt`.`probe_info` SET `probe_port`='8082' WHERE  `probe_recv`='https://github.com/fatedier/frp';
