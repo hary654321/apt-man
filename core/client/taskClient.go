@@ -57,7 +57,7 @@ func RunTask(hostInfo *define.Host, taskdata *define.DetailTask) error {
 	// slog.Println(slog.DEBUG, "===任务开始===", reqD.Payload)
 	jsonData, _ := sonic.Marshal(&reqD)
 
-	// slog.Println(slog.DEBUG, string(jsonData))
+	slog.Println(slog.DEBUG, string(jsonData))
 
 	var responseJson ResponseJson
 
