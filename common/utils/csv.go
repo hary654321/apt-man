@@ -72,13 +72,11 @@ func GetcsvDataPro(filename string, mapa map[string]string) (ResData []map[strin
 
 				if mapa[v] == "probe_protocol" && !In_array(line[k], []string{"HTTP", "TCP"}) {
 
-					slog.Println(slog.DEBUG, v, "协议不对", line[k])
-					return ResData, errors.New("协议不对")
+					return ResData, errors.New("协议必须为HTTP,TCP")
 				}
 				if mapa[v] == "probe_match_type" && !In_array(line[k], []string{"keyword", "==", "re", "cert"}) {
 
-					slog.Println(slog.DEBUG, v, "匹配类型不对", line[k])
-					return ResData, errors.New("匹配类型不对")
+					return ResData, errors.New("匹配类型必须为keyword,re,==,cert")
 				}
 				rowData[mapa[v]] = line[k]
 				slog.Println(slog.DEBUG, v, "========", line[k])
