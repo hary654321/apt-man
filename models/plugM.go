@@ -23,8 +23,13 @@ func GetPlugInfo(pageNum int, pageSize int, maps map[string]interface{}) (PlugIn
 
 	var PlugInfo []define.PlugInfo
 	if maps["name"] != nil {
-		dbTmp = dbTmp.Where("name LIKE ?", "%"+maps["name"].(string)+"%")
+		dbTmp = dbTmp.Where("`name` LIKE ?", "%"+maps["name"].(string)+"%")
 		delete(maps, "name")
+	}
+
+	if maps["desc"] != nil {
+		dbTmp = dbTmp.Where("`desc` LIKE ?", "%"+maps["desc"].(string)+"%")
+		delete(maps, "desc")
 	}
 
 	dbTmp.Where("is_deleted", 0).Where(maps).Count(&total)
