@@ -13,3 +13,4 @@ vendor
 *.csv
 report
 ./*.sql
+*.tar
