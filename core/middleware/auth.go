@@ -14,6 +14,8 @@ import (
 	"zrDispatch/common/log"
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
+	redis2 "zrDispatch/core/redis"
+	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/resp"
 )
 
@@ -39,6 +41,12 @@ func CheckToken(token string) (string, string, bool) {
 // 权限检查
 func checkAuth(c *gin.Context) (pass bool, err error) {
 	token := strings.TrimPrefix(c.GetHeader("Authorization"), tokenpre)
+	redisClient := redis2.GetClient()
+
+	if redisClient.Get(token).Val() != "" {
+		slog.Println(slog.DEBUG, "命中缓存")
+		return true, nil
+	}
 
 	if token == "" {
 		err = errors.New("invalid token")
@@ -77,7 +85,13 @@ func checkAuth(c *gin.Context) (pass bool, err error) {
 	requrl := c.Request.URL.Path
 	method := c.Request.Method
 	enforcer := model.GetEnforcer()
-	return enforcer.Enforce(uid, requrl, method)
+	pass, err = enforcer.Enforce(uid, requrl, method)
+
+	if pass {
+		redisClient.Set(token, 1, 30*time.Minute)
+	}
+
+	return
 }
 
 var excludepath = []string{"login", "logout", "install", "websocket", "add"}
