@@ -16,6 +16,7 @@ import (
 	"zrDispatch/core/model"
 	redis2 "zrDispatch/core/redis"
 	"zrDispatch/core/slog"
+	"zrDispatch/core/utils/define"
 	"zrDispatch/core/utils/resp"
 )
 
@@ -57,6 +58,8 @@ func checkAuth(c *gin.Context) (pass bool, err error) {
 	c.Set("username", username)
 
 	if redisClient.Get(token).Val() != "" {
+
+		c.Set("role", define.AdminUser)
 		slog.Println(slog.DEBUG, "命中缓存")
 		return true, nil
 	}
