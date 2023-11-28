@@ -35,18 +35,19 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 		delete(maps, "probe_group")
 	}
 
-	if maps["probe_name"] != "" {
-		dbTmp = dbTmp.Where("probe_result.probe_name LIKE ?", "%"+utils.GetInterfaceToString(maps["probe_name"])+"%")
+	if maps["probe_name"] != nil {
+		slog.Println(slog.DEBUG, "probe_name", maps["probe_name"])
+		dbTmp = dbTmp.Where("probe_result.probe_name LIKE ?", utils.GetInterfaceToString(maps["probe_name"])+"%")
 		delete(maps, "probe_name")
 	}
 
-	if maps["task_name"] != "" {
-		dbTmp = dbTmp.Where("task.name LIKE ?", "%"+utils.GetInterfaceToString(maps["task_name"])+"%")
+	if maps["task_name"] != nil {
+		dbTmp = dbTmp.Where("task.name LIKE ?", utils.GetInterfaceToString(maps["task_name"])+"%")
 		delete(maps, "task_name")
 	}
 
-	if maps["task_group"] != "" {
-		dbTmp = dbTmp.Where("task.group LIKE ?", "%"+utils.GetInterfaceToString(maps["task_group"])+"%")
+	if maps["task_group"] != nil {
+		dbTmp = dbTmp.Where("task.group LIKE ?", utils.GetInterfaceToString(maps["task_group"])+"%")
 		delete(maps, "task_group")
 	}
 
@@ -57,6 +58,7 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 	var ProbeResNew []define.ProbeRes
 
 	pgMap := GetPgMap()
+
 	for _, v := range ProbeRes {
 		v.Region = pgMap[v.Pg]
 		ProbeResNew = append(ProbeResNew, v)
