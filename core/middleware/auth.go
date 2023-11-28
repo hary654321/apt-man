@@ -43,11 +43,6 @@ func checkAuth(c *gin.Context) (pass bool, err error) {
 	token := strings.TrimPrefix(c.GetHeader("Authorization"), tokenpre)
 	redisClient := redis2.GetClient()
 
-	if redisClient.Get(token).Val() != "" {
-		slog.Println(slog.DEBUG, "命中缓存")
-		return true, nil
-	}
-
 	if token == "" {
 		err = errors.New("invalid token")
 		return
@@ -60,6 +55,11 @@ func checkAuth(c *gin.Context) (pass bool, err error) {
 
 	c.Set("uid", uid)
 	c.Set("username", username)
+
+	if redisClient.Get(token).Val() != "" {
+		slog.Println(slog.DEBUG, "命中缓存")
+		return true, nil
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(),
 		config.CoreConf.Server.DB.MaxQueryTime.Duration)

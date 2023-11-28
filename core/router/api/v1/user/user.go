@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"zrDispatch/common/utils"
 	"zrDispatch/core/config"
@@ -81,8 +80,7 @@ func GetUser(c *gin.Context) {
 	defer cancel()
 
 	uid := c.GetString("uid")
-	fmt.Println(uid)
-	// check uid exist
+	slog.Println(slog.DEBUG, "uid======", uid)
 	exist, err := model.Check(ctx, model.TBUser, model.ID, uid)
 	if err != nil {
 		slog.Println(slog.DEBUG, "IsExist failed", zap.Error(err))
