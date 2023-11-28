@@ -66,3 +66,18 @@ func GetPgSelect() (ProbeInfo []define.PgName) {
 
 	return
 }
+
+func GetPgMap() map[string]string {
+	dbTmp := db.Table("probe_group")
+
+	var ProbeInfo []define.PGR
+
+	dbTmp.Find(&ProbeInfo)
+
+	pgmap := make(map[string]string)
+	for _, v := range ProbeInfo {
+		pgmap[v.Name] = v.Region
+	}
+
+	return pgmap
+}

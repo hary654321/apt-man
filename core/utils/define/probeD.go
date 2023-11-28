@@ -51,6 +51,11 @@ type PgName struct {
 	Name string `gorm:"column:probe_group_name" json:"probe_group_name"`
 }
 
+type PGR struct {
+	Name   string `gorm:"column:probe_group_name" json:"probe_group_name"`
+	Region string `gorm:"column:probe_group_region" json:"probe_group_region"`
+}
+
 type ProbeInfoAdd struct {
 	Name  string `gorm:"column:probe_name" json:"probe_name" binding:"required"`
 	Group string `gorm:"column:probe_group" json:"probe_group" binding:"required"`
