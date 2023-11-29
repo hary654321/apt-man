@@ -62,6 +62,8 @@ func NewHTTPRouter() *http.Server {
 		c.Redirect(http.StatusMovedPermanently, "/crocodile")
 	})
 
+	router.GET("/heartbeat", HeartBeat)
+
 	v1 := router.Group("/api/v1")
 	v1.Use(gin.Recovery(), middleware.ZapLogger(), middleware.PermissionControl(), middleware.Oprtation())
 	ru := v1.Group("/user")
