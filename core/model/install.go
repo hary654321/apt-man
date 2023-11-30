@@ -137,7 +137,7 @@ func StartInstall(ctx context.Context, username, password string) error {
 				}
 				_, err = conn.ExecContext(context.Background(), sql)
 				if err != nil {
-					slog.Println(slog.DEBUG, "StartInstall", "====sql======", err)
+					slog.Println(slog.DEBUG, "StartInstall", tbname, "====sql======", err)
 					continue
 				}
 			}
