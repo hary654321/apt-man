@@ -102,3 +102,15 @@ func GetPgMap() map[string]define.ProbeInfoAdd {
 
 	return pgmap
 }
+
+func GetPname(pg string) (res []string) {
+	dbTmp := db.Table("probe_info")
+
+	var ProbeInfo []define.ProbeName
+	dbTmp.Where("probe_group", pg).Find(&ProbeInfo)
+
+	for _, v := range ProbeInfo {
+		res = append(res, v.Name)
+	}
+	return
+}

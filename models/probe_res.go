@@ -25,13 +25,19 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	dbTmp := db.Table("probe_result")
 
-	dbTmp = dbTmp.Select("task.name as task_name,task.group as task_group,os.os,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark").
-		Joins("left join os on probe_result.ip = os.ip").
+	dbTmp = dbTmp.Select("task.name as task_name,task.group as task_group,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark").
 		Joins("left join task on task.id = probe_result.task_id")
 
 	if utils.GetInterfaceToString(maps["probe_group"]) != "" {
-		dbTmp = dbTmp.Where("probe_info.probe_group = ?", utils.GetInterfaceToString(maps["probe_group"]))
+		pnames := GetPname(utils.GetInterfaceToString(maps["probe_group"]))
+		dbTmp = dbTmp.Where("probe_result.probe_name  in ?", pnames)
 		delete(maps, "probe_group")
+	}
+
+	if maps["os"] != nil {
+		slog.Println(slog.DEBUG, "os", maps["os"])
+		dbTmp = dbTmp.Where("probe_result.ip in ?", GetOsip(utils.GetInterfaceToString(maps["os"])))
+		delete(maps, "os")
 	}
 
 	if maps["probe_name"] != nil {
@@ -60,6 +66,8 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	pgMap := GetPgMap()
 
+	osMap := GetOsMap(getipArr(ProbeRes))
+
 	// probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags
 	for _, v := range ProbeRes {
 
@@ -68,11 +76,20 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 		v.Finger = pgMap[v.Pname].Recv
 		v.Tags = pgMap[v.Pname].Tags
 		v.Region = pgrMap[v.Pg]
+		v.Os = osMap[v.IP]
 
 		ProbeResNew = append(ProbeResNew, v)
 	}
 
 	return ProbeResNew, total
+}
+
+func getipArr(res []define.ProbeRes) (ipArr []string) {
+	for _, v := range res {
+		ipArr = append(ipArr, v.IP)
+	}
+
+	return
 }
 
 func GetNotMacthedList() (ProbeRes []define.ProbeRes) {

@@ -52,3 +52,30 @@ func GetIpRes(pageNum int, pageSize int, maps map[string]interface{}) (PortRes [
 
 	return
 }
+
+func GetOsMap(iparr []string) map[string]string {
+	dbTmp := db.Table("os")
+
+	var ProbeInfo []define.OsAdd
+
+	dbTmp.Where("ip in ?", iparr).Find(&ProbeInfo)
+
+	pgmap := make(map[string]string)
+	for _, v := range ProbeInfo {
+		pgmap[v.IP] = v.Os
+	}
+
+	return pgmap
+}
+
+func GetOsip(os string) (res []string) {
+	dbTmp := db.Table("os")
+
+	var ProbeInfo []define.OsAdd
+	dbTmp.Where("os", os).Find(&ProbeInfo)
+
+	for _, v := range ProbeInfo {
+		res = append(res, v.IP)
+	}
+	return
+}
