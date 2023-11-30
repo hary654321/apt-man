@@ -131,6 +131,7 @@ type ProbeRes struct {
 	Res       string      `gorm:"column:response" json:"response" `
 	Cert      string      `gorm:"column:cert" json:"cert" `
 	RunTaskID string      `gorm:"column:run_task_id" json:"run_task_id"`
+	TaskID    string      `gorm:"column:task_id" json:"task_id"`
 	Matched   MatchStatus `gorm:"column:matched" json:"matched"`
 	Dealed    DealStatus  `gorm:"column:dealed" json:"dealed"`
 	Remark    string      `gorm:"column:remark" json:"remark"`

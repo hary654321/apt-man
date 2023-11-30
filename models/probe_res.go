@@ -25,8 +25,7 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	dbTmp := db.Table("probe_result")
 
-	dbTmp = dbTmp.Select("task.name as task_name,task.group as task_group,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark").
-		Joins("left join task on task.id = probe_result.task_id")
+	dbTmp = dbTmp.Select("*")
 
 	if utils.GetInterfaceToString(maps["probe_group"]) != "" {
 		pnames := GetPname(utils.GetInterfaceToString(maps["probe_group"]))
@@ -47,12 +46,12 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 	}
 
 	if maps["task_name"] != nil {
-		dbTmp = dbTmp.Where("task.name LIKE ?", utils.GetInterfaceToString(maps["task_name"])+"%")
+		dbTmp = dbTmp.Where("task_id in ?", GetTaskIds(utils.GetInterfaceToString(maps["task_name"])))
 		delete(maps, "task_name")
 	}
 
 	if maps["task_group"] != nil {
-		dbTmp = dbTmp.Where("task.group LIKE ?", utils.GetInterfaceToString(maps["task_group"])+"%")
+		dbTmp = dbTmp.Where("task_id in ?", GetTaskIdsBygrop(utils.GetInterfaceToString(maps["task_group"])))
 		delete(maps, "task_group")
 	}
 
@@ -68,15 +67,21 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	osMap := GetOsMap(getipArr(ProbeRes))
 
+	taskMap := GetTaskMap(gettaskArr(ProbeRes))
+
+	// slog.Println(slog.DEBUG, "taskMap", taskMap)
 	// probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags
 	for _, v := range ProbeRes {
 
+		// slog.Println(slog.DEBUG, "taskId", v.TaskID)
 		v.Pg = pgMap[v.Pname].Group
 		v.Payload = pgMap[v.Pname].Send
 		v.Finger = pgMap[v.Pname].Recv
 		v.Tags = pgMap[v.Pname].Tags
 		v.Region = pgrMap[v.Pg]
 		v.Os = osMap[v.IP]
+		v.TaskName = taskMap[v.TaskID].Name
+		v.TaskGroup = taskMap[v.TaskID].Group
 
 		ProbeResNew = append(ProbeResNew, v)
 	}
@@ -86,7 +91,25 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 func getipArr(res []define.ProbeRes) (ipArr []string) {
 	for _, v := range res {
+
+		if utils.In_array(v.IP, ipArr) {
+			continue
+		}
+
 		ipArr = append(ipArr, v.IP)
+	}
+
+	return
+}
+
+func gettaskArr(res []define.ProbeRes) (ipArr []string) {
+	for _, v := range res {
+
+		if utils.In_array(v.TaskID, ipArr) {
+			continue
+		}
+
+		ipArr = append(ipArr, v.TaskID)
 	}
 
 	return

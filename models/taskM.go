@@ -72,3 +72,42 @@ func GetTaskInfoByName(name string) (ProbeMatch define.CreateTask) {
 
 	return
 }
+
+func GetTaskMap(ids []string) map[string]define.GetIdNameGroup {
+	dbTmp := db.Table("task")
+
+	var ProbeInfo []define.GetIdNameGroup
+
+	dbTmp.Where("id in ?", ids).Find(&ProbeInfo)
+
+	pgmap := make(map[string]define.GetIdNameGroup)
+	for _, v := range ProbeInfo {
+		pgmap[v.ID] = v
+	}
+
+	return pgmap
+}
+
+func GetTaskIds(name string) (res []string) {
+	dbTmp := db.Table("task")
+
+	var ProbeInfo []define.GetIdNameGroup
+	dbTmp.Where("name like ?", name+"%").Find(&ProbeInfo)
+
+	for _, v := range ProbeInfo {
+		res = append(res, v.ID)
+	}
+	return
+}
+
+func GetTaskIdsBygrop(name string) (res []string) {
+	dbTmp := db.Table("task")
+
+	var ProbeInfo []define.GetIdNameGroup
+	dbTmp.Where("`group` like ?", name+"%").Find(&ProbeInfo)
+
+	for _, v := range ProbeInfo {
+		res = append(res, v.ID)
+	}
+	return
+}

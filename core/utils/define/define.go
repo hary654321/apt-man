@@ -90,6 +90,12 @@ type GetName struct {
 	Name string `gorm:"column:name"  json:"name" form:"name"  binding:"required,min=1,max=30"`
 }
 
+type GetIdNameGroup struct {
+	ID    string `gorm:"column:id"  json:"id" form:"id" `
+	Name  string `gorm:"column:name"  json:"name" form:"name"  `
+	Group string `gorm:"column:group"  json:"group" form:"group"  `
+}
+
 // Common struct
 type Common struct {
 	ID         string `json:"id" comment:"ID"`
