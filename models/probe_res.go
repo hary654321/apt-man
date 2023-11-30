@@ -25,8 +25,7 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	dbTmp := db.Table("probe_result")
 
-	dbTmp = dbTmp.Select("task.name as task_name,task.group as task_group,os.os,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark, probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags").
-		Joins("left join probe_info on probe_info.probe_name = probe_result.probe_name").
+	dbTmp = dbTmp.Select("task.name as task_name,task.group as task_group,os.os,probe_result.create_time,probe_result.id,probe_result.ip,probe_result.run_task_id,probe_result.port,probe_result.probe_name,probe_result.cert,probe_result.matched,probe_result.response,probe_result.dealed,probe_result.remark").
 		Joins("left join os on probe_result.ip = os.ip").
 		Joins("left join task on task.id = probe_result.task_id")
 
@@ -57,10 +56,19 @@ func GetProbeRes(pageNum int, pageSize int, maps map[string]interface{}, order s
 
 	var ProbeResNew []define.ProbeRes
 
+	pgrMap := GetPgRegionMap()
+
 	pgMap := GetPgMap()
 
+	// probe_info.probe_send,probe_info.probe_recv,probe_info.probe_group,probe_info.probe_tags
 	for _, v := range ProbeRes {
-		v.Region = pgMap[v.Pg]
+
+		v.Pg = pgMap[v.Pname].Group
+		v.Payload = pgMap[v.Pname].Send
+		v.Finger = pgMap[v.Pname].Recv
+		v.Tags = pgMap[v.Pname].Tags
+		v.Region = pgrMap[v.Pg]
+
 		ProbeResNew = append(ProbeResNew, v)
 	}
 

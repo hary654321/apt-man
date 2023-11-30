@@ -87,3 +87,18 @@ func GetPayload(ids []string) (p []define.Pyload, err error) {
 	err = res.Error
 	return
 }
+
+func GetPgMap() map[string]define.ProbeInfoAdd {
+	dbTmp := db.Table("probe_info")
+
+	var ProbeInfo []define.ProbeInfoAdd
+
+	dbTmp.Find(&ProbeInfo)
+
+	pgmap := make(map[string]define.ProbeInfoAdd)
+	for _, v := range ProbeInfo {
+		pgmap[v.Name] = v
+	}
+
+	return pgmap
+}

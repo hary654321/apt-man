@@ -67,7 +67,7 @@ func GetPgSelect() (ProbeInfo []define.PgName) {
 	return
 }
 
-func GetPgMap() map[string]string {
+func GetPgRegionMap() map[string]string {
 	dbTmp := db.Table("probe_group")
 
 	var ProbeInfo []define.PGR
