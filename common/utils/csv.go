@@ -8,7 +8,6 @@ import (
 	"io"
 	"os"
 	"strings"
-	"zrDispatch/core/slog"
 
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
@@ -79,7 +78,7 @@ func GetcsvDataPro(filename string, mapa map[string]string) (ResData []map[strin
 					return ResData, errors.New("匹配类型必须为keyword,re,==,cert")
 				}
 				rowData[mapa[v]] = line[k]
-				slog.Println(slog.DEBUG, v, "========", line[k])
+				// slog.Println(slog.DEBUG, v, "========", line[k])
 			}
 
 			ResData = append(ResData, rowData)
