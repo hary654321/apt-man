@@ -18,7 +18,7 @@ cd /mnt/hgfs/go-pro/cyberspacemapping/www/strategy-manage/install
 # docker build -t hary654321/crocodile . -f DockerfileServer
 
 
-# docker image save -o crocodile.tar hary654321/crocodile mysql:5.7 redis:latest
+docker image save -o crocodile.tar  mysql:5.7 redis:latest
 
 cd client
 
