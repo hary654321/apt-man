@@ -1,5 +1,6 @@
 CREATE TABLE `port_result` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`task_id` CHAR(18) NOT NULL DEFAULT '' COMMENT '任务ID' COLLATE 'utf8_general_ci',
 	`run_task_id` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`ip` VARCHAR(40) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`port` VARCHAR(5) NOT NULL COLLATE 'utf8_general_ci',
