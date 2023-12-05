@@ -28,7 +28,8 @@ CREATE TABLE `task` (
 	`isDeleted` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
 	PRIMARY KEY (`id`) USING BTREE,
 	INDEX `idx_name` (`name`) USING BTREE,
-	INDEX `idx_cbi` (`createByID`) USING BTREE
+	INDEX `idx_cbi` (`createByID`) USING BTREE,
+	INDEX `group` (`group`) USING BTREE
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
