@@ -1,0 +1,5 @@
+tar -jxvf  netcat-0.7.1.tar.bz2
+ cd netcat-0.7.1
+./configure --prefix=/usr/local
+make
+make install
