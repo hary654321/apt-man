@@ -1,6 +1,6 @@
 CREATE TABLE `probe_result` (
 	`id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
-	`ip` VARCHAR(40) NOT NULL DEFAULT '' COMMENT 'ip' COLLATE 'utf8_general_ci',
+	`ip` CHAR(15) NOT NULL DEFAULT '' COMMENT 'ip' COLLATE 'utf8_general_ci',
 	`run_task_id` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '执行ID' COLLATE 'utf8_general_ci',
 	`task_id` CHAR(18) NOT NULL DEFAULT '' COMMENT '任务ID' COLLATE 'utf8_general_ci',
 	`port` INT(10) NOT NULL DEFAULT '0' COMMENT '端口',
