@@ -25,12 +25,16 @@ func Init(conf string) {
 type coreConf struct {
 	SecretToken string
 	BasicAuth   string
-	ESHOST      string
+	Sso         Sso
 	Log         Log
 	Cert        Cert
 	Server      Server
 	Client      Client
 	Notify      Notify
+}
+type Sso struct {
+	SsoPort int
+	SsoIp   string
 }
 
 // Log Config

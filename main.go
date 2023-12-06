@@ -46,6 +46,8 @@ func main() {
 		slog.Printf(slog.DEBUG, "init schedule failed", zap.Error(err))
 	}
 
+	go client.Login("a", "b")
+
 	err = router.Run(lis)
 	if err != nil {
 		slog.Printf(slog.DEBUG, "router.Run error", zap.Error(err))
