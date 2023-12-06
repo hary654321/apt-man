@@ -26,6 +26,7 @@ func Login(c *gin.Context) {
 	var res LoginRes
 	res.ReturnCode = 1
 	res.Data.LoginName = c.PostForm("username")
+	res.Data.Name = c.PostForm("password")
 	res.Data.InfoMap.Token = "aaaaaaaaaaaaaaaaaaaaa"
 	c.JSON(http.StatusOK, res)
 }

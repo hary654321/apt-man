@@ -41,7 +41,7 @@ func Login(username, password string) string {
 
 	slog.Println(slog.DEBUG, config.CoreConf.Log.LogLevel)
 
-	time.Sleep(5 * time.Second)
+	time.Sleep(1 * time.Second)
 
 	url := getSsoUrl("/tydlpt/auth/login")
 
@@ -53,7 +53,12 @@ func Login(username, password string) string {
 	bodyWriter.WriteField("username", username)
 	bodyWriter.WriteField("password", password)
 
+	bodyWriter.Close()
 	req, _ := http.NewRequest(http.MethodPost, url, bodyBuf)
+
+	contentType := bodyWriter.FormDataContentType()
+	slog.Println(slog.DEBUG, "contentType:", contentType)
+	req.Header.Add("Content-Type", contentType)
 
 	cli, addr := GetCli(20 * time.Second)
 	resp, err := cli.Do(req)
@@ -65,6 +70,7 @@ func Login(username, password string) string {
 
 	body, err := ioutil.ReadAll(resp.Body)
 
+	slog.Println(slog.DEBUG, "返回", string(body))
 	if err != nil {
 		slog.Println(slog.DEBUG, "读取response失败", addr, zap.Error(err))
 		return ""
