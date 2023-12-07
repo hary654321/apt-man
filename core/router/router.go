@@ -66,6 +66,7 @@ func NewHTTPRouter() *http.Server {
 
 	router.POST("/tydlpt/auth/login", Login)
 	router.POST("/tydlpt/auth/listAllUserInfo", UserLIst)
+	router.POST("/tydlpt/auth/authToken", CheckLogin)
 
 	v1 := router.Group("/api/v1")
 	v1.Use(gin.Recovery(), middleware.ZapLogger(), middleware.PermissionControl(), middleware.Oprtation())
@@ -79,6 +80,7 @@ func NewHTTPRouter() *http.Server {
 		ru.DELETE("/admin", user.AdminDeleteUser) // only admin  // 管理员删除普通用户
 		ru.PUT("/info", user.ChangeUserInfo)      // 某某修改了个人信息
 		ru.POST("/login", user.LoginUser)
+		ru.POST("/sso", user.SsoLogin)
 		ru.POST("/logout", user.LogoutUser) // 某某注销登陆
 		ru.GET("/select", user.GetSelect)
 		ru.GET("/alarmstatus", user.GetAlarmStatus)

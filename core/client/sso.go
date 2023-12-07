@@ -43,10 +43,6 @@ func getSsoUrl(path string) string {
 
 func Login(username, password string) string {
 
-	slog.Println(slog.DEBUG, config.CoreConf.Log.LogLevel)
-
-	time.Sleep(1 * time.Second)
-
 	url := getSsoUrl("/tydlpt/auth/login")
 
 	var responseJson LoginRes
@@ -170,4 +166,59 @@ func GetAllUserList() (res UserListRes) {
 	}
 
 	return
+}
+
+type CheckRes struct {
+	ReturnCode int    `json:"returnCode"`
+	Data       bool   `json:"data"`
+	ErrorMsg   string `json:"errorMsg"`
+}
+
+func CheckToken(token string) bool {
+	slog.Println(slog.DEBUG, config.CoreConf.Log.LogLevel)
+
+	time.Sleep(1 * time.Second)
+
+	url := getSsoUrl("/tydlpt/auth/authToken")
+
+	var responseJson CheckRes
+
+	bodyBuf := &bytes.Buffer{}
+	bodyWriter := multipart.NewWriter(bodyBuf)
+
+	bodyWriter.WriteField("token", token)
+
+	bodyWriter.Close()
+	req, _ := http.NewRequest(http.MethodPost, url, bodyBuf)
+
+	contentType := bodyWriter.FormDataContentType()
+	// slog.Println(slog.DEBUG, "contentType:", contentType)
+	req.Header.Add("Content-Type", contentType)
+
+	cli, addr := GetCli(20 * time.Second)
+	resp, err := cli.Do(req)
+
+	if err != nil {
+		slog.Println(slog.DEBUG, "登录失败", err)
+		return false
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	slog.Println(slog.DEBUG, "返回", string(body))
+	if err != nil {
+		slog.Println(slog.DEBUG, "读取response失败", addr, zap.Error(err))
+		return false
+	}
+	if err = json.Unmarshal(body, &responseJson); err != nil {
+		slog.Println(slog.DEBUG, "json读取失败", addr, zap.Error(err))
+		return false
+	}
+
+	if responseJson.ReturnCode != 200 {
+		slog.Println(slog.DEBUG, "check 失败", addr, zap.Error(err))
+		return false
+	}
+
+	return true
 }

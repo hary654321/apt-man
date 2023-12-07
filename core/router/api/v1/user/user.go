@@ -4,12 +4,15 @@ import (
 	"context"
 	"errors"
 
+	"zrDispatch/common/jwt"
 	"zrDispatch/common/utils"
+	"zrDispatch/core/client"
 	"zrDispatch/core/config"
 	"zrDispatch/core/model"
 	"zrDispatch/core/slog"
 	"zrDispatch/core/utils/define"
 	"zrDispatch/core/utils/resp"
+	"zrDispatch/models"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -360,6 +363,40 @@ func LoginUser(c *gin.Context) {
 	switch err := errors.Unwrap(err); err.(type) {
 	case nil:
 		resp.JSON(c, resp.Success, token)
+	case define.ErrUserPass:
+		resp.JSON(c, resp.ErrUserPassword, nil)
+	case define.ErrForbid:
+		resp.JSON(c, resp.ErrUserForbid, nil)
+	default:
+		resp.JSON(c, resp.ErrInternalServer, nil)
+	}
+}
+
+func SsoLogin(c *gin.Context) {
+
+	id := c.Query("userId")
+	token := c.Query("token")
+	// resourceId := c.Query("resourceId")
+
+	user, err := models.GetUserInfoBYid(id)
+	if err != nil {
+		resp.JSONNew(c, resp.AddFail, "不存在此用户")
+		return
+	}
+
+	if !client.CheckToken(token) {
+		resp.JSONNew(c, resp.AddFail, "无效token")
+		return
+	}
+
+	tokennew, err := jwt.GenerateToken(id, user.Name)
+
+	if err != nil {
+		slog.Println(slog.DEBUG, "model.LoginUser failed", zap.Error(err))
+	}
+	switch err := errors.Unwrap(err); err.(type) {
+	case nil:
+		resp.JSON(c, resp.Success, tokennew)
 	case define.ErrUserPass:
 		resp.JSON(c, resp.ErrUserPassword, nil)
 	case define.ErrForbid:

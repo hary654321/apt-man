@@ -35,3 +35,16 @@ func UserLIst(c *gin.Context) {
 
 	c.JSON(http.StatusOK, res)
 }
+
+func CheckLogin(c *gin.Context) {
+
+	c.PostForm("token")
+
+	slog.Println(slog.DEBUG, "token")
+	var res client.CheckRes
+	res.ReturnCode = 200
+	res.ErrorMsg = ""
+	res.Data = true
+
+	c.JSON(http.StatusOK, res)
+}
