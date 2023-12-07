@@ -65,6 +65,7 @@ func NewHTTPRouter() *http.Server {
 	router.GET("/heartbeat", HeartBeat)
 
 	router.POST("/tydlpt/auth/login", Login)
+	router.POST("/tydlpt/auth/listAllUserInfo", UserLIst)
 
 	v1 := router.Group("/api/v1")
 	v1.Use(gin.Recovery(), middleware.ZapLogger(), middleware.PermissionControl(), middleware.Oprtation())

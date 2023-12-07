@@ -11,6 +11,7 @@ import (
 	"zrDispatch/core/config"
 	"zrDispatch/core/slog"
 
+	"github.com/bytedance/sonic"
 	"go.uber.org/zap"
 )
 
@@ -88,4 +89,75 @@ func Login(username, password string) string {
 	slog.Println(slog.DEBUG, responseJson.Data.InfoMap.Token)
 
 	return responseJson.Data.InfoMap.Token
+}
+
+type UserListRes struct {
+	ReturnCode int         `json:"returnCode"`
+	Data       []UserInfo  `json:"data"`
+	ErrorMsg   interface{} `json:"errorMsg"`
+}
+
+type UserInfo struct {
+	BeginLastUpdateTime string `json:"beginLastUpdateTime"`
+	Birthday            string `json:"birthday"`
+	EndLastUpdateTime   string `json:"endLastUpdateTime"`
+	SystemGlobalID      string `json:"systemGlobalId"`
+	Roles               []struct {
+		UpdaterID   int    `json:"updaterId"`
+		AppID       int    `json:"appId"`
+		DisableFlag bool   `json:"disableFlag"`
+		GlobalID    string `json:"globalId"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		UpdateTime  int64  `json:"updateTime"`
+		ID          int    `json:"id"`
+		Value       string `json:"value"`
+	} `json:"roles"`
+	Sex             string        `json:"sex"`
+	DeptID          string        `json:"deptId"`
+	ExtensionFields []interface{} `json:"extensionFields"`
+	PhoneNumber     string        `json:"phoneNumber"`
+	DisableFlag     bool          `json:"disableFlag"`
+	LoginName       string        `json:"loginName"`
+	Name            string        `json:"name"`
+	ID              string        `json:"id"`
+	UserType        string        `json:"userType"`
+	LastUpdateTime  string        `json:"lastUpdateTime"`
+}
+
+type UserListReq struct {
+	Token string `json:"token"`
+}
+
+func GetAllUserList() (res UserListRes) {
+	time.Sleep(1 * time.Second)
+
+	url := getSsoUrl("/tydlpt/auth/listAllUserInfo")
+
+	var reqD UserListReq
+	reqD.Token = Login("a", "b")
+
+	jsonData, _ := sonic.Marshal(&reqD)
+	slog.Println(slog.DEBUG, "发送", string(jsonData))
+
+	body, err := Send(url, string(jsonData))
+
+	slog.Println(slog.DEBUG, "返回", string(body))
+	if err != nil {
+		slog.Println(slog.DEBUG, "读取response失败", url, zap.Error(err))
+		return
+	}
+	if err = json.Unmarshal(body, &res); err != nil {
+		slog.Println(slog.DEBUG, "json读取失败", url, zap.Error(err))
+		return
+	}
+
+	if res.ReturnCode != 1 {
+		slog.Println(slog.DEBUG, "心跳返回错误", url, zap.Error(err))
+		return
+	}
+
+	slog.Println(slog.DEBUG, res)
+
+	return
 }
