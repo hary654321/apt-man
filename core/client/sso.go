@@ -166,7 +166,7 @@ func GetAllUserList() (res UserListRes) {
 
 		slog.Println(slog.DEBUG, "sso导入", v.LoginName)
 		hashpassword, _ := utils.GenerateHashPass("zrtx@2023")
-		_, err = model.AddUser(ctx, v.LoginName, hashpassword, "sso导入", define.AdminUser)
+		_, err = model.AddUser(ctx, v.LoginName, hashpassword, "sso导入", define.AdminUser, v.ID)
 	}
 
 	return

@@ -60,7 +60,7 @@ func LoginUser(ctx context.Context, name string, password string) (string, error
 }
 
 // AddUser add new user
-func AddUser(ctx context.Context, name, hashpassword, remark string, role define.Role) (string, error) {
+func AddUser(ctx context.Context, name, hashpassword, remark string, role define.Role, id string) (string, error) {
 	adduser := `INSERT INTO user (
 					id,
 					name,
@@ -86,7 +86,11 @@ func AddUser(ctx context.Context, name, hashpassword, remark string, role define
 	defer stmt.Close()
 
 	now := time.Now().Unix()
-	id := utils.GetID()
+
+	if id == "" {
+		id = utils.GetID()
+	}
+
 	_, err = stmt.ExecContext(ctx, id, name, hashpassword, remark, role, false, now, now)
 	if err != nil {
 		return id, fmt.Errorf("stmt.ExecContext failed: %w", err)

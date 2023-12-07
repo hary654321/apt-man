@@ -31,7 +31,7 @@ func UserLIst(c *gin.Context) {
 	res.ReturnCode = 1
 	res.Data = []client.UserInfo{}
 
-	res.Data = append(res.Data, client.UserInfo{Name: "管理员", LoginName: "admin"})
+	res.Data = append(res.Data, client.UserInfo{Name: "管理员", LoginName: "admin", ID: "1111111111"})
 
 	c.JSON(http.StatusOK, res)
 }

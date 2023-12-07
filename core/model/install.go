@@ -159,7 +159,7 @@ func StartInstall(ctx context.Context, username, password string) error {
 	if err != nil {
 		return fmt.Errorf("utils.GenerateHashPass failed: %w", err)
 	}
-	uid, err := AddUser(ctx, username, hashpassword, "", define.AdminUser)
+	uid, err := AddUser(ctx, username, hashpassword, "", define.AdminUser, "")
 
 	models.UpdateHgCreate("zd", uid)
 	models.UpdateTaskCreate("test", uid)
