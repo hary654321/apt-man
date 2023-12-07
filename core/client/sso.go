@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"mime/multipart"
@@ -9,7 +10,9 @@ import (
 	"time"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/config"
+	"zrDispatch/core/model"
 	"zrDispatch/core/slog"
+	"zrDispatch/core/utils/define"
 
 	"github.com/bytedance/sonic"
 	"go.uber.org/zap"
@@ -58,7 +61,7 @@ func Login(username, password string) string {
 	req, _ := http.NewRequest(http.MethodPost, url, bodyBuf)
 
 	contentType := bodyWriter.FormDataContentType()
-	slog.Println(slog.DEBUG, "contentType:", contentType)
+	// slog.Println(slog.DEBUG, "contentType:", contentType)
 	req.Header.Add("Content-Type", contentType)
 
 	cli, addr := GetCli(20 * time.Second)
@@ -156,8 +159,15 @@ func GetAllUserList() (res UserListRes) {
 		slog.Println(slog.DEBUG, "心跳返回错误", url, zap.Error(err))
 		return
 	}
+	ctx, cancel := context.WithTimeout(context.Background(),
+		config.CoreConf.Server.DB.MaxQueryTime.Duration)
+	defer cancel()
+	for _, v := range res.Data {
 
-	slog.Println(slog.DEBUG, res)
+		slog.Println(slog.DEBUG, "sso导入", v.LoginName)
+		hashpassword, _ := utils.GenerateHashPass("zrtx@2023")
+		_, err = model.AddUser(ctx, v.LoginName, hashpassword, "sso导入", define.AdminUser)
+	}
 
 	return
 }
