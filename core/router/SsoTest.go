@@ -38,9 +38,9 @@ func UserLIst(c *gin.Context) {
 
 func CheckLogin(c *gin.Context) {
 
-	c.PostForm("token")
+	token := c.PostForm("token")
 
-	slog.Println(slog.DEBUG, "token")
+	slog.Println(slog.DEBUG, "token-", token)
 	var res client.CheckRes
 	res.ReturnCode = 200
 	res.ErrorMsg = ""
