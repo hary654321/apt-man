@@ -53,9 +53,9 @@ func ChangeTaskRun(id string, run int) error {
 	return res.Error
 }
 
-func ChangeTaskStatus(id string, run define.TaskOneStatus) error {
+func ChangeTaskStatus(id string, status define.TaskOneStatus) error {
 
-	res := db.Table("task").Where("id", id).Update("status", run)
+	res := db.Table("task").Where("id", id).Update("status", status)
 
 	return res.Error
 }
