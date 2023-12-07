@@ -860,8 +860,6 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 	err = client.RunTask(hostInfo, taskdata)
 	if err == nil {
 		t.GetRes(hostInfo, taskdata)
-
-		model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
 		t.status = define.TASK_STATUS_DONE
 	} else {
 		if taskdata.Cronexpr == "" {
@@ -957,7 +955,6 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 
 			client.Stop(hostInfo, taskdata)
 
-			models.ChangeTaskRun(taskdata.ID, 0)
 			return
 		}
 		res, err := client.GetTaskPress(hostInfo, taskdata)
@@ -984,6 +981,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 				}
 			}
 
+			model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
 			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
 			break
 		}
