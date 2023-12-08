@@ -53,7 +53,3 @@ func main() {
 		slog.Printf(slog.DEBUG, "router.Run error", zap.Error(err))
 	}
 }
-
-type IPInfo struct {
-	IP string `json:"IP"`
-}
