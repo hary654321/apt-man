@@ -825,7 +825,9 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 
 	err = client.RunTask(hostInfo, taskdata)
 	if err == nil {
-		t.GetRes(hostInfo, taskdata)
+		if !t.GetRes(hostInfo, taskdata) {
+			return nil
+		}
 	} else {
 		if taskdata.Cronexpr == "" {
 			t.status = define.TASK_STATUS_Fail
@@ -947,7 +949,7 @@ func (t *task2) stop() {
 }
 
 // 获取任务的结果
-func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
+func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) (jixu bool) {
 	time.Sleep(3 * time.Second)
 	for {
 		if t.status != define.TASK_STATUS_RUNING {
@@ -955,6 +957,7 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 
 			client.Stop(hostInfo, taskdata)
 
+			jixu = false
 			return
 		}
 		res, err := client.GetTaskPress(hostInfo, taskdata)
@@ -967,7 +970,8 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 			}
 
 			models.UpdateResReason(taskdata.RunTaskId, -1, err.Error(), utils.GetHaoMiao())
-			break
+			jixu = false
+			return
 
 		}
 		if res {
@@ -983,7 +987,8 @@ func (t *task2) GetRes(hostInfo *define.Host, taskdata *define.DetailTask) {
 
 			model.UpdateTaskStatus(context.Background(), taskdata.ID, 0, define.TASK_STATUS_DONE)
 			models.UpdateResReason(taskdata.RunTaskId, 1, "", utils.GetHaoMiao())
-			break
+			jixu = true
+			return
 		}
 
 		time.Sleep(3 * time.Second)
