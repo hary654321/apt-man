@@ -35,6 +35,7 @@ type coreConf struct {
 type Sso struct {
 	SsoPort int
 	SsoIp   string
+	Secm    string
 }
 
 // Log Config

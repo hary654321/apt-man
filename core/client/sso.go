@@ -36,7 +36,7 @@ type LoginRes struct {
 func getSsoUrl(path string) string {
 	ip := config.CoreConf.Sso.SsoIp
 	port := config.CoreConf.Sso.SsoPort
-	url := "http://" + ip + ":" + utils.GetInterfaceToString(port) + path
+	url := config.CoreConf.Sso.Secm + "://" + ip + ":" + utils.GetInterfaceToString(port) + path
 
 	return url
 }
