@@ -134,7 +134,7 @@ func GetAllUserList() (res UserListRes) {
 	url := getSsoUrl("/tydlpt/auth/listAllUserInfo")
 
 	var reqD UserListReq
-	reqD.Token = Login("a", "b")
+	reqD.Token = Login(config.CoreConf.Sso.Username, config.CoreConf.Sso.Password)
 
 	jsonData, _ := sonic.Marshal(&reqD)
 	slog.Println(slog.DEBUG, "发送", string(jsonData))

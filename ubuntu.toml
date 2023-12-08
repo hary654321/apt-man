@@ -5,6 +5,8 @@ BasicAuth = "Basic enc6Y2g="
 ssoIp="127.0.0.1"
 ssoPort=8085
 secm="http"
+username="JSJ"
+password="123456a"
 # 日志
 [log]
 # 日志路径，为空将输出控制台

@@ -33,9 +33,11 @@ type coreConf struct {
 	Notify      Notify
 }
 type Sso struct {
-	SsoPort int
-	SsoIp   string
-	Secm    string
+	SsoPort  int
+	SsoIp    string
+	Secm     string
+	Username string
+	Password string
 }
 
 // Log Config
