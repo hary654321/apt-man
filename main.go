@@ -46,7 +46,7 @@ func main() {
 		slog.Printf(slog.DEBUG, "init schedule failed", zap.Error(err))
 	}
 
-	// go client.GetAllUserList()
+	go client.GetAllUserList()
 
 	err = router.Run(lis)
 	if err != nil {
