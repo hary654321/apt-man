@@ -93,7 +93,7 @@ setupDocker() {
   [[ ` docker-compose version` ]]
   if [ $? -ne  0 ]; then
     echo "检测到 docker-compose 未安装 开始安装！"
-    composerFile=./bin/docker-compose-linux-x86_64.tar
+    composerFile=./bin/docker-compose-linux-x86_64
     if [[ ! -f ${composerFile} ]]; then
         echo "无对应系统docker-compose安装包请手动安装"
         exit 1
@@ -178,7 +178,7 @@ ulimit -n 50000
 nohup ./apt-server  wl.toml>>m.log &
 cd /zrtx/apt  && nohup  ./apt-scan >>s.log &
 
-cd - &&  nohup ./wlaqxc.sh>>monitor.log  &
+nohup ./wlaqxc.sh>>monitor.log  &
 
 }
 
@@ -191,7 +191,7 @@ install()
   service iptables stop
   getIpAddr
   run
-  info "后台地址：http://${local_ip}:61665/crocodile/"
+  info "后台地址：https://${local_ip}:61665/crocodile/"
   info '安装顺利完成！'
 }
 
