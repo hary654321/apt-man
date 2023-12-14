@@ -4,7 +4,7 @@ BasicAuth = "Basic enc6Y2g="
 [sso]
 ssoIp="127.0.0.1"
 ssoPort=8085
-secm="http"
+secm="https"
 username="JSJ"
 password="123456a"
 # 日志

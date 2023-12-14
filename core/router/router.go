@@ -28,11 +28,10 @@ import (
 
 	assetfs "github.com/elazarl/go-bindata-assetfs"
 	"github.com/gin-gonic/gin"
-	"github.com/soheilhy/cmux"
 )
 
 // NewHTTPRouter create http.Server
-func NewHTTPRouter() *http.Server {
+func Run() {
 	//gin.SetMode("release")
 	router := gin.New()
 
@@ -208,12 +207,7 @@ func NewHTTPRouter() *http.Server {
 		//c.Redirect(http.StatusMovedPermanently, "/crocodile/")
 	})
 
-	httpSrv := &http.Server{
-		Handler: router,
-		// ReadTimeout:  config.CoreConf.Server.MaxHTTPTime.Duration,
-		// WriteTimeout: config.CoreConf.Server.MaxHTTPTime.Duration,
-	}
-	return httpSrv
+	router.RunTLS(fmt.Sprintf(":%d", config.CoreConf.Server.Port), "pem/.cert.pem", "pem/.key.pem")
 }
 
 // GetListen get listen addr by server or client
@@ -238,26 +232,4 @@ func GetListen(mode define.RunMode) (net.Listener, error) {
 	lis, err := net.Listen("tcp", addr)
 
 	return lis, err
-}
-
-// Run start run http or grpc Server
-func Run(lis net.Listener) error {
-	var (
-		httpServer *http.Server
-		err        error
-		m          cmux.CMux
-	)
-
-	//gRPCServer, err = schedule.NewgRPCServer(mode)
-	if err != nil {
-		return err
-	}
-
-	m = cmux.New(lis)
-
-	httpServer = NewHTTPRouter()
-	httpL := m.Match(cmux.HTTP1Fast())
-	go httpServer.Serve(httpL)
-
-	return m.Serve()
 }

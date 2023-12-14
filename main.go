@@ -11,7 +11,6 @@ import (
 	"zrDispatch/core/router"
 	"zrDispatch/core/schedule"
 	"zrDispatch/core/slog"
-	"zrDispatch/core/utils/define"
 	mylog "zrDispatch/core/utils/log"
 	"zrDispatch/models"
 
@@ -36,10 +35,7 @@ func main() {
 	go client.HeartBeat() // 心跳检测
 
 	go match.Match() // 匹配
-	lis, err := router.GetListen(define.Server)
-	if err != nil {
-		slog.Printf(slog.DEBUG, "listen failed", zap.Error(err))
-	}
+
 	//初始化定时任务
 	err = schedule.Init2()
 	if err != nil {
@@ -48,8 +44,6 @@ func main() {
 
 	go client.GetAllUserList()
 
-	err = router.Run(lis)
-	if err != nil {
-		slog.Printf(slog.DEBUG, "router.Run error", zap.Error(err))
-	}
+	router.Run()
+
 }
