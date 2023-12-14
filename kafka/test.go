@@ -13,9 +13,9 @@ import (
 )
 
 func main() {
-	// createTopicByConn()
+	createTopicByConn()
 	// writeByConn()
-	readByConn()
+	// readByConn()
 	// topiclist()
 }
 
@@ -24,7 +24,7 @@ func createTopicByConn() {
 	topic := "my-topic"
 
 	// 连接至任意kafka节点
-	conn, err := kafka.Dial("tcp", "172.16.160.96:9092")
+	conn, err := kafka.Dial("tcp", "127.0.0.1:9092")
 	if err != nil {
 		slog.Println(slog.DEBUG, err)
 	}
@@ -63,7 +63,7 @@ func writeByConn() {
 	partition := 0
 
 	// 连接至Kafka集群的Leader节点
-	conn, err := kafka.DialLeader(context.Background(), "tcp", "172.16.160.96:9092", topic, partition)
+	conn, err := kafka.DialLeader(context.Background(), "tcp", "127.0.0.1:9092", topic, partition)
 	if err != nil {
 		slog.Println(slog.DEBUG, "failed to dial leader:", err)
 	}
@@ -94,7 +94,7 @@ func readByConn() {
 	partition := 0
 
 	// 连接至Kafka的leader节点
-	conn, err := kafka.DialLeader(context.Background(), "tcp", "172.16.160.96:9092", topic, partition)
+	conn, err := kafka.DialLeader(context.Background(), "tcp", "127.0.0.1:9092", topic, partition)
 	if err != nil {
 		slog.Println(slog.DEBUG, "failed to dial leader:", err)
 	}

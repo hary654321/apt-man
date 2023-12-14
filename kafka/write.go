@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// 设置 Kafka 服务器地址
-	brokers := []string{"172.16.160.96:9092"}
+	brokers := []string{"127.0.0.1:9092"}
 	// 创建 Kafka 生产者配置
 	config := sarama.NewConfig()
 	config.Producer.Return.Successes = true

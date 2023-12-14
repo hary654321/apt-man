@@ -122,9 +122,10 @@ loadImage() {
 }
 
 runContainer() {
-  sleep 0.5
   echo "开始生成 Docker 容器。耗时比较长，请耐心等待..."
+  systemctl restart docker.service
    docker-compose up -d 
+  ./docker-compose up -d 
   info "生成 Docker 容器完成"
 }
 
