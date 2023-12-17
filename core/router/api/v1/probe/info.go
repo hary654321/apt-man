@@ -1,8 +1,11 @@
 package probe
 
 import (
+	"bytes"
 	"encoding/csv"
+	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"time"
@@ -14,6 +17,9 @@ import (
 	"zrDispatch/core/utils/resp"
 	"zrDispatch/e"
 	"zrDispatch/models"
+
+	"golang.org/x/text/encoding/simplifiedchinese"
+	"golang.org/x/text/transform"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -163,7 +169,7 @@ func Import(c *gin.Context) {
 	//SaveUploadedFile上传表单文件到指定的路径
 	c.SaveUploadedFile(f, "./"+f.Filename)
 
-	data, err := utils.GetcsvDataPro(f.Filename, mapa)
+	data, err := GetcsvDataPro(f.Filename, mapa)
 
 	if err != nil {
 		resp.JSONNew(c, resp.ErrBadRequest, err.Error())
@@ -178,6 +184,70 @@ func Import(c *gin.Context) {
 	}
 
 	resp.JSON(c, resp.Success, map[string]string{"msg": "导入成功"})
+}
+
+func GetcsvDataPro(filename string, mapa map[string]string) (ResData []map[string]any, err error) {
+
+	file, err := os.ReadFile(filename)
+
+	if err != nil {
+		fmt.Println("文件打开失败: ", err)
+		return
+	}
+
+	reader := csv.NewReader(transform.NewReader(bytes.NewReader(file), simplifiedchinese.GBK.NewDecoder()))
+	rowNum := 1
+	var headarr []string
+	for {
+		line, err := reader.Read()
+		if err == io.EOF {
+			fmt.Println("文件读取完毕")
+			break
+		}
+
+		if err != nil {
+			fmt.Println("读取文件时发生错误: ", err)
+			break
+		}
+		if rowNum == 1 {
+			headarr = line
+		} else {
+			var rowData = make(map[string]any)
+			for k, v := range headarr {
+
+				if v == "" {
+					continue
+				}
+
+				if mapa[v] == "probe_name" {
+
+					res := models.GetProbeInfoByName(line[k])
+
+					if res.Name != "" {
+						slog.Println(slog.DEBUG, "名称重复", line[k])
+						return ResData, errors.New("有重复名称:" + line[k])
+					}
+
+				}
+
+				if mapa[v] == "probe_protocol" && !utils.In_array(line[k], []string{"HTTP", "TCP"}) {
+
+					return ResData, errors.New("协议必须为HTTP,TCP")
+				}
+				if mapa[v] == "probe_match_type" && !utils.In_array(line[k], []string{"keyword", "==", "re", "cert"}) {
+
+					return ResData, errors.New("匹配类型必须为keyword,re,==,cert")
+				}
+				rowData[mapa[v]] = line[k]
+				// slog.Println(slog.DEBUG, v, "========", line[k])
+			}
+
+			ResData = append(ResData, rowData)
+		}
+		rowNum++
+
+	}
+	return
 }
 
 func GetPiSelect(c *gin.Context) {
