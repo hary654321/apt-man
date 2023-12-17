@@ -66,6 +66,7 @@ func Run() {
 	router.POST("/tydlpt/auth/login", Login)
 	router.POST("/tydlpt/auth/listAllUserInfo", UserLIst)
 	router.POST("/tydlpt/auth/authToken", CheckLogin)
+	router.POST("/api/v1/login", user.Login)
 
 	v1 := router.Group("/api/v1")
 	v1.Use(gin.Recovery(), middleware.ZapLogger(), middleware.PermissionControl(), middleware.Oprtation())

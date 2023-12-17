@@ -372,6 +372,34 @@ func LoginUser(c *gin.Context) {
 	}
 }
 
+func Login(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(),
+		config.CoreConf.Server.DB.MaxQueryTime.Duration)
+	defer cancel()
+
+	ruser := define.Login{}
+	err := c.ShouldBindJSON(&ruser)
+	if err != nil {
+		slog.Println(slog.DEBUG, "ShouldBindJSON failed", zap.Error(err))
+		resp.JSON(c, resp.ErrBadRequest, nil)
+		return
+	}
+
+	token, err := model.LoginUser(ctx, ruser.Name, ruser.Password)
+	if err != nil {
+		slog.Println(slog.DEBUG, "model.LoginUser failed", zap.Error(err))
+	}
+	switch err := errors.Unwrap(err); err.(type) {
+	case nil:
+		resp.JSON(c, resp.Success, token)
+	case define.ErrUserPass:
+		resp.JSON(c, resp.ErrUserPassword, nil)
+	case define.ErrForbid:
+		resp.JSON(c, resp.ErrUserForbid, nil)
+	default:
+		resp.JSON(c, resp.ErrInternalServer, nil)
+	}
+}
 func SsoLogin(c *gin.Context) {
 
 	id := c.Query("userId")

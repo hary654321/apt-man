@@ -130,6 +130,12 @@ type RegistryUser struct {
 	Remark   string `json:"remark" binding:"max=100"`            // 备注
 }
 
+// RegistryUser data
+type Login struct {
+	Name     string `json:"name" binding:"required,max=30"`    // 用户名
+	Password string `json:"password" binding:"required,min=8"` // 用户密码
+}
+
 // CreateAdminUser first run must be create admin user
 type CreateAdminUser struct {
 	Name     string `json:"username" binding:"required,max=30"` // 用户名
