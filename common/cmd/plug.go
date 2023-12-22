@@ -17,7 +17,7 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 
 	portstr := strings.Join(utils.GetPortArr(port), ",")
 
-	res := "/tmp/" + taskId + "plugres"
+	res := "./plugres/" + taskId + "plugres"
 
 	if !strings.Contains(cmd, "nmap") {
 

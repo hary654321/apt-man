@@ -34,7 +34,7 @@ keyfile="key.pem"
 # crocodile server
 [server]
 logPath = "/u2/zrtx/log/cyberspace/"
-port = 8085
+port = 61665
 maxhttptime = "10s" # 秒
 [server.db]
 # mysql: [username[:password]@][protocol[(address)]]/dbname[?param1=value1&...&paramN=valueN]
