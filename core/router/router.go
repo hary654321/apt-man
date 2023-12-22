@@ -43,6 +43,7 @@ func Run() {
 	}
 
 	router.Static("/tem", "./tem")
+	router.Static("/plugres", "./plugres")
 	router.StaticFS("/crocodile", fs)
 	router.GET("/static/*url", func(c *gin.Context) {
 		pre, exist := c.Params.Get("url")

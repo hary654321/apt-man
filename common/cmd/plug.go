@@ -18,7 +18,16 @@ func Plug(taskId, ip, plugname, cmd string) (string, error) {
 
 	dir, _ := os.Getwd()
 
-	res := dir + "/plugres/" + plugname + "/" + taskId + ".res"
+	path := dir + "/plugres/" + plugname
+
+	if !utils.PathExist(path) {
+		err := os.MkdirAll(path, 0777)
+		if err != nil {
+			slog.Println(slog.WARN, "新建日志目录失败")
+		}
+	}
+
+	res := path + "/" + taskId + ".res"
 
 	if !strings.Contains(cmd, "nmap") {
 

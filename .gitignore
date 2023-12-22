@@ -15,3 +15,5 @@ report
 ./*.sql
 *.tar
 plugres
+kscan
+test.res

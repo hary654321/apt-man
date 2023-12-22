@@ -65,13 +65,13 @@ func checkPlug(pname, filename, cmdstr string) {
 		return
 	}
 
-	cmd.Exec("chmod +x " + "/app/" + filename)
+	dir, _ := os.Getwd()
 
-	cmdstr = "/app/" + cmdstr
+	cmd.Exec("chmod +x " + dir + "/" + filename)
+
+	cmdstr = dir + "/" + cmdstr
 
 	cmdstr = strings.Replace(cmdstr, "{ip}", "127.0.0.1", -1)
-
-	cmdstr = strings.Replace(cmdstr, "{port}", "80", -1)
 
 	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
 
