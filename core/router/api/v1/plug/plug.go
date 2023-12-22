@@ -2,6 +2,7 @@ package plug
 
 import (
 	"net/http"
+	"os"
 	"strings"
 
 	"zrDispatch/common/cmd"
@@ -22,7 +23,9 @@ func CreatePlug(c *gin.Context) {
 
 	f, _ := c.FormFile("file")
 	//SaveUploadedFile上传表单文件到指定的路径
-	c.SaveUploadedFile(f, "/app/"+f.Filename)
+	dir, _ := os.Getwd()
+
+	c.SaveUploadedFile(f, dir+"/"+f.Filename)
 
 	slog.Println(slog.DEBUG, f.Header)
 

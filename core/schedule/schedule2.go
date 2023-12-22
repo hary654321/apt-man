@@ -893,7 +893,7 @@ func plug(taskdata *define.DetailTask, pid string) {
 	slog.Println(slog.DEBUG, taskdata.ID, "====", taskdata.TaskType)
 
 	pluginfo := models.GetPlugInfoById(pid)
-	path, _ := cmd.Plug(taskdata.RunTaskId, taskdata.Ip, taskdata.Port, pluginfo.Cmd)
+	path, _ := cmd.Plug(taskdata.RunTaskId, taskdata.Ip, pluginfo.Name, pluginfo.Cmd)
 
 	if path == "" {
 		return

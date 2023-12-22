@@ -1,13 +1,14 @@
 package cmd
 
 import (
+	"os"
 	"os/exec"
 	"strings"
 	"zrDispatch/common/utils"
 	"zrDispatch/core/slog"
 )
 
-func Plug(taskId, ip, port, cmd string) (string, error) {
+func Plug(taskId, ip, plugname, cmd string) (string, error) {
 
 	if cmd == "" {
 		return "", nil
@@ -15,19 +16,19 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 
 	ipstr := strings.Join(utils.GetIpArr(ip), " ")
 
-	portstr := strings.Join(utils.GetPortArr(port), ",")
+	dir, _ := os.Getwd()
 
-	res := "./plugres/" + taskId + "plugres"
+	res := dir + "/plugres/" + plugname + "/" + taskId + ".res"
 
 	if !strings.Contains(cmd, "nmap") {
 
 		exe := strings.Split(cmd, " ")[0]
-		exe = "/app/" + exe
+		exe = dir + "/" + exe
 		if !utils.PathExist(exe) {
 			slog.Println(slog.DEBUG, "文件不存在", exe)
 			return "", nil
 		}
-		cmd = "/app/" + cmd
+		cmd = dir + "/" + cmd
 		ipstr = strings.Join(utils.GetIpArr(ip), ",")
 	} else {
 		if !utils.PathExist("/usr/bin/nmap") {
@@ -37,8 +38,6 @@ func Plug(taskId, ip, port, cmd string) (string, error) {
 	}
 
 	cmd = strings.Replace(cmd, "{ip}", ipstr, -1)
-
-	cmd = strings.Replace(cmd, "{port}", portstr, -1)
 
 	cmd = strings.Replace(cmd, "{res}", res, -1)
 
