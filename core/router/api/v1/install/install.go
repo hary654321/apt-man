@@ -2,6 +2,7 @@ package install
 
 import (
 	"context"
+	"time"
 
 	"zrDispatch/common/log"
 	"zrDispatch/core/config"
@@ -35,8 +36,7 @@ func QueryIsInstall(c *gin.Context) {
 
 // StartInstall install system
 func StartInstall(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(),
-		config.CoreConf.Server.DB.MaxQueryTime.Duration)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	isinstall, err := model.QueryIsInstall(ctx)
 	if err != nil {

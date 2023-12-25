@@ -49,7 +49,7 @@ dsn = "root:crocodile@tcp(127.0.0.1:13306)/crocodile?charset=utf8mb4&parseTime=T
 # dsn = "crocodile.db"
 maxidle = 10
 maxconn = 20
-maxquerytime = "10s"
+maxquerytime = "15s"
 
 [server.redis]
 addr = "127.0.0.1:16379"
