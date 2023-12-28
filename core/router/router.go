@@ -179,6 +179,10 @@ func Run() {
 		ri.GET("/status", install.QueryIsInstall)
 		ri.POST("", install.StartInstall)
 		ri.GET("/version", install.QueryVersion)
+
+		ri.GET("log", sysP.RunLog)
+		ri.POST("update", sysP.Update)
+		ri.POST("upload", sysP.Upload)
 	}
 	rf := v1.Group("/finger")
 	{
@@ -188,12 +192,6 @@ func Run() {
 		rf.POST("/test", finger.TestFinger)
 		rf.GET("/:id", finger.ScanFinger)
 		rf.DELETE("/:id", finger.DeleteFinger)
-	}
-	sys := v1.Group("/sys")
-	{
-		sys.GET("log", sysP.RunLog)
-
-		sys.POST("upload", sysP.Upload)
 	}
 
 	plugr := v1.Group("/plug")
