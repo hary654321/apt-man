@@ -191,7 +191,7 @@ install()
   service iptables stop
   getIpAddr
   run
-  info "后台地址：http://${local_ip}:61665/crocodile/"
+  info "后台地址s：http://${local_ip}:61665/crocodile/"
   info '安装顺利完成！'
 }
 

