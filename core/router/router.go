@@ -58,7 +58,7 @@ func Run() {
 	router.GET("/probeTem.csv", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/crocodile/probeTem.csv")
 	})
-	router.GET("/index.html", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/crocodile")
 	})
 
