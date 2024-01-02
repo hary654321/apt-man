@@ -29,8 +29,14 @@ func Plug(taskId, ip, plugname, cmd string) (string, error) {
 
 	res := path + "/" + taskId + ".res"
 
-	if !strings.Contains(cmd, "nmap") {
-
+	if strings.Contains(cmd, "nmap") {
+		if !utils.PathExist("/usr/bin/nmap") {
+			slog.Println(slog.DEBUG, "nmap不存在")
+			return "", nil
+		}
+	} else if strings.Contains(cmd, "python") {
+		cmd = "cd " + dir + " && " + cmd
+	} else {
 		exe := strings.Split(cmd, " ")[0]
 		exe = dir + "/" + exe
 		if !utils.PathExist(exe) {
@@ -39,16 +45,15 @@ func Plug(taskId, ip, plugname, cmd string) (string, error) {
 		}
 		cmd = dir + "/" + cmd
 		ipstr = strings.Join(utils.GetIpArr(ip), ",")
-	} else {
-		if !utils.PathExist("/usr/bin/nmap") {
-			slog.Println(slog.DEBUG, "nmap不存在")
-			return "", nil
-		}
 	}
 
 	cmd = strings.Replace(cmd, "{ip}", ipstr, -1)
 
-	cmd = strings.Replace(cmd, "{res}", res, -1)
+	if strings.Contains(cmd, "{res}") {
+		cmd = strings.Replace(cmd, "{res}", res, -1)
+	} else {
+		cmd = cmd + " >" + res
+	}
 
 	slog.Println(slog.DEBUG, cmd)
 
@@ -62,4 +67,36 @@ func Plug(taskId, ip, plugname, cmd string) (string, error) {
 
 	}
 	return res, nil
+}
+
+func CheckExec(cmdstr, filename string) (err error) {
+	dir, _ := os.Getwd()
+
+	Exec("chmod +x " + dir + "/" + filename)
+
+	cmdstr = dir + "/" + cmdstr
+
+	cmdstr = strings.Replace(cmdstr, "{ip}", "127.0.0.1", -1)
+
+	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
+
+	_, err = Exec(cmdstr)
+
+	return
+}
+
+func CheckScript(cmdstr, filename string) (err error) {
+	dir, _ := os.Getwd()
+
+	Exec("chmod +x " + dir + "/" + filename)
+
+	cmdstr = "cd " + dir + " && " + cmdstr
+
+	cmdstr = strings.Replace(cmdstr, "{ip}", "127.0.0.1", -1)
+
+	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
+
+	_, err = Exec(cmdstr)
+
+	return
 }

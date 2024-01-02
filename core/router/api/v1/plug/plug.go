@@ -65,19 +65,14 @@ func checkPlug(pname, filename, cmdstr string) {
 		return
 	}
 
-	dir, _ := os.Getwd()
+	var err error
+	if strings.Contains(cmdstr, "python") {
+		err = cmd.CheckScript(cmdstr, filename)
+	} else {
+		err = cmd.CheckExec(cmdstr, filename)
+	}
 
-	cmd.Exec("chmod +x " + dir + "/" + filename)
-
-	cmdstr = dir + "/" + cmdstr
-
-	cmdstr = strings.Replace(cmdstr, "{ip}", "127.0.0.1", -1)
-
-	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
-
-	_, err := cmd.Exec(cmdstr)
-
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "exit status 1") {
 		slog.Println(slog.DEBUG, err)
 		models.ChangePlugState(pname, int(define.PLUG_FAIL))
 	} else {
