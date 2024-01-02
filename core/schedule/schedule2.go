@@ -837,7 +837,6 @@ func (t *task2) runTask(ctx context.Context, id string, taskruntype define.TaskR
 	}
 
 	taskdata.TaskType = define.TYPE_PORT
-	taskdata.RunTaskId = taskdata.ID + "-" + utils.GetTime()
 	//日志保存
 	tasklogres = &define.Log{
 		Name:        taskdata.Name,
