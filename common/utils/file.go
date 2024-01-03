@@ -46,8 +46,18 @@ func Write(path, str string) {
 	//jsonBuf := append([]byte(result),[]byte("\r\n")...)
 	f.WriteString(str)
 }
-
 func WriteAppend(path, str string) {
+	f, err := os.OpenFile(path, os.O_CREATE+os.O_RDWR+os.O_APPEND, 0764)
+	if err != nil {
+		log.Error("router.Run error", zap.Error(err))
+	}
+
+	//jsonBuf := append([]byte(result),[]byte("\r\n")...)
+	str += "\n"
+	f.WriteString(str)
+}
+
+func WriteAppendHh(path, str string) {
 	f, err := os.OpenFile(path, os.O_CREATE+os.O_RDWR+os.O_APPEND, 0764)
 	if err != nil {
 		log.Error("router.Run error", zap.Error(err))

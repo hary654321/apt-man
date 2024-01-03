@@ -47,25 +47,45 @@ func Plug(taskId, ip, plugname, cmd string) (string, error) {
 		ipstr = strings.Join(utils.GetIpArr(ip), ",")
 	}
 
-	cmd = strings.Replace(cmd, "{ip}", ipstr, -1)
-
 	if strings.Contains(cmd, "{res}") {
 		cmd = strings.Replace(cmd, "{res}", res, -1)
+	} else if strings.Contains(cmd, "{SingleIP}") {
+		cmd = cmd + " >>" + res
 	} else {
 		cmd = cmd + " >" + res
 	}
 
-	slog.Println(slog.DEBUG, cmd)
+	if strings.Contains(cmd, "{SingleIP}") {
+		ipArr := utils.GetIpArr(ip)
+		for _, sip := range ipArr {
+			utils.WriteAppend(res, "ip:"+sip+"   ")
+			cmdip := strings.Replace(cmd, "{SingleIP}", sip, -1)
+			slog.Println(slog.DEBUG, cmdip)
 
-	cmd1 := exec.Command("bash", "-c", cmd)
+			cmd1 := exec.Command("bash", "-c", cmdip)
 
-	_, err := cmd1.CombinedOutput()
-	if err != nil {
-		slog.Println(slog.ERROR, err)
+			cmdres, err := cmd1.CombinedOutput()
 
-		return "", err
+			slog.Println(slog.DEBUG, string(cmdres), "==========", err)
+			utils.WriteAppendHh(res, string(cmdres))
+		}
 
+	} else {
+		cmd = strings.Replace(cmd, "{ip}", ipstr, -1)
+		slog.Println(slog.DEBUG, cmd)
+
+		cmd1 := exec.Command("bash", "-c", cmd)
+
+		_, err := cmd1.CombinedOutput()
+		if err != nil {
+			slog.Println(slog.ERROR, err)
+
+			return "", err
+
+		}
+		return res, nil
 	}
+
 	return res, nil
 }
 
@@ -93,6 +113,8 @@ func CheckScript(cmdstr, filename string) (err error) {
 	cmdstr = "cd " + dir + " && " + cmdstr
 
 	cmdstr = strings.Replace(cmdstr, "{ip}", "127.0.0.1", -1)
+
+	cmdstr = strings.Replace(cmdstr, "{SingleIP}", "127.0.0.1", -1)
 
 	cmdstr = strings.Replace(cmdstr, "{res}", "test.res", -1)
 
