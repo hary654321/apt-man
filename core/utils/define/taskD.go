@@ -121,7 +121,6 @@ type GetTask struct {
 	TaskType          TaskType      `json:"task_type"`
 	TaskTypeDesc      string        `json:"task_typedesc" comment:"任务类型"`
 	Ip                string        `json:"ip" comment:"任务数据"`
-	Port              string        `json:"port" comment:"任务数据"`
 	Run               bool          `json:"run" comment:"运行"`
 	Status            TaskOneStatus `json:"status" comment:"运行状态码"`
 	StatusDesc        string        `json:"status_desc" comment:"运行状态"`

@@ -11,7 +11,7 @@ ulimit -n 50000
 nohup ./apt-server  wl.toml>>m.log &
 nohup ./apt-server  wl.toml>>m.log &
 cd - &&  nohup ./wlaqxc.sh>>monitor.log  &
-cd /zrtx/apt  && nohup  ./apt-scan >>s.log &
+cd /zrtx/apt  && nohup  ./apt-scan-x86_64 >>s.log &
 
 
 

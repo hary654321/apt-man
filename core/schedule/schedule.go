@@ -517,7 +517,7 @@ func (s *cacheSchedule) runTask(ctx context.Context, id, /*real run task id*/
 
 	if err != nil {
 		log.Error("json.Marshal", zap.Error(err))
-		logcache.WriteStringf("Marshal task %s[%s]'s RunData [%v] failed: %v", taskdata.Name, id, taskdata.Ip+taskdata.Port, err)
+		logcache.WriteStringf("Marshal task %s[%s]'s RunData [%v] failed: %v", taskdata.Name, id, err)
 		goto Check
 	}
 
