@@ -12,7 +12,7 @@ vendor
 *.zip
 *.csv
 report
-./*.sql
+*.sql
 *.tar
 plugres
 kscan

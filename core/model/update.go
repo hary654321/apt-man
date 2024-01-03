@@ -16,7 +16,7 @@ import (
 
 func Update() {
 
-	filename := "update1130.sql"
+	filename := "update0103.sql"
 
 	if utils.PathExists(filename) {
 
