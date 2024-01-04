@@ -42,7 +42,7 @@ func main() {
 		slog.Printf(slog.DEBUG, "init schedule failed", zap.Error(err))
 	}
 
-	go client.GetAllUserList()
+	go client.GetUpdateUserList()
 
 	router.Run()
 

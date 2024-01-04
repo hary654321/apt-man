@@ -101,17 +101,17 @@ type UserInfo struct {
 	Birthday            string `json:"birthday"`
 	EndLastUpdateTime   string `json:"endLastUpdateTime"`
 	SystemGlobalID      string `json:"systemGlobalId"`
-	Roles               []struct {
-		UpdaterID   int    `json:"updaterId"`
-		AppID       int    `json:"appId"`
-		DisableFlag bool   `json:"disableFlag"`
-		GlobalID    string `json:"globalId"`
-		Name        string `json:"name"`
-		Description string `json:"description"`
-		UpdateTime  int64  `json:"updateTime"`
-		ID          int    `json:"id"`
-		Value       string `json:"value"`
-	} `json:"roles"`
+	// Roles               []struct {
+	// 	UpdaterID   int    `json:"updaterId"`
+	// 	AppID       int    `json:"appId"`
+	// 	DisableFlag bool   `json:"disableFlag"`
+	// 	GlobalID    string `json:"globalId"`
+	// 	Name        string `json:"name"`
+	// 	Description string `json:"description"`
+	// 	UpdateTime  int64  `json:"updateTime"`
+	// 	ID          int    `json:"id"`
+	// 	Value       string `json:"value"`
+	// } `json:"roles"`
 	Sex             string        `json:"sex"`
 	DeptID          string        `json:"deptId"`
 	ExtensionFields []interface{} `json:"extensionFields"`
@@ -135,6 +135,52 @@ func GetAllUserList() (res UserListRes) {
 
 	var reqD UserListReq
 	reqD.Token = Login(config.CoreConf.Sso.Username, config.CoreConf.Sso.Password)
+
+	jsonData, _ := sonic.Marshal(&reqD)
+	slog.Println(slog.DEBUG, "发送", string(jsonData))
+
+	body, err := Send(url, string(jsonData))
+
+	slog.Println(slog.DEBUG, "返回", string(body))
+	if err != nil {
+		slog.Println(slog.DEBUG, "读取response失败", url, zap.Error(err))
+		return
+	}
+	if err = json.Unmarshal(body, &res); err != nil {
+		slog.Println(slog.DEBUG, "json读取失败", url, zap.Error(err))
+		return
+	}
+
+	if res.ReturnCode != 1 {
+		slog.Println(slog.DEBUG, "心跳返回错误", url, zap.Error(err))
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(),
+		config.CoreConf.Server.DB.MaxQueryTime.Duration)
+	defer cancel()
+	for _, v := range res.Data {
+
+		slog.Println(slog.DEBUG, "sso导入", v.LoginName)
+		hashpassword, _ := utils.GenerateHashPass("zrtx@2023")
+		_, err = model.AddUser(ctx, v.LoginName, hashpassword, "sso导入", define.AdminUser, v.ID)
+	}
+
+	return
+}
+
+type UpdateListReq struct {
+	SysNum         string `json:"sysNum"`
+	LastUpdateTime string `json:"lastUpdateTime"`
+}
+
+func GetUpdateUserList() (res UserListRes) {
+	time.Sleep(1 * time.Second)
+
+	url := getSsoUrl("/tydlpt/user/updateUser")
+
+	var reqD UpdateListReq
+
+	reqD.SysNum = "12"
 
 	jsonData, _ := sonic.Marshal(&reqD)
 	slog.Println(slog.DEBUG, "发送", string(jsonData))
