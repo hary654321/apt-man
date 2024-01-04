@@ -170,6 +170,7 @@ func GetAllUserList() (res UserListRes) {
 
 type UpdateListReq struct {
 	SysNum         string `json:"sysNum"`
+	Token          string `json:"token"`
 	LastUpdateTime string `json:"lastUpdateTime"`
 }
 
@@ -181,6 +182,7 @@ func GetUpdateUserList() (res UserListRes) {
 	var reqD UpdateListReq
 
 	reqD.SysNum = "12"
+	reqD.Token = "fbfd215e-b196-4303-b483-edc9d27476e8"
 
 	jsonData, _ := sonic.Marshal(&reqD)
 	slog.Println(slog.DEBUG, "发送", string(jsonData))
